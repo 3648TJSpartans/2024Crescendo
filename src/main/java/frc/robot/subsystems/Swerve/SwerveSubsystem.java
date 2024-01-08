@@ -1,18 +1,26 @@
 package frc.robot.subsystems.Swerve;
 
+import java.util.function.Supplier;
+
 import com.kauailabs.navx.frc.AHRS;
+import com.pathplanner.lib.auto.AutoBuilder;
+
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 
 public class SwerveSubsystem extends SubsystemBase {
+    // public static Supplier<Pose2d> getPose;
+
     private final SwerveModule frontLeft = new SwerveModule(
             DriveConstants.kFrontLeftDriveMotorPort,
             DriveConstants.kFrontLeftTurningMotorPort,
@@ -63,6 +71,8 @@ public class SwerveSubsystem extends SubsystemBase {
             } catch (Exception e) {
             }
         }).start();
+        AutoBuilder.configureHolonomic(this::getPose, this::resetOdometry, this::getSpeeds, this::driveRobotRelative,
+                AutoConstants.pathFollowerConfig, this);
     }
 
     public void zeroHeading() {
@@ -107,6 +117,24 @@ public class SwerveSubsystem extends SubsystemBase {
         frontRight.stop();
         backLeft.stop();
         backRight.stop();
+    }
+
+    public SwerveModuleState[] getModuleStates() {
+        SwerveModuleState[] module_states = new SwerveModuleState[] { frontLeft.getState(), frontRight.getState(),
+                backLeft.getState(), backRight.getState()
+        };
+        return module_states;
+    }
+
+    public ChassisSpeeds getSpeeds() {
+        return DriveConstants.kDriveKinematics.toChassisSpeeds(getModuleStates());
+    }
+
+    public void driveRobotRelative(ChassisSpeeds robotRelativeSpeeds) {
+        ChassisSpeeds targetSpeeds = ChassisSpeeds.discretize(robotRelativeSpeeds, 0.02);
+
+        SwerveModuleState[] targetStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(targetSpeeds);
+        setModuleStates(targetStates);
     }
 
     public void setModuleStates(SwerveModuleState[] desiredStates) {

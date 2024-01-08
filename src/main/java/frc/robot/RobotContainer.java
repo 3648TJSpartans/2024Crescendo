@@ -5,7 +5,13 @@
 package frc.robot;
 
 import java.util.List;
+
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -41,8 +47,8 @@ import frc.robot.subsystems.Swerve.SwerveSubsystem;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  private final SendableChooser<Command> autoChooser;
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
-
   private final Joystick driverJoytick = new Joystick(OIConstants.kDriverControllerPort);
 
   /**
@@ -56,6 +62,8 @@ public class RobotContainer {
         () -> driverJoytick.getRawAxis(OIConstants.kDriverRotAxis),
         () -> !driverJoytick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx)));
     configureBindings();
+    autoChooser = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("Auto Chooser", autoChooser);
   }
 
   /**
@@ -74,15 +82,7 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    // new Trigger(m_exampleSubsystem::exampleCondition)
-    // .onTrue(new ExampleCommand(m_exampleSubsystem));
-
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is
-    // pressed,
-    // cancelling on release.
-    // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-    // new JoystickButton(driverJoytick, 2).butt(() ->
-    // swerveSubsystem.zeroHeading());
+    SmartDashboard.putData("Example Auto", Autos.followTestAuto());
   }
 
   /**
@@ -90,8 +90,9 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  // public Command getAutonomousCommand() {
-  // // An example command will be run in autonomous
-  // return Autos.exampleAuto(m_exampleSubsystem);
-  // }
+  public Command getAutonomousCommand() {
+
+    return Autos.followTestAuto();
+
+  }
 }

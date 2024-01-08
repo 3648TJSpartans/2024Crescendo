@@ -37,10 +37,42 @@ public class SwerveJoystickCmd extends Command {
 
     @Override
     public void execute() {
+        double xSpeed = xSpdFunction.get();
+        double ySpeed = ySpdFunction.get();
+        double turningSpeed = turningSpdFunction.get();
+
+        // 2. Apply deadband
+        xSpeed = Math.abs(xSpeed) > OIConstants.kDeadband ? xSpeed : 0.0;
+        ySpeed = Math.abs(ySpeed) > OIConstants.kDeadband ? ySpeed : 0.0;
+        turningSpeed = Math.abs(turningSpeed) > OIConstants.kDeadband ? turningSpeed : 0.0;
+
+        // 3. Make the driving smoother
+        xSpeed = xLimiter.calculate(xSpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
+        ySpeed = yLimiter.calculate(ySpeed) * DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
+        turningSpeed = turningLimiter.calculate(turningSpeed)
+                * DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
+
+        // 4. Construct desired chassis speeds
+        ChassisSpeeds chassisSpeeds;
+        if (fieldOrientedFunction.get()) {
+            // Relative to field
+            chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+                    xSpeed, ySpeed, turningSpeed, swerveSubsystem.getRotation2d());
+        } else {
+            // Relative to robot
+            chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
+        }
+
+        // 5. Convert chassis speeds to individual module states
+        SwerveModuleState[] moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
+
+        // 6. Output each module states to wheels
+        swerveSubsystem.setModuleStates(moduleStates);
     }
 
     @Override
     public void end(boolean interrupted) {
+        swerveSubsystem.stopModules();
     }
 
     // Returns true when the command should end.
