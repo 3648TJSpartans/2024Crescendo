@@ -143,4 +143,8 @@ public final class Constants {
         new PIDConstants(0, 0, 0), new PIDConstants(0, 0, 0), 5, 0.565685, new ReplanningConfig()); // TODO: check
                                                                                                     // driveBaseRadius
   }
+
+  public static final class ArmConstants {
+
+  }
 }
