@@ -15,7 +15,7 @@ import frc.robot.subsystems.Swerve.SwerveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class SwerveJoystickCmd extends Command {
-    private SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+    private SwerveSubsystem swerveSubsystem;
     private double xSpeed;
     private double ySpeed;
     private double rot;
@@ -30,7 +30,9 @@ public class SwerveJoystickCmd extends Command {
     double xSpeedCommanded;
     double ySpeedCommanded;
 
-    public SwerveJoystickCmd(double xSpeed, double ySpeed, double rot, boolean fieldRelative, boolean rateLimit) {
+    public SwerveJoystickCmd(SwerveSubsystem swerveSubsystem, double xSpeed, double ySpeed, double rot,
+            boolean fieldRelative, boolean rateLimit) {
+        this.swerveSubsystem = swerveSubsystem;
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
         this.rot = rot;

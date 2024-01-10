@@ -4,8 +4,6 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.ExampleSubsystem;
-
 import java.util.function.Supplier;
 
 import com.pathplanner.lib.commands.FollowPathHolonomic;
@@ -23,10 +21,6 @@ import frc.robot.subsystems.Swerve.SwerveSubsystem;
 
 public final class Autos {
   /** Example static factory for an autonomous command. */
-
-  public static Command exampleAuto(ExampleSubsystem subsystem) {
-    return Commands.sequence(subsystem.exampleMethodCommand(), new ExampleCommand(subsystem));
-  }
 
   public static Command followTestAuto() {
     return new PathPlannerAuto("TestAuto");

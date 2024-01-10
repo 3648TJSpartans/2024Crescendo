@@ -32,9 +32,7 @@ import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.SwerveJoystickCmd;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
 
 /**
@@ -56,10 +54,13 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    swerveSubsystem.setDefaultCommand(new SwerveJoystickCmd(
-        -MathUtil.applyDeadband(driverJoytick.getRawAxis(OIConstants.kDriverXAxis), OIConstants.kDeadband),
-        -MathUtil.applyDeadband(driverJoytick.getRawAxis(OIConstants.kDriverYAxis), OIConstants.kDeadband),
-        -MathUtil.applyDeadband(driverJoytick.getRawAxis(OIConstants.kDriverRotAxis), OIConstants.kDeadband),
+    swerveSubsystem.setDefaultCommand(new SwerveJoystickCmd(swerveSubsystem,
+        -MathUtil.applyDeadband(driverJoytick.getRawAxis(OIConstants.kDriverXAxis),
+            OIConstants.kDeadband),
+        -MathUtil.applyDeadband(driverJoytick.getRawAxis(OIConstants.kDriverYAxis),
+            OIConstants.kDeadband),
+        -MathUtil.applyDeadband(driverJoytick.getRawAxis(OIConstants.kDriverRotAxis),
+            OIConstants.kDeadband),
         true, true));
     configureBindings();
     autoChooser = AutoBuilder.buildAutoChooser();
