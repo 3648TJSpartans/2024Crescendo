@@ -38,6 +38,7 @@ public class SwerveJoystickCmd extends Command {
         this.rot = rot;
         this.fieldRelative = fieldRelative;
         this.rateLimit = rateLimit;
+        addRequirements(swerveSubsystem);
     }
 
     @Override
