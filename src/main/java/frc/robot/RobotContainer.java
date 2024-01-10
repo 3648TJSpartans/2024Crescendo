@@ -12,6 +12,7 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -56,11 +57,10 @@ public class RobotContainer {
    */
   public RobotContainer() {
     swerveSubsystem.setDefaultCommand(new SwerveJoystickCmd(
-        swerveSubsystem,
-        () -> -driverJoytick.getRawAxis(OIConstants.kDriverYAxis),
-        () -> driverJoytick.getRawAxis(OIConstants.kDriverXAxis),
-        () -> driverJoytick.getRawAxis(OIConstants.kDriverRotAxis),
-        () -> !driverJoytick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx)));
+        -MathUtil.applyDeadband(driverJoytick.getRawAxis(OIConstants.kDriverXAxis), OIConstants.kDeadband),
+        -MathUtil.applyDeadband(driverJoytick.getRawAxis(OIConstants.kDriverYAxis), OIConstants.kDeadband),
+        -MathUtil.applyDeadband(driverJoytick.getRawAxis(OIConstants.kDriverRotAxis), OIConstants.kDeadband),
+        true, true));
     configureBindings();
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
