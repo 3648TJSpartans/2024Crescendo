@@ -145,6 +145,7 @@ public final class Constants {
   }
 
   public static final class ArmConstants {
-
+    public static final int kDriverXAxis = 0;
+    public static final int armMotorId = 8;
   }
 }
