@@ -8,6 +8,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Utils.SwerveUtils;
@@ -16,9 +17,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 public class SwerveJoystickCmd extends Command {
     private SwerveSubsystem swerveSubsystem;
-    private double xSpeed;
-    private double ySpeed;
-    private double rot;
+    private Supplier<Double> xSpeed;
+    private Supplier<Double> ySpeed;
+    private Supplier<Double> rot;
     private boolean fieldRelative;
     private boolean rateLimit;
     private double m_currentTranslationMag = 0.0;
@@ -30,7 +31,8 @@ public class SwerveJoystickCmd extends Command {
     double xSpeedCommanded;
     double ySpeedCommanded;
 
-    public SwerveJoystickCmd(SwerveSubsystem swerveSubsystem, double xSpeed, double ySpeed, double rot,
+    public SwerveJoystickCmd(SwerveSubsystem swerveSubsystem, Supplier<Double> xSpeed, Supplier<Double> ySpeed,
+            Supplier<Double> rot,
             boolean fieldRelative, boolean rateLimit) {
         this.swerveSubsystem = swerveSubsystem;
         this.xSpeed = xSpeed;
@@ -48,10 +50,13 @@ public class SwerveJoystickCmd extends Command {
 
     @Override
     public void execute() {
+        SmartDashboard.putNumber("xSpeed", xSpeed.get());
+        SmartDashboard.putNumber("ySpeed", ySpeed.get());
+        SmartDashboard.putNumber("rot", rot.get());
         if (rateLimit) {
             // Convert XY to polar for rate limiting
-            double inputTranslationDir = Math.atan2(ySpeed, xSpeed);
-            double inputTranslationMag = Math.sqrt(Math.pow(xSpeed, 2) + Math.pow(ySpeed, 2));
+            double inputTranslationDir = Math.atan2(ySpeed.get(), xSpeed.get());
+            double inputTranslationMag = Math.sqrt(Math.pow(xSpeed.get(), 2) + Math.pow(ySpeed.get(), 2));
 
             // Calculate the direction slew rate based on an estimate of the lateral
             // acceleration
@@ -87,12 +92,12 @@ public class SwerveJoystickCmd extends Command {
 
             xSpeedCommanded = m_currentTranslationMag * Math.cos(m_currentTranslationDir);
             ySpeedCommanded = m_currentTranslationMag * Math.sin(m_currentTranslationDir);
-            m_currentRotation = m_rotLimiter.calculate(rot);
+            m_currentRotation = m_rotLimiter.calculate(rot.get());
 
         } else {
-            xSpeedCommanded = xSpeed;
-            ySpeedCommanded = ySpeed;
-            m_currentRotation = rot;
+            xSpeedCommanded = xSpeed.get();
+            ySpeedCommanded = ySpeed.get();
+            m_currentRotation = rot.get();
         }
 
         // Convert the commanded speeds into the correct units for the drivetrain

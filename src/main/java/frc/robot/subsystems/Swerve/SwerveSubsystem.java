@@ -125,6 +125,11 @@ public class SwerveSubsystem extends SubsystemBase {
         m_frontRight.setDesiredState(desiredStates[1]);
         m_rearLeft.setDesiredState(desiredStates[2]);
         m_rearRight.setDesiredState(desiredStates[3]);
+        SmartDashboard.putNumber("Front Left Encoder Value", m_frontLeft.getAbsoluteEncoder());
+        SmartDashboard.putNumber("Front Right Encoder Value", m_frontRight.getAbsoluteEncoder());
+        SmartDashboard.putNumber("Back Left Encoder Value", m_rearLeft.getAbsoluteEncoder());
+        SmartDashboard.putNumber("Back Right Encoder Value", m_rearRight.getAbsoluteEncoder());
+
     }
 
     public void resetEncoders() {

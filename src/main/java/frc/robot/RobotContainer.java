@@ -55,11 +55,11 @@ public class RobotContainer {
    */
   public RobotContainer() {
     swerveSubsystem.setDefaultCommand(new SwerveJoystickCmd(swerveSubsystem,
-        -MathUtil.applyDeadband(driverJoytick.getRawAxis(OIConstants.kDriverXAxis),
+        () -> -MathUtil.applyDeadband(driverJoytick.getRawAxis(OIConstants.kDriverXAxis),
             OIConstants.kDeadband),
-        -MathUtil.applyDeadband(driverJoytick.getRawAxis(OIConstants.kDriverYAxis),
+        () -> -MathUtil.applyDeadband(driverJoytick.getRawAxis(OIConstants.kDriverYAxis),
             OIConstants.kDeadband),
-        -MathUtil.applyDeadband(driverJoytick.getRawAxis(OIConstants.kDriverRotAxis),
+        () -> -MathUtil.applyDeadband(driverJoytick.getRawAxis(OIConstants.kDriverRotAxis),
             OIConstants.kDeadband),
         true, true));
     configureBindings();
