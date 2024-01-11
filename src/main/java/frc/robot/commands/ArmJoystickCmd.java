@@ -1,10 +1,17 @@
 package frc.robot.commands;
 
+import java.util.function.Supplier;
+
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.ArmSubsystem;
 
 public class ArmJoystickCmd extends Command {
-
-    public ArmJoystickCmd() {
+    private final ArmSubsystem ArmSubsystem;
+    private Supplier<Double> xSpeed;
+    public ArmJoystickCmd(ArmSubsystem subsystem, Supplier<Double> xSpeed ) {
+        this.xSpeed = xSpeed;
+        this.ArmSubsystem = ArmSubsystem;
+        addRequirements(ArmSubsystem);
 
     }
 
@@ -15,6 +22,9 @@ public class ArmJoystickCmd extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        double speed = xSpeed.get();
+        ArmSubsystem.MoveArm(speed);
+
     }
 
     // Called once the command ends or is interrupted.
