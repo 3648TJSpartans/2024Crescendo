@@ -4,30 +4,17 @@
 
 package frc.robot;
 
-import java.util.List;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+import edu.wpi.first.wpilibj.Joystick.ButtonType;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants.AutoConstants;
-import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.SolenoidCmd;
 import frc.robot.commands.SwerveJoystickCmd;
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Solenoid.SolenoidSubsystem;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
 
 /**
@@ -44,6 +31,15 @@ public class RobotContainer {
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
 
   private final Joystick driverJoytick = new Joystick(OIConstants.kDriverControllerPort);
+  
+  private final SolenoidSubsystem solenoidSubsystem = new SolenoidSubsystem();
+
+  XboxController exampleController = new XboxController(0);
+
+  // private final JoystickButton solenoidAButton = new JoystickButton(exampleController, XboxController.Button.kA.value);
+  // private final JoystickButton solenoidBButton = new JoystickButton(exampleController, XboxController.Button.kB.value);
+  // private final JoystickButton solenoidYButton = new JoystickButton(exampleController, XboxController.Button.kY.value);
+  // private final JoystickButton solenoidXButton = new JoystickButton(exampleController, XboxController.Button.kX.value);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -55,6 +51,14 @@ public class RobotContainer {
         () -> driverJoytick.getRawAxis(OIConstants.kDriverXAxis),
         () -> driverJoytick.getRawAxis(OIConstants.kDriverRotAxis),
         () -> !driverJoytick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx)));
+
+    solenoidSubsystem.setDefaultCommand(new SolenoidCmd(
+      solenoidSubsystem,
+      () -> exampleController.getRawButton(1),
+      () -> exampleController.getRawButton(1),
+      () -> exampleController.getRawButton(1),
+      () -> exampleController.getRawButton(1)
+      ));
     configureBindings();
   }
 
