@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.TankDriveConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.SwerveJoystickCmd;
@@ -64,7 +65,7 @@ public class RobotContainer {
         tankSubsystem,
         () -> driverJoytick.getRawAxis(OIConstants.kDriverXAxis),
         () -> -driverJoytick.getRawAxis(OIConstants.kDriverYAxis),
-        "LR"));
+        TankDriveConstants.kDriveMode));
     configureBindings();
 
   }

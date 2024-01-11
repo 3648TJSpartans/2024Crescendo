@@ -42,6 +42,8 @@ public final class Constants {
     public static final int kRightDriveMotorPort = 9;
     public static final boolean kLeftDriveMotorReversed = true;
     public static final boolean kRightDriveMotorReversed = false;
+
+    public static String kDriveMode = "LR"; // Set to "LR" (Left/Right) or "FT" (Front/Turn)
   }
 
   public static final class DriveConstants {
