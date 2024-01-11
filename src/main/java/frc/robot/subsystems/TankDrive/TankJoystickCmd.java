@@ -12,20 +12,22 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 public class TankJoystickCmd extends Command {
     private final TankDrive tankSubsystem;
-    private final Supplier<Double> frontSpdFunction, turnSpdFunction;
+    private final Supplier<Double> xInputFunction, yInputFunction;
     // private final Supplier<Boolean> fieldOrientedFunction;
-    private final SlewRateLimiter frontLimiter, turnLimiter;
+    private final SlewRateLimiter xLimiter, yLimiter;
 
-    private final double deadzone = 0.1;
+    private double deadzone = 0.1;
+    private String mode;
 
-    public TankJoystickCmd(TankDrive tankSubsystem, Supplier<Double> frontSpdFunction, Supplier<Double> turnSpdFunction
-    /* Supplier<Boolean> fieldOrientedFunction */) {
+    public TankJoystickCmd(TankDrive tankSubsystem, Supplier<Double> xInputFunction, Supplier<Double> yInputFunction,
+            String mode) {
         this.tankSubsystem = tankSubsystem;
-        this.frontSpdFunction = frontSpdFunction;
-        this.turnSpdFunction = turnSpdFunction;
+        this.xInputFunction = xInputFunction;
+        this.yInputFunction = yInputFunction;
         // this.fieldOrientedFunction = fieldOrientedFunction;
-        this.frontLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
-        this.turnLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
+        this.xLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
+        this.yLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
+        this.mode = mode;
         addRequirements(tankSubsystem);
     }
 
@@ -43,8 +45,15 @@ public class TankJoystickCmd extends Command {
 
     @Override
     public void execute() {
-        tankSubsystem.setInputForward(deadZoneCheck(frontSpdFunction.get(), deadzone));
-        tankSubsystem.setInputTurn(deadZoneCheck(turnSpdFunction.get(), deadzone));
+        if (mode == "FT") {
+            tankSubsystem.setInputForward(deadZoneCheck(xInputFunction.get(), deadzone));
+            tankSubsystem.setInputTurn(deadZoneCheck(yInputFunction.get(), deadzone));
+        } else if (mode == "LR") {
+            tankSubsystem.setInputLeft(deadZoneCheck(xInputFunction.get(), deadzone));
+            tankSubsystem.setInputRight(deadZoneCheck(yInputFunction.get(), deadzone));
+        } else {
+            throw new NumberFormatException("String mode cannot be parsed. Enter FT or LR to continue");
+        }
     }
 
     @Override

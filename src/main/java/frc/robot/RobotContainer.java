@@ -62,11 +62,9 @@ public class RobotContainer {
 
     tankSubsystem.setDefaultCommand(new TankJoystickCmd(
         tankSubsystem,
+        () -> driverJoytick.getRawAxis(OIConstants.kDriverXAxis),
         () -> -driverJoytick.getRawAxis(OIConstants.kDriverYAxis),
-        () -> driverJoytick.getRawAxis(OIConstants.kDriverXAxis)
-    /*
-     * () -> !driverJoytick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx)
-     */));
+        "LR"));
     configureBindings();
 
   }
