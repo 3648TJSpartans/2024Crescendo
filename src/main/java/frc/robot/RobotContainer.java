@@ -6,6 +6,7 @@ package frc.robot;
 
 import java.util.List;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -27,8 +28,10 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.SwerveJoystickCmd;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
+//import frc.robot.subsystems.TankDrive.ExampleSubsystem;
+import frc.robot.subsystems.TankDrive.TankDrive;
+import frc.robot.subsystems.TankDrive.TankJoystickCmd;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -42,6 +45,7 @@ import frc.robot.subsystems.Swerve.SwerveSubsystem;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+  private final TankDrive tankSubsystem = new TankDrive();
 
   private final Joystick driverJoytick = new Joystick(OIConstants.kDriverControllerPort);
 
@@ -55,7 +59,16 @@ public class RobotContainer {
         () -> driverJoytick.getRawAxis(OIConstants.kDriverXAxis),
         () -> driverJoytick.getRawAxis(OIConstants.kDriverRotAxis),
         () -> !driverJoytick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx)));
+
+    tankSubsystem.setDefaultCommand(new TankJoystickCmd(
+        tankSubsystem,
+        () -> -driverJoytick.getRawAxis(OIConstants.kDriverYAxis),
+        () -> driverJoytick.getRawAxis(OIConstants.kDriverXAxis)
+    /*
+     * () -> !driverJoytick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx)
+     */));
     configureBindings();
+
   }
 
   /**

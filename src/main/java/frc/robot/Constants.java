@@ -37,6 +37,13 @@ public final class Constants {
     public static final double kPTurning = 0.5;
   }
 
+  public static final class TankDriveConstants {
+    public static final int kLeftDriveMotorPort = 0;
+    public static final int kRightDriveMotorPort = 9;
+    public static final boolean kLeftDriveMotorReversed = true;
+    public static final boolean kRightDriveMotorReversed = false;
+  }
+
   public static final class DriveConstants {
 
     public static final double kTrackWidth = Units.inchesToMeters(26);
