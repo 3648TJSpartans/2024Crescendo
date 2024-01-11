@@ -34,7 +34,7 @@ public class RobotContainer {
   
   private final SolenoidSubsystem solenoidSubsystem = new SolenoidSubsystem();
 
-  XboxController exampleController = new XboxController(0);
+  XboxController exampleController = new XboxController(1);
 
   // private final JoystickButton solenoidAButton = new JoystickButton(exampleController, XboxController.Button.kA.value);
   // private final JoystickButton solenoidBButton = new JoystickButton(exampleController, XboxController.Button.kB.value);
@@ -54,11 +54,7 @@ public class RobotContainer {
 
     solenoidSubsystem.setDefaultCommand(new SolenoidCmd(
       solenoidSubsystem,
-      () -> exampleController.getRawButton(1),
-      () -> exampleController.getRawButton(1),
-      () -> exampleController.getRawButton(1),
-      () -> exampleController.getRawButton(1)
-      ));
+      () -> driverJoytick.getRawButton(1)));
     configureBindings();
   }
 
