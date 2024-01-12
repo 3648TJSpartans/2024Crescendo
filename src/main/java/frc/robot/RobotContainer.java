@@ -66,7 +66,6 @@ public class RobotContainer {
     configureBindings();
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
-    SmartDashboard.putBoolean("getAutoCommandTest", false);
   }
 
   /**
@@ -95,8 +94,8 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    SmartDashboard.putBoolean("getAutoCommandTest", true);
-    return Autos.followTestAuto();
+
+    return autoChooser.getSelected();
 
   }
 }

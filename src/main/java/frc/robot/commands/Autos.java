@@ -24,13 +24,16 @@ public final class Autos extends Command {
   /** Example static factory for an autonomous command. */
 
   public static Command followTestAuto() {
-    System.out.println("working");
     return new PathPlannerAuto("TestAuto");
   }
 
   public static Command followSquareAuto() {
     return new PathPlannerAuto("Square Auto");
   }
+  // public static Command exampleAuto(ExampleSubsystem subsystem) {
+  // return Commands.sequence(subsystem.exampleMethodCommand(), new
+  // ExampleCommand(subsystem));
+  // }
 
   // You must wrap the path following command in a FollowPathWithEvents command in
   // order for event markers to work
