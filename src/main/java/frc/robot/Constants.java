@@ -137,6 +137,10 @@ public final class Constants {
     public static final double kDeadband = 0.05;
   }
 
+  public static final class IntakeContants {
+
+  }
+
   public static final class AutoConstants {
     public static final double maxModuleSpeed = 5;
     public static final HolonomicPathFollowerConfig pathFollowerConfig = new HolonomicPathFollowerConfig(
