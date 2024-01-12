@@ -1,5 +1,6 @@
 package frc.robot.subsystems.Swerve;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -23,8 +24,7 @@ import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 
 public class SwerveSubsystem extends SubsystemBase {
-    // public static Supplier<Pose2d> getPose;
-
+    // public st atic Supplier<Pose2d> getPose;
     private final SwerveModule m_frontLeft = new SwerveModule(
             DriveConstants.kFrontLeftDrivingCanId,
             DriveConstants.kFrontLeftTurningCanId,
@@ -79,7 +79,7 @@ public class SwerveSubsystem extends SubsystemBase {
         modules = new SwerveModule[] { m_frontLeft, m_frontRight, m_rearLeft, m_rearRight };
         AutoBuilder.configureHolonomic(this::getPose, this::resetOdometry,
                 this::getSpeeds, this::driveRobotRelative,
-                AutoConstants.pathFollowerConfig, this);
+                AutoConstants.pathFollowerConfig, this::shouldFlipPath, this);
     }
 
     @Override
@@ -97,6 +97,10 @@ public class SwerveSubsystem extends SubsystemBase {
 
     public Pose2d getPose() {
         return m_odometry.getPoseMeters();
+    }
+
+    public Boolean shouldFlipPath() {
+        return true;
     }
 
     public void resetOdometry(Pose2d pose) {

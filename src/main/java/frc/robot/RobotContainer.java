@@ -54,6 +54,7 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+
     swerveSubsystem.setDefaultCommand(new SwerveJoystickCmd(swerveSubsystem,
         () -> -MathUtil.applyDeadband(driverJoytick.getRawAxis(OIConstants.kDriverXAxis),
             OIConstants.kDeadband),
@@ -65,6 +66,7 @@ public class RobotContainer {
     configureBindings();
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
+    SmartDashboard.putBoolean("getAutoCommandTest", false);
   }
 
   /**
@@ -83,7 +85,8 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    SmartDashboard.putData("Example Auto", Autos.followTestAuto());
+    // SmartDashboard.putData("Example Auto", Autos.followTestAuto());
+    // SmartDashboard.putData("Square Auto", Autos.followSquareAuto());
   }
 
   /**
@@ -92,7 +95,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-
+    SmartDashboard.putBoolean("getAutoCommandTest", true);
     return Autos.followTestAuto();
 
   }
