@@ -139,6 +139,10 @@ public final class Constants {
     public static int kArmControllerPort = 1;
   }
 
+  public static final class IntakeContants {
+
+  }
+
   public static final class AutoConstants {
     public static final double maxModuleSpeed = 5;
     public static final HolonomicPathFollowerConfig pathFollowerConfig = new HolonomicPathFollowerConfig(
