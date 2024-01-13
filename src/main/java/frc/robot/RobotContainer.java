@@ -33,8 +33,10 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ArmJoystickCmd;
 import frc.robot.commands.Autos;
+import frc.robot.commands.IntakeButtonCmd;
 import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
 
 /**
@@ -49,18 +51,17 @@ import frc.robot.subsystems.Swerve.SwerveSubsystem;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final SendableChooser<Command> autoChooser;
-  private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
+  private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
+  private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
   private final Joystick driverJoytick = new Joystick(OIConstants.kDriverControllerPort);
-
-  private final ArmSubsystem ArmSubsystem = new ArmSubsystem();
-  private final Joystick ArmJoytick = new Joystick(OIConstants.kArmControllerPort);
+  private final Joystick copolietJoystick = new Joystick(OIConstants.kCopilotControllerPort);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
 
-    swerveSubsystem.setDefaultCommand(new SwerveJoystickCmd(swerveSubsystem,
+    m_swerveSubsystem.setDefaultCommand(new SwerveJoystickCmd(m_swerveSubsystem,
         () -> -MathUtil.applyDeadband(driverJoytick.getRawAxis(OIConstants.kDriverXAxis),
             OIConstants.kDeadband),
         () -> -MathUtil.applyDeadband(driverJoytick.getRawAxis(OIConstants.kDriverYAxis),
@@ -68,11 +69,11 @@ public class RobotContainer {
         () -> -MathUtil.applyDeadband(driverJoytick.getRawAxis(OIConstants.kDriverRotAxis),
             OIConstants.kDeadband),
         true, true));
-
-    ArmSubsystem.setDefaultCommand(new ArmJoystickCmd(
-        ArmSubsystem,
-        () -> -ArmJoytick.getRawAxis(OIConstants.kDriverYAxis)));
-
+    m_IntakeSubsystem.setDefaultCommand(new IntakeButtonCmd(m_IntakeSubsystem, () -> driverJoytick.getRawButton(5),
+        () -> driverJoytick.getRawButton(6)));
+    // ArmSubsystem.setDefaultCommand(new ArmJoystickCmd(
+    // ArmSubsystem,
+    // () -> -ArmJoytick.getRawAxis(OIConstants.kDriverYAxis)));
 
     configureBindings();
     autoChooser = AutoBuilder.buildAutoChooser();

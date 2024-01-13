@@ -136,11 +136,11 @@ public final class Constants {
     public static final int kcopilotXAxis = 0;
     public static final double kDeadband = 0.05;
 
-    public static int kArmControllerPort = 1;
   }
 
   public static final class IntakeContants {
-
+    public static final int IntakeMotor1Id = 9;
+    public static final int IntakeMotor2Id = 10;
   }
 
   public static final class AutoConstants {
@@ -151,6 +151,6 @@ public final class Constants {
   }
 
   public static final class ArmConstants {
-    public static final int armMotorId = 8;
+    public static final int armMotorId = 16;
   }
 }

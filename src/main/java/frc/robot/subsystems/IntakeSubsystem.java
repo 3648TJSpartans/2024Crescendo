@@ -12,8 +12,8 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public IntakeSubsystem() {
 
-        intakeMotor1 = new CANSparkMax(IntakeContants.Int1MotorId, MotorType.kBrushless);
-        intakeMotor2 = new CANSparkMax(IntakeContants.Int2MotorId, MotorType.kBrushless);
+        intakeMotor1 = new CANSparkMax(IntakeContants.IntakeMotor1Id, MotorType.kBrushless);
+        intakeMotor2 = new CANSparkMax(IntakeContants.IntakeMotor1Id, MotorType.kBrushless);
 
     }
 
