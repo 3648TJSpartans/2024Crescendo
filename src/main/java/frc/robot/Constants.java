@@ -149,4 +149,8 @@ public final class Constants {
   public static final class ArmConstants {
     public static final int armMotorId = 8;
   }
+
+  public static final class ClimberConstants {
+    public static final int climberMotorID = 7;
+  }
 }
