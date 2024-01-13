@@ -1,13 +1,10 @@
 package frc.robot.subsystems.TankDrive;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
 import java.util.function.Supplier;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.OIConstants;
-import frc.robot.subsystems.TankDrive.TankDrive;
-import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.Constants.TankDriveConstants;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class TankJoystickCmd extends Command {
@@ -15,8 +12,6 @@ public class TankJoystickCmd extends Command {
     private final Supplier<Double> xInputFunction, yInputFunction;
     private final Supplier<Boolean> driveModeFunction;
     private final SlewRateLimiter xLimiter, yLimiter;
-
-    private double deadzone = 0.1;
 
     public TankJoystickCmd(TankDrive tankSubsystem, Supplier<Double> xInputFunction, Supplier<Double> yInputFunction,
             Supplier<Boolean> driveModeFunction) {
@@ -29,14 +24,6 @@ public class TankJoystickCmd extends Command {
         addRequirements(tankSubsystem);
     }
 
-    public double deadZoneCheck(double input, double deadzone) {
-        if (Math.abs(input) < deadzone) {
-            return input;
-        } else {
-            return 0.0;
-        }
-    }
-
     @Override
     public void initialize() {
     }
@@ -44,11 +31,11 @@ public class TankJoystickCmd extends Command {
     @Override
     public void execute() {
         if (driveModeFunction.get()) {
-            tankSubsystem.setInputForward(deadZoneCheck(xInputFunction.get(), deadzone));
-            tankSubsystem.setInputTurn(deadZoneCheck(yInputFunction.get(), deadzone));
+            tankSubsystem.setInputForward(MathUtil.applyDeadband(xInputFunction.get(), TankDriveConstants.kDeadzone));
+            tankSubsystem.setInputTurn(MathUtil.applyDeadband(yInputFunction.get(), TankDriveConstants.kDeadzone));
         } else {
-            tankSubsystem.setInputLeft(deadZoneCheck(xInputFunction.get(), deadzone));
-            tankSubsystem.setInputRight(deadZoneCheck(yInputFunction.get(), deadzone));
+            tankSubsystem.setInputLeft(MathUtil.applyDeadband(xInputFunction.get(), TankDriveConstants.kDeadzone));
+            tankSubsystem.setInputRight(MathUtil.applyDeadband(yInputFunction.get(), TankDriveConstants.kDeadzone));
         }
     }
 
