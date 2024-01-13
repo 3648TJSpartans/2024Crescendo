@@ -13,21 +13,19 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class TankJoystickCmd extends Command {
     private final TankDrive tankSubsystem;
     private final Supplier<Double> xInputFunction, yInputFunction;
-    // private final Supplier<Boolean> fieldOrientedFunction;
+    private final Supplier<Boolean> driveModeFunction;
     private final SlewRateLimiter xLimiter, yLimiter;
 
     private double deadzone = 0.1;
-    private String mode;
 
     public TankJoystickCmd(TankDrive tankSubsystem, Supplier<Double> xInputFunction, Supplier<Double> yInputFunction,
-            String mode) {
+            Supplier<Boolean> driveModeFunction) {
         this.tankSubsystem = tankSubsystem;
         this.xInputFunction = xInputFunction;
         this.yInputFunction = yInputFunction;
-        // this.fieldOrientedFunction = fieldOrientedFunction;
+        this.driveModeFunction = driveModeFunction;
         this.xLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
         this.yLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
-        this.mode = mode;
         addRequirements(tankSubsystem);
     }
 
@@ -45,14 +43,12 @@ public class TankJoystickCmd extends Command {
 
     @Override
     public void execute() {
-        if (mode == "FT") {
+        if (driveModeFunction.get()) {
             tankSubsystem.setInputForward(deadZoneCheck(xInputFunction.get(), deadzone));
             tankSubsystem.setInputTurn(deadZoneCheck(yInputFunction.get(), deadzone));
-        } else if (mode == "LR") {
+        } else {
             tankSubsystem.setInputLeft(deadZoneCheck(xInputFunction.get(), deadzone));
             tankSubsystem.setInputRight(deadZoneCheck(yInputFunction.get(), deadzone));
-        } else {
-            throw new NumberFormatException("String mode cannot be parsed. Enter FT or LR to continue");
         }
     }
 

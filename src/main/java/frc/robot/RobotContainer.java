@@ -65,7 +65,7 @@ public class RobotContainer {
         tankSubsystem,
         () -> driverJoytick.getRawAxis(TankDriveConstants.kPilotXAxis),
         () -> -driverJoytick.getRawAxis(TankDriveConstants.kPilotYAxis),
-        TankDriveConstants.kDriveMode));
+        () -> !driverJoytick.getRawButton(TankDriveConstants.kDriveModeButtonIdx)));
     configureBindings();
 
   }
