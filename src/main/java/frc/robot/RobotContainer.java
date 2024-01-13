@@ -63,8 +63,8 @@ public class RobotContainer {
 
     tankSubsystem.setDefaultCommand(new TankJoystickCmd(
         tankSubsystem,
-        () -> driverJoytick.getRawAxis(OIConstants.kDriverXAxis),
-        () -> -driverJoytick.getRawAxis(OIConstants.kDriverYAxis),
+        () -> driverJoytick.getRawAxis(TankDriveConstants.kPilotXAxis),
+        () -> -driverJoytick.getRawAxis(TankDriveConstants.kPilotYAxis),
         TankDriveConstants.kDriveMode));
     configureBindings();
 

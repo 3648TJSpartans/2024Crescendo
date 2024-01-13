@@ -38,6 +38,9 @@ public final class Constants {
   }
 
   public static final class TankDriveConstants {
+    public static final int kPilotXAxis = 1;
+    public static final int kPilotYAxis = 5;
+
     public static final int kLeftDriveMotorPort = 0;
     public static final int kRightDriveMotorPort = 9;
     public static final boolean kLeftDriveMotorReversed = true;
