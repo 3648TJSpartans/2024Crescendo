@@ -128,13 +128,15 @@ public final class Constants {
 
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
-
+    public static final int kCopilotControllerPort = 1;
     public static final int kDriverYAxis = 1;
     public static final int kDriverXAxis = 0;
     public static final int kDriverRotAxis = 4;
     public static final int kDriverFieldOrientedButtonIdx = 1;
-
+    public static final int kcopilotXAxis = 0;
     public static final double kDeadband = 0.05;
+
+    public static int kArmControllerPort = 1;
   }
 
   public static final class AutoConstants {
@@ -142,5 +144,9 @@ public final class Constants {
     public static final HolonomicPathFollowerConfig pathFollowerConfig = new HolonomicPathFollowerConfig(
         new PIDConstants(0, 0, 0), new PIDConstants(0, 0, 0), 5, 0.565685, new ReplanningConfig()); // TODO: check
                                                                                                     // driveBaseRadius
+  }
+
+  public static final class ArmConstants {
+    public static final int armMotorId = 8;
   }
 }

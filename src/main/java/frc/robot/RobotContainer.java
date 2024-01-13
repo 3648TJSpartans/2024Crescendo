@@ -31,8 +31,10 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.ArmJoystickCmd;
 import frc.robot.commands.Autos;
 import frc.robot.commands.SwerveJoystickCmd;
+import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
 
 /**
@@ -50,6 +52,9 @@ public class RobotContainer {
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
   private final Joystick driverJoytick = new Joystick(OIConstants.kDriverControllerPort);
 
+  private final ArmSubsystem ArmSubsystem = new ArmSubsystem();
+  private final Joystick ArmJoytick = new Joystick(OIConstants.kArmControllerPort);
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -63,6 +68,12 @@ public class RobotContainer {
         () -> -MathUtil.applyDeadband(driverJoytick.getRawAxis(OIConstants.kDriverRotAxis),
             OIConstants.kDeadband),
         true, true));
+
+    ArmSubsystem.setDefaultCommand(new ArmJoystickCmd(
+        ArmSubsystem,
+        () -> -ArmJoytick.getRawAxis(OIConstants.kDriverYAxis)));
+
+
     configureBindings();
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
