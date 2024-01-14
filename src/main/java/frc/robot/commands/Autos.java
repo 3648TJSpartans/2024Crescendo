@@ -4,17 +4,45 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.ExampleSubsystem;
+import java.util.function.Supplier;
+
+import com.pathplanner.lib.commands.FollowPathHolonomic;
+import com.pathplanner.lib.commands.FollowPathWithEvents;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
+import frc.robot.subsystems.Swerve.SwerveSubsystem;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.subsystems.Swerve.SwerveSubsystem;
 
-public final class Autos {
+public final class Autos extends Command {
   /** Example static factory for an autonomous command. */
-  public static Command exampleAuto(ExampleSubsystem subsystem) {
-    return Commands.sequence(subsystem.exampleMethodCommand(), new ExampleCommand(subsystem));
+
+  public static Command followTestAuto() {
+    return new PathPlannerAuto("TestAuto");
   }
+
+  public static Command followSquareAuto() {
+    return new PathPlannerAuto("Square Auto");
+  }
+  // public static Command exampleAuto(ExampleSubsystem subsystem) {
+  // return Commands.sequence(subsystem.exampleMethodCommand(), new
+  // ExampleCommand(subsystem));
+  // }
+
+  // You must wrap the path following command in a FollowPathWithEvents command in
+  // order for event markers to work
+
+  // You must wrap the path following command in a FollowPathWithEvents command in
+  // order for event markers to work
 
   private Autos() {
     throw new UnsupportedOperationException("This is a utility class!");
   }
+
 }
