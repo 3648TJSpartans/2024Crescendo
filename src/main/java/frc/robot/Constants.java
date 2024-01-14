@@ -154,4 +154,11 @@ public final class Constants {
   public static final class ArmConstants {
     public static final int armMotorId = 16;
   }
+
+  public static final class ButtonConstants{
+    public static final int AButton = 1;
+    public static final int BButton = 2;
+    public static final int YButton = 3;
+    public static final int XButton= 4;
+  }
 }
