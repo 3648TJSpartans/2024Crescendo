@@ -5,11 +5,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Joystick.ButtonType;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.SolenoidCmd;
@@ -36,10 +33,6 @@ public class RobotContainer {
 
   XboxController exampleController = new XboxController(1);
 
-  // private final JoystickButton solenoidAButton = new JoystickButton(exampleController, XboxController.Button.kA.value);
-  // private final JoystickButton solenoidBButton = new JoystickButton(exampleController, XboxController.Button.kB.value);
-  // private final JoystickButton solenoidYButton = new JoystickButton(exampleController, XboxController.Button.kY.value);
-  // private final JoystickButton solenoidXButton = new JoystickButton(exampleController, XboxController.Button.kX.value);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -52,9 +45,20 @@ public class RobotContainer {
         () -> driverJoytick.getRawAxis(OIConstants.kDriverRotAxis),
         () -> !driverJoytick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx)));
 
+    /** "setDeaultCommand()" sets the command for how sets how "SolenoidCmd()" acts
+        - "SolenoidCmd()" is the constructor that was created in the SolenoidCmd.java
+          - Info about "SolenoidCmd()" is in SolenoidCmd.java documentation
+     */
     solenoidSubsystem.setDefaultCommand(new SolenoidCmd(
       solenoidSubsystem,
-      () -> driverJoytick.getRawButton(1)));
+      /**
+      Button Int Value of 1 = "A" button 
+      Button Int Value of 3 = "X" button
+      Button Int Value of 4 = "Y" button
+       */ 
+      () -> driverJoytick.getRawButton(1),
+      () -> driverJoytick.getRawButton(3),
+      () -> driverJoytick.getRawButton(4)));
     configureBindings();
   }
 
