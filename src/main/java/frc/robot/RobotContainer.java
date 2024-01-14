@@ -51,7 +51,7 @@ public class RobotContainer {
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
   private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
   private final Joystick driverJoystick = new Joystick(OIConstants.kDriverControllerPort);
-  private final SolenoidSubsystem solenoidSubsystem = new SolenoidSubsystem();
+  // private final SolenoidSubsystem solenoidSubsystem = new SolenoidSubsystem();
 
   private final Joystick copolietJoystick = new Joystick(OIConstants.kCopilotControllerPort);
 
@@ -65,16 +65,16 @@ public class RobotContainer {
      * - "SolenoidCmd()" is the constructor that was created in the SolenoidCmd.java
      * - Info about "SolenoidCmd()" is in SolenoidCmd.java documentation
      */
-    solenoidSubsystem.setDefaultCommand(new SolenoidCmd(
-        solenoidSubsystem,
-        /**
-         * Button Int Value of 1 = "A" button
-         * Button Int Value of 3 = "X" button
-         * Button Int Value of 4 = "Y" button
-         */
-        () -> driverJoystick.getRawButton(1),
-        () -> driverJoystick.getRawButton(3),
-        () -> driverJoystick.getRawButton(4)));
+    // solenoidSubsystem.setDefaultCommand(new SolenoidCmd(
+    // solenoidSubsystem,
+    // /**
+    // * Button Int Value of 1 = "A" button
+    // * Button Int Value of 3 = "X" button
+    // * Button Int Value of 4 = "Y" button
+    // */
+    // () -> driverJoystick.getRawButton(1),
+    // () -> driverJoystick.getRawButton(3),
+    // () -> driverJoystick.getRawButton(4)));
 
     m_swerveSubsystem.setDefaultCommand(new SwerveJoystickCmd(m_swerveSubsystem,
         () -> -MathUtil.applyDeadband(driverJoystick.getRawAxis(OIConstants.kDriverXAxis),
