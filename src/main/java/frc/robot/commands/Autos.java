@@ -6,13 +6,13 @@ package frc.robot.commands;
 
 import java.util.function.Supplier;
 
-import com.pathplanner.lib.commands.FollowPathHolonomic;
-import com.pathplanner.lib.commands.FollowPathWithEvents;
-import com.pathplanner.lib.commands.PathPlannerAuto;
-import com.pathplanner.lib.path.PathPlannerPath;
-import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-import com.pathplanner.lib.util.PIDConstants;
-import com.pathplanner.lib.util.ReplanningConfig;
+// import com.pathplanner.lib.commands.FollowPathHolonomic;
+// import com.pathplanner.lib.commands.FollowPathWithEvents;
+// import com.pathplanner.lib.commands.PathPlannerAuto;
+// import com.pathplanner.lib.path.PathPlannerPath;
+// import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+// import com.pathplanner.lib.util.PIDConstants;
+// import com.pathplanner.lib.util.ReplanningConfig;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,13 +23,13 @@ import frc.robot.subsystems.Swerve.SwerveSubsystem;
 public final class Autos extends Command {
   /** Example static factory for an autonomous command. */
 
-  public static Command followTestAuto() {
-    return new PathPlannerAuto("TestAuto");
-  }
+  // public static Command followTestAuto() {
+  // return new PathPlannerAuto("TestAuto");
+  // }
 
-  public static Command followSquareAuto() {
-    return new PathPlannerAuto("Square Auto");
-  }
+  // public static Command followSquareAuto() {
+  // return new PathPlannerAuto("Square Auto");
+  // }
   // public static Command exampleAuto(ExampleSubsystem subsystem) {
   // return Commands.sequence(subsystem.exampleMethodCommand(), new
   // ExampleCommand(subsystem));

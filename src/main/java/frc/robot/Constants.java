@@ -4,9 +4,9 @@
 
 package frc.robot;
 
-import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-import com.pathplanner.lib.util.PIDConstants;
-import com.pathplanner.lib.util.ReplanningConfig;
+// import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+// import com.pathplanner.lib.util.PIDConstants;
+// import com.pathplanner.lib.util.ReplanningConfig;
 import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.math.controller.HolonomicDriveController;
@@ -28,6 +28,19 @@ import edu.wpi.first.math.util.Units;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+  public static final class TankDriveConstants {
+    public static final int kPilotXAxis = 1;
+    public static final int kPilotYAxis = 5;
+    public static final int kDriveModeButtonIdx = 2;
+
+    public static final double kDeadzone = 0.1;
+
+    public static final int kLeftDriveMotorPort = 4;
+    public static final int kRightDriveMotorPort = 6;
+    public static final boolean kLeftDriveMotorReversed = true;
+    public static final boolean kRightDriveMotorReversed = false;
+  }
 
   public static final class DriveConstants {
     // Driving Parameters - Note that these are not the maximum capable speeds of
@@ -68,6 +81,14 @@ public final class Constants {
     public static final int kRearRightTurningCanId = 5;
 
     public static final boolean kGyroReversed = false;
+
+    public static final double kPhysicalMaxSpeedMetersPerSecond = 5;
+    public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
+
+    public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond / 4;
+    public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = kPhysicalMaxAngularSpeedRadiansPerSecond / 4;
+    public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3;
+    public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
   }
 
   public static final class ModuleConstants {
@@ -145,9 +166,11 @@ public final class Constants {
 
   public static final class AutoConstants {
     public static final double maxModuleSpeed = 5;
-    public static final HolonomicPathFollowerConfig pathFollowerConfig = new HolonomicPathFollowerConfig(
-        new PIDConstants(0, 0, 0), new PIDConstants(0, 0, 0), 5, 0.565685, new ReplanningConfig()); // TODO: check
-                                                                                                    // driveBaseRadius
+    // public static final HolonomicPathFollowerConfig pathFollowerConfig = new
+    // HolonomicPathFollowerConfig(
+    // new PIDConstants(0, 0, 0), new PIDConstants(0, 0, 0), 5, 0.565685, new
+    // ReplanningConfig()); // TODO: check
+    // // driveBaseRadius
   }
 
   public static final class ArmConstants {

@@ -4,7 +4,7 @@ import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
 import com.kauailabs.navx.frc.AHRS;
-import com.pathplanner.lib.auto.AutoBuilder;
+// import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.SPI;
@@ -77,9 +77,9 @@ public class SwerveSubsystem extends SubsystemBase {
             }
         }).start();
         modules = new SwerveModule[] { m_frontLeft, m_frontRight, m_rearLeft, m_rearRight };
-        AutoBuilder.configureHolonomic(this::getPose, this::resetOdometry,
-                this::getSpeeds, this::driveRobotRelative,
-                AutoConstants.pathFollowerConfig, this::shouldFlipPath, this);
+        // AutoBuilder.configureHolonomic(this::getPose, this::resetOdometry,
+        // this::getSpeeds, this::driveRobotRelative,
+        // AutoConstants.pathFollowerConfig, this::shouldFlipPath, this);
     }
 
     @Override
