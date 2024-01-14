@@ -28,7 +28,7 @@ public class IntakeButtonCmd extends Command {
     public void execute() {
         if (m_leftexecuteButton.get()) {
             System.out.println(m_leftexecuteButton.get());
-            IntakeSubsystem.setIntakeSpeed(IntakeConstants.IntakeSpeed);
+            IntakeSubsystem.setIntakeSpeed(-IntakeConstants.IntakeSpeed);
         } else if (m_rightexecuteButton.get()) {
             System.out.println(m_rightexecuteButton.get());
             IntakeSubsystem.setIntakeSpeed(IntakeConstants.IntakeSpeed);
