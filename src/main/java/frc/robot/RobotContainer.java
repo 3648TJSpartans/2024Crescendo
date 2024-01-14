@@ -31,13 +31,16 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.TankDriveConstants;
 import frc.robot.commands.ArmJoystickCmd;
 import frc.robot.commands.Autos;
 import frc.robot.commands.IntakeButtonCmd;
 import frc.robot.commands.SwerveJoystickCmd;
+import frc.robot.commands.TankJoystickCmd;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
+import frc.robot.subsystems.TankDrive.TankDrive;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -51,8 +54,9 @@ import frc.robot.subsystems.Swerve.SwerveSubsystem;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   // private final SendableChooser<Command> autoChooser;
-  private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
-  private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
+  // private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
+  // private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
+  private final TankDrive tankSubsystem = new TankDrive();
   private final Joystick driverJoytick = new Joystick(OIConstants.kDriverControllerPort);
   private final Joystick copilotJoystick = new Joystick(OIConstants.kCopilotControllerPort);
 
@@ -78,7 +82,13 @@ public class RobotContainer {
     // ArmSubsystem.setDefaultCommand(new ArmJoystickCmd(
     // ArmSubsystem,
     // () -> -ArmJoytick.getRawAxis(OIConstants.kDriverYAxis)));
-
+    tankSubsystem.setDefaultCommand(new TankJoystickCmd(
+        tankSubsystem,
+        () -> MathUtil.applyDeadband(driverJoytick.getRawAxis(TankDriveConstants.kPilotXAxis),
+            TankDriveConstants.kDeadzone),
+        () -> -MathUtil.applyDeadband(driverJoytick.getRawAxis(TankDriveConstants.kPilotYAxis),
+            TankDriveConstants.kDeadzone),
+        () -> driverJoytick.getRawButton(TankDriveConstants.kDriveModeButtonIdx)));
     configureBindings();
     // autoChooser = AutoBuilder.buildAutoChooser();
     // SmartDashboard.putData("Auto Chooser", autoChooser);

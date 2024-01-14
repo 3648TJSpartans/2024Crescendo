@@ -36,10 +36,14 @@ public final class Constants {
 
     public static final double kDeadzone = 0.1;
 
-    public static final int kLeftDriveMotorPort = 4;
-    public static final int kRightDriveMotorPort = 6;
-    public static final boolean kLeftDriveMotorReversed = true;
-    public static final boolean kRightDriveMotorReversed = false;
+    public static final int kLeftDriveMotorPort1 = 1;
+    public static final int kLeftDriveMotorPort2 = 2;
+    public static final int kRightDriveMotorPort1 = 3;
+    public static final int kRightDriveMotorPort2 = 4;
+    public static final boolean kLeftDriveMotorReversed1 = true;
+    public static final boolean kLeftDriveMotorReversed2 = true;
+    public static final boolean kRightDriveMotorReversed1 = false;
+    public static final boolean kRightDriveMotorReversed2 = false;
   }
 
   public static final class DriveConstants {

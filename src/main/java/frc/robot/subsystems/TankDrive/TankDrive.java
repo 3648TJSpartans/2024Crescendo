@@ -12,8 +12,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class TankDrive extends SubsystemBase {
-    private CANSparkMax leftMotor;
-    private CANSparkMax rightMotor;
+    private CANSparkMax leftMotor1, leftMotor2, rightMotor1, rightMotor2;
 
     public double input_forward = 0;
     public double input_turn = 0;
@@ -21,10 +20,14 @@ public class TankDrive extends SubsystemBase {
     public double input_right;
 
     public TankDrive() {
-        leftMotor = new CANSparkMax(TankDriveConstants.kLeftDriveMotorPort, MotorType.kBrushless);
-        rightMotor = new CANSparkMax(TankDriveConstants.kRightDriveMotorPort, MotorType.kBrushless);
-        leftMotor.setInverted(TankDriveConstants.kLeftDriveMotorReversed);
-        rightMotor.setInverted(TankDriveConstants.kRightDriveMotorReversed);
+        leftMotor1 = new CANSparkMax(TankDriveConstants.kLeftDriveMotorPort1, MotorType.kBrushless);
+        leftMotor2 = new CANSparkMax(TankDriveConstants.kLeftDriveMotorPort2, MotorType.kBrushless);
+        rightMotor1 = new CANSparkMax(TankDriveConstants.kRightDriveMotorPort1, MotorType.kBrushless);
+        rightMotor2 = new CANSparkMax(TankDriveConstants.kRightDriveMotorPort2, MotorType.kBrushless);
+        leftMotor1.setInverted(TankDriveConstants.kLeftDriveMotorReversed1);
+        leftMotor2.setInverted(TankDriveConstants.kLeftDriveMotorReversed2);
+        rightMotor1.setInverted(TankDriveConstants.kRightDriveMotorReversed1);
+        rightMotor2.setInverted(TankDriveConstants.kRightDriveMotorReversed2);
     }
 
     @Override
@@ -32,8 +35,10 @@ public class TankDrive extends SubsystemBase {
         input_left = input_turn + input_forward;
         input_right = input_turn - input_forward;
 
-        leftMotor.set(input_left);
-        rightMotor.set(input_right);
+        leftMotor1.set(input_left);
+        leftMotor2.set(input_left);
+        rightMotor1.set(input_right);
+        rightMotor2.set(input_right);
     }
 
     public void setInputForward(double forward) {
@@ -53,8 +58,10 @@ public class TankDrive extends SubsystemBase {
     }
 
     public void stop() {
-        leftMotor.set(0);
-        rightMotor.set(0);
+        leftMotor1.set(0);
+        leftMotor2.set(0);
+        rightMotor1.set(0);
+        rightMotor2.set(0);
     }
 
     @Override
