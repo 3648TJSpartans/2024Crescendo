@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class SolenoidSubsystem extends SubsystemBase{
     // sets the compressor to variable "comp"
     private static final Compressor comp = new Compressor(PneumaticsModuleType.REVPH);
-    // set the DoubleSolenois to variable "Solenoid"
+    // set the DoubleSolenoid to variable "Solenoid"
     private static final DoubleSolenoid Solenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, 0, 1);
 
     

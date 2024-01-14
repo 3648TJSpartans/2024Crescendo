@@ -61,20 +61,20 @@ public class RobotContainer {
   public RobotContainer() {
 
     /**
-     * "setDeaultCommand()" sets the command for how sets how "SolenoidCmd()" acts
+     * "setDefaultCommand()" sets the command for how sets how "SolenoidCmd()" acts
      * - "SolenoidCmd()" is the constructor that was created in the SolenoidCmd.java
      * - Info about "SolenoidCmd()" is in SolenoidCmd.java documentation
      */
     // solenoidSubsystem.setDefaultCommand(new SolenoidCmd(
     // solenoidSubsystem,
     // /**
-    // * Button Int Value of 1 = "A" button
-    // * Button Int Value of 3 = "X" button
-    // * Button Int Value of 4 = "Y" button
+    // * Button Int Value of AButton = 1
+    // * Button Int Value of XButton = 3
+    // * Button Int Value of YButton = 4
     // */
-    // () -> driverJoystick.getRawButton(1),
-    // () -> driverJoystick.getRawButton(3),
-    // () -> driverJoystick.getRawButton(4)));
+    // () -> driverJoystick.getRawButton(ButtonConstants.AButton),
+    // () -> driverJoystick.getRawButton(ButtonConstants.XButton),
+    // () -> driverJoystick.getRawButton(ButtonConstants.YButton)));
 
     m_swerveSubsystem.setDefaultCommand(new SwerveJoystickCmd(m_swerveSubsystem,
         () -> -MathUtil.applyDeadband(driverJoystick.getRawAxis(OIConstants.kDriverXAxis),

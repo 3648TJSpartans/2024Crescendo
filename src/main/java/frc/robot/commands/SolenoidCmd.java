@@ -4,14 +4,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Solenoid.SolenoidSubsystem;
 
 public class SolenoidCmd extends Command {
-    // Creates the buttons as supplier boolean values to excute pneumatic and compressor controls
+    // Creates the buttons as supplier boolean values to execute pneumatic and compressor controls
     private final Supplier<Boolean> m_executeButton, m_CompressorOn, m_CompressorOff;
     // Creates "m_solenoidSubsystem" to use to call methods created in SolenoidSubsystem file
     private final SolenoidSubsystem m_solenoidSubsystem;
 
     /** Creates constructor that creates the instance of "SolenoidCmd()" that is called in RobotContainer file 
-        - sets the intial variables equal to parameters in the constructor
-        - "addrequirements()" intializes m_solenoidSubsystem in the contructor, being called in the RobotContainer
+        - sets the initial variables equal to parameters in the constructor
+        - "addRequirements()" initializes m_solenoidSubsystem in the constructor, being called in the RobotContainer
     */
     public SolenoidCmd(SolenoidSubsystem m_solenoidSubsystem, Supplier<Boolean> m_executeButton, Supplier<Boolean> m_CompressorOn, 
     Supplier<Boolean> m_CompressorOff) {
@@ -24,7 +24,7 @@ public class SolenoidCmd extends Command {
 
 
     @Override
-    // "intialize()" is called when the program intially runs
+    // "initialize()" is called when the program initially runs
     public void initialize() {
         m_solenoidSubsystem.CompressorOn();
     }
