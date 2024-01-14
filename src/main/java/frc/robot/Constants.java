@@ -138,9 +138,10 @@ public final class Constants {
 
   }
 
-  public static final class IntakeContants {
+  public static final class IntakeConstants {
     public static final int IntakeMotor1Id = 9;
     public static final int IntakeMotor2Id = 10;
+    public static final double IntakeSpeed = .5;
   }
 
   public static final class AutoConstants {

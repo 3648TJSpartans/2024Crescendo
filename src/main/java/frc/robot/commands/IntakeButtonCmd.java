@@ -3,6 +3,7 @@ package frc.robot.commands;
 import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class IntakeButtonCmd extends Command {
@@ -27,10 +28,10 @@ public class IntakeButtonCmd extends Command {
     public void execute() {
         if (m_leftexecuteButton.get()) {
             System.out.println(m_leftexecuteButton.get());
-            IntakeSubsystem.setIntakeSpeed(5);
+            IntakeSubsystem.setIntakeSpeed(IntakeConstants.IntakeSpeed);
         } else if (m_rightexecuteButton.get()) {
             System.out.println(m_rightexecuteButton.get());
-            IntakeSubsystem.setIntakeSpeed(-5);
+            IntakeSubsystem.setIntakeSpeed(IntakeConstants.IntakeSpeed);
         } else {
             IntakeSubsystem.setIntakeSpeed(0);
         }
