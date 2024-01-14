@@ -54,7 +54,7 @@ public class RobotContainer {
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
   private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
   private final Joystick driverJoytick = new Joystick(OIConstants.kDriverControllerPort);
-  private final Joystick copolietJoystick = new Joystick(OIConstants.kCopilotControllerPort);
+  private final Joystick copilotJoystick = new Joystick(OIConstants.kCopilotControllerPort);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
