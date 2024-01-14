@@ -26,15 +26,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants.AutoConstants;
-import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.ArmJoystickCmd;
-import frc.robot.commands.Autos;
-import frc.robot.commands.IntakeButtonCmd;
-import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
@@ -54,12 +47,33 @@ public class RobotContainer {
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
   private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
   private final Joystick driverJoytick = new Joystick(OIConstants.kDriverControllerPort);
+  
+  private final SolenoidSubsystem solenoidSubsystem = new SolenoidSubsystem();
+
+  
+
   private final Joystick copolietJoystick = new Joystick(OIConstants.kCopilotControllerPort);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+   
+
+    /** "setDeaultCommand()" sets the command for how sets how "SolenoidCmd()" acts
+        - "SolenoidCmd()" is the constructor that was created in the SolenoidCmd.java
+          - Info about "SolenoidCmd()" is in SolenoidCmd.java documentation
+     */
+    solenoidSubsystem.setDefaultCommand(new SolenoidCmd(
+      solenoidSubsystem,
+      /**
+      Button Int Value of 1 = "A" button 
+      Button Int Value of 3 = "X" button
+      Button Int Value of 4 = "Y" button
+       */ 
+      () -> driverJoytick.getRawButton(1),
+      () -> driverJoytick.getRawButton(3),
+      () -> driverJoytick.getRawButton(4)));
 
     m_swerveSubsystem.setDefaultCommand(new SwerveJoystickCmd(m_swerveSubsystem,
         () -> -MathUtil.applyDeadband(driverJoytick.getRawAxis(OIConstants.kDriverXAxis),
