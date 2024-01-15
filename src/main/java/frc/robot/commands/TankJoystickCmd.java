@@ -43,7 +43,7 @@ public class TankJoystickCmd extends Command {
         }
         if (toggle) {
             tankSubsystem
-                    .setInputForward(MathUtil.applyDeadband(xInputFunction.get(), TankDriveConstants.kDeadzone));
+                    .setInputForward(-MathUtil.applyDeadband(xInputFunction.get(), TankDriveConstants.kDeadzone));
             tankSubsystem.setInputTurn(MathUtil.applyDeadband(yInputFunction.get(), TankDriveConstants.kDeadzone));
         } else {
             tankSubsystem.setInputLeft(-MathUtil.applyDeadband(xInputFunction.get(), TankDriveConstants.kDeadzone));

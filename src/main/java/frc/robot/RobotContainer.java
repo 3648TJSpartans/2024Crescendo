@@ -6,8 +6,8 @@ package frc.robot;
 
 import java.util.List;
 
-// import com.pathplanner.lib.auto.AutoBuilder;
-// import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -53,9 +53,10 @@ import frc.robot.subsystems.TankDrive.TankDrive;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  // private final SendableChooser<Command> autoChooser;
-  // private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
-  // private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
+  private final SendableChooser<Command> autoChooser;
+  private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
+  private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
+  private final ArmSubsystem ArmSubsystem = new ArmSubsystem();
   private final TankDrive tankSubsystem = new TankDrive();
   private final Joystick driverJoytick = new Joystick(OIConstants.kDriverControllerPort);
   private final Joystick copilotJoystick = new Joystick(OIConstants.kCopilotControllerPort);
@@ -64,24 +65,40 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    // Uncomment to initialize each subsystem listed below
+    // swerveSubsystemInit();
+    // intakeSubsystemInit();
+    // armSubsystemInit();
+    tankDriveInit();
 
-    // m_swerveSubsystem.setDefaultCommand(new SwerveJoystickCmd(m_swerveSubsystem,
-    // () ->
-    // -MathUtil.applyDeadband(driverJoytick.getRawAxis(OIConstants.kDriverXAxis),
-    // OIConstants.kDeadband),
-    // () ->
-    // -MathUtil.applyDeadband(driverJoytick.getRawAxis(OIConstants.kDriverYAxis),
-    // OIConstants.kDeadband),
-    // () ->
-    // -MathUtil.applyDeadband(driverJoytick.getRawAxis(OIConstants.kDriverRotAxis),
-    // OIConstants.kDeadband),
-    // true, true));
-    // m_IntakeSubsystem.setDefaultCommand(new IntakeButtonCmd(m_IntakeSubsystem, ()
-    // -> driverJoytick.getRawButton(5),
-    // () -> driverJoytick.getRawButton(6)));
-    // ArmSubsystem.setDefaultCommand(new ArmJoystickCmd(
-    // ArmSubsystem,
-    // () -> -ArmJoytick.getRawAxis(OIConstants.kDriverYAxis)));
+    configureBindings();
+    autoChooser = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("Auto Chooser", autoChooser);
+  }
+
+  private void swerveSubsystemInit() {
+    m_swerveSubsystem.setDefaultCommand(new SwerveJoystickCmd(m_swerveSubsystem,
+        () -> -MathUtil.applyDeadband(driverJoytick.getRawAxis(OIConstants.kDriverXAxis),
+            OIConstants.kDeadband),
+        () -> -MathUtil.applyDeadband(driverJoytick.getRawAxis(OIConstants.kDriverYAxis),
+            OIConstants.kDeadband),
+        () -> -MathUtil.applyDeadband(driverJoytick.getRawAxis(OIConstants.kDriverRotAxis),
+            OIConstants.kDeadband),
+        true, true));
+  }
+
+  private void intakeSubsystemInit() {
+    m_IntakeSubsystem.setDefaultCommand(new IntakeButtonCmd(m_IntakeSubsystem, () -> driverJoytick.getRawButton(5),
+        () -> driverJoytick.getRawButton(6)));
+  }
+
+  private void armSubsystemInit() {
+    ArmSubsystem
+        .setDefaultCommand(
+            new ArmJoystickCmd(ArmSubsystem, () -> copilotJoystick.getRawAxis(OIConstants.kDriverYAxis)));
+  }
+
+  private void tankDriveInit() {
     tankSubsystem.setDefaultCommand(new TankJoystickCmd(
         tankSubsystem,
         () -> MathUtil.applyDeadband(driverJoytick.getRawAxis(TankDriveConstants.kPilotYAxis),
@@ -89,9 +106,6 @@ public class RobotContainer {
         () -> MathUtil.applyDeadband(driverJoytick.getRawAxis(TankDriveConstants.kPilotXAxis),
             TankDriveConstants.kDeadzone),
         () -> driverJoytick.getRawButtonPressed(TankDriveConstants.kDriveModeButtonIdx)));
-    configureBindings();
-    // autoChooser = AutoBuilder.buildAutoChooser();
-    // SmartDashboard.putData("Auto Chooser", autoChooser);
   }
 
   /**
@@ -110,8 +124,8 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    // SmartDashboard.putData("Example Auto", Autos.followTestAuto());
-    // SmartDashboard.putData("Square Auto", Autos.followSquareAuto());
+    SmartDashboard.putData("Example Auto", Autos.followTestAuto());
+    SmartDashboard.putData("Square Auto", Autos.followSquareAuto());
   }
 
   /**
@@ -119,9 +133,7 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  // public Command getAutonomousCommand() {
-
-  // return autoChooser.getSelected();
-
-  // }
+  public Command getAutonomousCommand() {
+    return autoChooser.getSelected();
+  }
 }
