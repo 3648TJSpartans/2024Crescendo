@@ -84,11 +84,11 @@ public class RobotContainer {
     // () -> -ArmJoytick.getRawAxis(OIConstants.kDriverYAxis)));
     tankSubsystem.setDefaultCommand(new TankJoystickCmd(
         tankSubsystem,
+        () -> MathUtil.applyDeadband(driverJoytick.getRawAxis(TankDriveConstants.kPilotYAxis),
+            TankDriveConstants.kDeadzone),
         () -> MathUtil.applyDeadband(driverJoytick.getRawAxis(TankDriveConstants.kPilotXAxis),
             TankDriveConstants.kDeadzone),
-        () -> -MathUtil.applyDeadband(driverJoytick.getRawAxis(TankDriveConstants.kPilotYAxis),
-            TankDriveConstants.kDeadzone),
-        () -> driverJoytick.getRawButton(TankDriveConstants.kDriveModeButtonIdx)));
+        () -> driverJoytick.getRawButtonPressed(TankDriveConstants.kDriveModeButtonIdx)));
     configureBindings();
     // autoChooser = AutoBuilder.buildAutoChooser();
     // SmartDashboard.putData("Auto Chooser", autoChooser);

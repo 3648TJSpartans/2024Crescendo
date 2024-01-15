@@ -12,14 +12,17 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class TankDrive extends SubsystemBase {
+    // Initializes two motors on each side
     private CANSparkMax leftMotor1, leftMotor2, rightMotor1, rightMotor2;
 
+    // Initializes forward, turning, left side and right side input vars
     public double input_forward = 0;
     public double input_turn = 0;
-    public double input_left;
-    public double input_right;
+    public double input_left = 0;
+    public double input_right = 0;
 
     public TankDrive() {
+        // Defines motors from ports/ids from consts
         leftMotor1 = new CANSparkMax(TankDriveConstants.kLeftDriveMotorPort1, MotorType.kBrushless);
         leftMotor2 = new CANSparkMax(TankDriveConstants.kLeftDriveMotorPort2, MotorType.kBrushless);
         rightMotor1 = new CANSparkMax(TankDriveConstants.kRightDriveMotorPort1, MotorType.kBrushless);
@@ -32,15 +35,19 @@ public class TankDrive extends SubsystemBase {
 
     @Override
     public void periodic() {
+        // Defines fwd as left/right side moving in same direction, and turn as
+        // left/right side moving in opp direction
         input_left = input_turn + input_forward;
         input_right = input_turn - input_forward;
 
+        // Sets motor speeds to left/right input
         leftMotor1.set(input_left);
         leftMotor2.set(input_left);
         rightMotor1.set(input_right);
         rightMotor2.set(input_right);
     }
 
+    // Methods for setting fwd/turn/left/right input
     public void setInputForward(double forward) {
         input_forward = forward;
     }
@@ -50,13 +57,16 @@ public class TankDrive extends SubsystemBase {
     }
 
     public void setInputLeft(double left) {
-        input_left = left;
+        leftMotor1.set(left);
+        leftMotor2.set(left);
     }
 
     public void setInputRight(double right) {
-        input_right = right;
+        rightMotor1.set(-right);
+        rightMotor2.set(-right);
     }
 
+    // Method for stopping all motors
     public void stop() {
         leftMotor1.set(0);
         leftMotor2.set(0);

@@ -32,12 +32,12 @@ public final class Constants {
   public static final class TankDriveConstants {
     public static final int kPilotXAxis = 1;
     public static final int kPilotYAxis = 5;
-    public static final int kDriveModeButtonIdx = 2;
+    public static final int kDriveModeButtonIdx = 6;
 
     public static final double kDeadzone = 0.1;
 
     public static final int kLeftDriveMotorPort1 = 1;
-    public static final int kLeftDriveMotorPort2 = 2;
+    public static final int kLeftDriveMotorPort2 = 6;
     public static final int kRightDriveMotorPort1 = 3;
     public static final int kRightDriveMotorPort2 = 4;
     public static final boolean kLeftDriveMotorReversed1 = true;
