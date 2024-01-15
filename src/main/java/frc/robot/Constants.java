@@ -141,7 +141,7 @@ public final class Constants {
   public static final class IntakeConstants {
     public static final int IntakeMotor1Id = 9;
     public static final int IntakeMotor2Id = 10;
-    public static final double IntakeSpeed = .2;
+    public static final double IntakeSpeed = .65;
   }
 
   public static final class AutoConstants {
@@ -155,10 +155,10 @@ public final class Constants {
     public static final int armMotorId = 16;
   }
 
-  public static final class ButtonConstants{
+  public static final class ButtonConstants {
     public static final int AButton = 1;
     public static final int BButton = 2;
     public static final int YButton = 3;
-    public static final int XButton= 4;
+    public static final int XButton = 4;
   }
 }
