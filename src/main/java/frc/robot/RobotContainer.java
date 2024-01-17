@@ -29,10 +29,12 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.IntakeButtonCmd;
+import frc.robot.commands.ShootCommand;
 import frc.robot.commands.SolenoidCmd;
 import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.Solenoid.SolenoidSubsystem;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
 
@@ -51,6 +53,7 @@ public class RobotContainer {
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
   private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
   private final Joystick driverJoystick = new Joystick(OIConstants.kDriverControllerPort);
+  private final ShooterSubsystem m_ShooterSubsystem = new ShooterSubsystem();
   // private final SolenoidSubsystem solenoidSubsystem = new SolenoidSubsystem();
 
   private final Joystick copolietJoystick = new Joystick(OIConstants.kCopilotControllerPort);
@@ -89,6 +92,7 @@ public class RobotContainer {
     // ArmSubsystem.setDefaultCommand(new ArmJoystickCmd(
     // ArmSubsystem,
     // () -> -ArmJoytick.getRawAxis(OIConstants.kDriverYAxis)));
+    m_ShooterSubsystem.setDefaultCommand(new ShootCommand(m_ShooterSubsystem,() -> driverJoystick.getRawButton(6), () -> driverJoystick.getRawButton(7)));
 
     configureBindings();
     autoChooser = AutoBuilder.buildAutoChooser();

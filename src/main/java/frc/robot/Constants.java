@@ -161,4 +161,11 @@ public final class Constants {
     public static final int YButton = 3;
     public static final int XButton= 4;
   }
+
+  public static final class ShooterConstants{
+    public static final int ShooterMotor1Id = 6;
+    public static final int ShooterMotor2Id = 8;
+    public static final int BeltMotorId = 4;
+  }
+  
 }

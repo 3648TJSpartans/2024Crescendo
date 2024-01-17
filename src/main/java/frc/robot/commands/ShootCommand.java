@@ -1,10 +1,21 @@
 package frc.robot.commands;
 
+import java.util.function.Supplier;
+
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShootCommand extends Command {
+    private final Supplier<Boolean> m_ShootButton;
+    private final Supplier<Boolean> m_RevButton;
+    private final ShooterSubsystem ShooterSubsystem;
 
-    public ShootCommand() {
+    public ShootCommand(ShooterSubsystem m_ShooterSubsystem,Supplier<Boolean> m_ShootButton, Supplier<Boolean> m_RevButton) {
+        ShooterSubsystem = m_ShooterSubsystem;
+        this.m_ShootButton = m_ShootButton;
+        this.m_RevButton = m_RevButton;
+        addRequirements(m_ShooterSubsystem);
 
     }
 
@@ -15,8 +26,12 @@ public class ShootCommand extends Command {
 
     @Override
     public void execute() {
-        // this needs to rev the shooter motors and then move the belts up
-        // needs to work for amp and speaker
+        if (m_RevButton.get()){
+            ShooterSubsystem.revShooter();
+        }
+        if (m_ShootButton.get()){
+            ShooterSubsystem.moveShooterIntake();
+        }
     }
 
 }
