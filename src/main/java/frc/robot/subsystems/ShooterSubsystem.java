@@ -19,13 +19,12 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void revShooter() {
-        ShooterMotor1.set(0.5);
-        ShooterMotor2.set(-0.5);
-
+        ShooterMotor1.set(ShooterConstants.Motor1Speed);
+        ShooterMotor2.set(ShooterConstants.Motor2Speed);
     }
 
     public void moveShooterIntake() {
-        BeltMotor.set(0.2);
+        BeltMotor.set(ShooterConstants.BeltMotorSpeed);
 
     }
 

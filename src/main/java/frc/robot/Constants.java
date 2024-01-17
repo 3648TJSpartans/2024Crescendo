@@ -163,9 +163,13 @@ public final class Constants {
   }
 
   public static final class ShooterConstants{
-    public static final int ShooterMotor1Id = 6;
-    public static final int ShooterMotor2Id = 8;
-    public static final int BeltMotorId = 4;
+    public static final int ShooterMotor1Id = 9;
+    public static final int ShooterMotor2Id = 11;
+    public static final int BeltMotorId = 12;
+    public static final double Motor1Speed = 0.3;
+    public static final double Motor2Speed = -0.3;
+    public static final double BeltMotorSpeed = 0.3;
+    public static final long IdleTime = 1000;
   }
   
 }
