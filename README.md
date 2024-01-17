@@ -16,10 +16,9 @@ To be able to simulate and deploy robot code make sure you have the following
     <li> RevLib https://software-metadata.revrobotics.com/REVLib-2023.json </li>
     <li> NavX https://dev.studica.com/releases/2024/NavX.json</li>
     <li> PathPlanner https://3015rangerrobotics.github.io/pathplannerlib/PathplannerLib.json </li>
-    
+</ul>
         
 
-</ul>
 ## Contributing
 
 We welcome contributions from other teams who are interested in using or improving our framework. If you have suggestions or improvements, please feel free to fork the repository and submit a pull request.
