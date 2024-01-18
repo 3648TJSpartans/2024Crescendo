@@ -8,13 +8,13 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShootCommand extends Command {
-    private final Supplier<Boolean> m_ShootButton;
-    private final ShooterSubsystem ShooterSubsystem;
+    private final Supplier<Boolean> m_shootButton;
+    private final ShooterSubsystem shooterSubsystem;
 
-    public ShootCommand(ShooterSubsystem m_ShooterSubsystem, Supplier<Boolean> m_ShootButton) {
-        ShooterSubsystem = m_ShooterSubsystem;
-        this.m_ShootButton = m_ShootButton;
-        addRequirements(m_ShooterSubsystem);
+    public ShootCommand(ShooterSubsystem m_shooterSubsystem, Supplier<Boolean> m_shootButton) {
+        shooterSubsystem = m_shooterSubsystem;
+        this.m_shootButton = m_shootButton;
+        addRequirements(m_shooterSubsystem);
 
     }
 
@@ -25,10 +25,9 @@ public class ShootCommand extends Command {
 
     @Override
     public void execute() {
-        if (m_ShootButton.get()) {
-            ShooterSubsystem.revShooter();
-            ShooterSubsystem.moveShooterIntake();
-
+        if (m_shootButton.get()) {
+            shooterSubsystem.revShooter();
+            shooterSubsystem.moveShooterIntake();
         }
 
     }
