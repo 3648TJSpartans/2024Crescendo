@@ -10,17 +10,17 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterCommandGroup extends SequentialCommandGroup {
-    private final Supplier<Boolean> m_ShootButton;
-    private final ShooterSubsystem ShooterSubsystem;
+    private final Supplier<Boolean> m_shootButton;
+    private final ShooterSubsystem shooterSubsystem;
 
-    public ShooterCommandGroup(ShooterSubsystem m_ShooterSubsystem, Supplier<Boolean> m_ShootButton) {
-        ShooterSubsystem = m_ShooterSubsystem;
-        this.m_ShootButton = m_ShootButton;
-        // addRequirements(m_ShooterSubsystem);
+    public ShooterCommandGroup(ShooterSubsystem m_shooterSubsystem, Supplier<Boolean> m_shootButton) {
+        shooterSubsystem = m_shooterSubsystem;
+        this.m_shootButton = m_shootButton;
+        // addRequirements(m_shooterSubsystem);
 
         addCommands(
-                new RevMotorCommand(m_ShooterSubsystem, m_ShootButton),
-                new ShootCommand(m_ShooterSubsystem, m_ShootButton));
+                new RevMotorCommand(m_shooterSubsystem, m_shootButton),
+                new ShootCommand(m_shooterSubsystem, m_shootButton));
 
     }
 

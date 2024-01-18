@@ -28,16 +28,18 @@ import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.IntakeButtonCmd;
 import frc.robot.commands.ShooterCommands.ShootCommand;
 import frc.robot.commands.ShooterCommands.ShooterCommandGroup;
 import frc.robot.commands.SolenoidCmd;
 import frc.robot.commands.SwerveJoystickCmd;
+import frc.robot.commands.SolenoidCmd;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.subsystems.Solenoid.SolenoidSubsystem;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
+import frc.robot.subsystems.Solenoid.SolenoidSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -52,12 +54,12 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final SendableChooser<Command> autoChooser;
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
-  private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
+  private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final Joystick driverJoystick = new Joystick(OIConstants.kDriverControllerPort);
-  private final ShooterSubsystem m_ShooterSubsystem = new ShooterSubsystem();
+  private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   // private final SolenoidSubsystem solenoidSubsystem = new SolenoidSubsystem();
 
-  private final Joystick copolietJoystick = new Joystick(OIConstants.kCopilotControllerPort);
+  private final Joystick copilotJoystick = new Joystick(OIConstants.kCopilotControllerPort);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -88,13 +90,14 @@ public class RobotContainer {
         () -> -MathUtil.applyDeadband(driverJoystick.getRawAxis(OIConstants.kDriverRotAxis),
             OIConstants.kDeadband),
         true, true));
-    m_IntakeSubsystem.setDefaultCommand(new IntakeButtonCmd(m_IntakeSubsystem, () -> driverJoystick.getRawButton(5),
+    m_intakeSubsystem.setDefaultCommand(new IntakeButtonCmd(m_intakeSubsystem, () -> driverJoystick.getRawButton(5),
         () -> driverJoystick.getRawButton(6)));
     // ArmSubsystem.setDefaultCommand(new ArmJoystickCmd(
     // ArmSubsystem,
     // () -> -ArmJoytick.getRawAxis(OIConstants.kDriverYAxis)));
-    m_ShooterSubsystem
-        .setDefaultCommand(new ShooterCommandGroup(m_ShooterSubsystem, () -> driverJoystick.getRawButtonPressed(6)));
+    m_shooterSubsystem
+        .setDefaultCommand(new ShooterCommandGroup(m_shooterSubsystem,
+            () -> driverJoystick.getRawButtonPressed(ShooterConstants.buttonID)));
 
     configureBindings();
     autoChooser = AutoBuilder.buildAutoChooser();

@@ -7,24 +7,24 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 
 public class ShooterSubsystem extends SubsystemBase {
-    private final CANSparkMax ShooterMotor1;
-    private final CANSparkMax ShooterMotor2;
-    private final CANSparkMax BeltMotor;
+    private final CANSparkMax shooterMotor1;
+    private final CANSparkMax shooterMotor2;
+    private final CANSparkMax beltMotor;
 
     public ShooterSubsystem() {
-        ShooterMotor1 = new CANSparkMax(ShooterConstants.ShooterMotor1Id, MotorType.kBrushless);
-        ShooterMotor2 = new CANSparkMax(ShooterConstants.ShooterMotor2Id, MotorType.kBrushless);
-        BeltMotor = new CANSparkMax(ShooterConstants.BeltMotorId, MotorType.kBrushless);
+        shooterMotor1 = new CANSparkMax(ShooterConstants.shooterMotor1Id, MotorType.kBrushless);
+        shooterMotor2 = new CANSparkMax(ShooterConstants.shooterMotor2Id, MotorType.kBrushless);
+        shooterMotor2.follow(shooterMotor1);
+        shooterMotor1.setInverted(true);
+        beltMotor = new CANSparkMax(ShooterConstants.beltMotorId, MotorType.kBrushless);
     }
 
     public void revShooter() {
-        ShooterMotor1.set(ShooterConstants.MotorSpeed);
-        ShooterMotor2.follow(ShooterMotor1);
+        shooterMotor1.set(ShooterConstants.motorSpeed);
     }
 
     public void moveShooterIntake() {
-        BeltMotor.set(ShooterConstants.BeltMotorSpeed);
-
+        beltMotor.set(ShooterConstants.beltMotorSpeed);
     }
 
 }
