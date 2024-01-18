@@ -127,6 +127,10 @@ public final class Constants {
   }
 
   public static final class OIConstants {
+    public static final int AButton = 1;
+    public static final int BButton = 2;
+    public static final int YButton = 3;
+    public static final int XButton = 4;
     public static final int kDriverControllerPort = 0;
     public static final int kCopilotControllerPort = 1;
     public static final int kDriverYAxis = 1;
@@ -155,15 +159,7 @@ public final class Constants {
     public static final int armMotorId = 16;
   }
 
-  public static final class ButtonConstants {
-    public static final int AButton = 1;
-    public static final int BButton = 2;
-    public static final int YButton = 3;
-    public static final int XButton = 4;
-  }
-
   public static final class ShooterConstants {
-    public static final int buttonID = 4;
     public static final int shooterMotor1Id = 9;
     public static final int shooterMotor2Id = 11;
     public static final int beltMotorId = 12;

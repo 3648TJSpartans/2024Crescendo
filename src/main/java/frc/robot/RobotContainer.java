@@ -78,9 +78,9 @@ public class RobotContainer {
     // * Button Int Value of XButton = 3
     // * Button Int Value of YButton = 4
     // */
-    // () -> driverJoystick.getRawButton(ButtonConstants.AButton),
-    // () -> driverJoystick.getRawButton(ButtonConstants.XButton),
-    // () -> driverJoystick.getRawButton(ButtonConstants.YButton)));
+    // () -> driverJoystick.getRawButton(OIConstants.AButton),
+    // () -> driverJoystick.getRawButton(OIConstants.XButton),
+    // () -> driverJoystick.getRawButton(OIConstants.YButton)));
 
     m_swerveSubsystem.setDefaultCommand(new SwerveJoystickCmd(m_swerveSubsystem,
         () -> -MathUtil.applyDeadband(driverJoystick.getRawAxis(OIConstants.kDriverXAxis),
@@ -97,7 +97,7 @@ public class RobotContainer {
     // () -> -ArmJoytick.getRawAxis(OIConstants.kDriverYAxis)));
     m_shooterSubsystem
         .setDefaultCommand(new ShooterCommandGroup(m_shooterSubsystem,
-            () -> driverJoystick.getRawButtonPressed(ShooterConstants.buttonID)));
+            () -> driverJoystick.getRawButtonPressed(OIConstants.XButton)));
 
     configureBindings();
     autoChooser = AutoBuilder.buildAutoChooser();

@@ -9,10 +9,10 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 public class RevMotorCommand extends Command {
     private final Supplier<Boolean> m_shootButton;
-    private final ShooterSubsystem shooterSubsystem;
+    private final ShooterSubsystem m_shooterSubsystem;
 
     public RevMotorCommand(ShooterSubsystem m_shooterSubsystem, Supplier<Boolean> m_shootButton) {
-        shooterSubsystem = m_shooterSubsystem;
+        this.m_shooterSubsystem = m_shooterSubsystem;
         this.m_shootButton = m_shootButton;
         addRequirements(m_shooterSubsystem);
     }
@@ -25,9 +25,7 @@ public class RevMotorCommand extends Command {
     @Override
     public void execute() {
         if (m_shootButton.get()) {
-            shooterSubsystem.revShooter();
+            m_shooterSubsystem.revShooter();
         }
-
     }
-
 }
