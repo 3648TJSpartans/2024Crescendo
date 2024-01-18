@@ -152,5 +152,11 @@ public final class Constants {
 
   public static final class ClimberConstants {
     public static final int climberMotorID = 7;
+    public static final double kClimberP = 0;
+    public static final double kClimberI = 0;
+    public static final double kClimberD = 0;
+    public static final double kClimberFF = 0;
+    public static final double kClimberMinOutput = 0;
+    public static final double kClimberMaxOutput = 0;
   }
 }
