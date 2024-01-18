@@ -14,13 +14,12 @@ public class ShooterSubsystem extends SubsystemBase {
     public ShooterSubsystem() {
         ShooterMotor1 = new CANSparkMax(ShooterConstants.ShooterMotor1Id, MotorType.kBrushless);
         ShooterMotor2 = new CANSparkMax(ShooterConstants.ShooterMotor2Id, MotorType.kBrushless);
-        BeltMotor = new CANSparkMax(ShooterConstants. BeltMotorId, MotorType.kBrushless);
-    }
+        BeltMotor = new CANSparkMax(ShooterConstants.BeltMotorId, MotorType.kBrushless);
     }
 
     public void revShooter() {
-        ShooterMotor1.set(ShooterConstants.Motor1Speed);
-        ShooterMotor2.set(ShooterConstants.Motor2Speed);
+        ShooterMotor1.set(ShooterConstants.MotorSpeed);
+        ShooterMotor2.follow(ShooterMotor1);
     }
 
     public void moveShooterIntake() {

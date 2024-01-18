@@ -29,8 +29,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.IntakeButtonCmd;
-import frc.robot.commands.ShootCommand;
-import frc.robot.commands.ShooterCommandGroup;
+import frc.robot.commands.ShooterCommands.ShootCommand;
+import frc.robot.commands.ShooterCommands.ShooterCommandGroup;
 import frc.robot.commands.SolenoidCmd;
 import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.subsystems.ArmSubsystem;
@@ -93,7 +93,8 @@ public class RobotContainer {
     // ArmSubsystem.setDefaultCommand(new ArmJoystickCmd(
     // ArmSubsystem,
     // () -> -ArmJoytick.getRawAxis(OIConstants.kDriverYAxis)));
-    m_ShooterSubsystem.setDefaultCommand(new ShooterCommandGroup(m_ShooterSubsystem,() -> driverJoystick.getRawButtonPressed(6)));
+    m_ShooterSubsystem
+        .setDefaultCommand(new ShooterCommandGroup(m_ShooterSubsystem, () -> driverJoystick.getRawButtonPressed(6)));
 
     configureBindings();
     autoChooser = AutoBuilder.buildAutoChooser();

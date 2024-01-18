@@ -155,21 +155,20 @@ public final class Constants {
     public static final int armMotorId = 16;
   }
 
-  public static final class ButtonConstants{
+  public static final class ButtonConstants {
     public static final int AButton = 1;
     public static final int BButton = 2;
     public static final int YButton = 3;
-    public static final int XButton= 4;
+    public static final int XButton = 4;
   }
 
-  public static final class ShooterConstants{
+  public static final class ShooterConstants {
     public static final int ShooterMotor1Id = 9;
     public static final int ShooterMotor2Id = 11;
     public static final int BeltMotorId = 12;
-    public static final double Motor1Speed = 0.3;
-    public static final double Motor2Speed = -0.3;
-    public static final double BeltMotorSpeed = 0.3;
+    public static final double MotorSpeed = 0.3;
+    public static final double BeltMotorSpeed = 0.4;
     public static final long IdleTime = 1000;
   }
-  
+
 }
