@@ -161,4 +161,13 @@ public final class Constants {
     public static final int YButton = 3;
     public static final int XButton = 4;
   }
+
+  public static final class TrapConstants {
+    public static final double kTrapP = 0;
+    public static final double kTrapI = 0;
+    public static final double kTrapD = 0;
+    public static final double kTrapFF = 0;
+    public static final double kTrapMinOutput = -1;
+    public static final double kTrapMaxOutput = 1;
+  }
 }
