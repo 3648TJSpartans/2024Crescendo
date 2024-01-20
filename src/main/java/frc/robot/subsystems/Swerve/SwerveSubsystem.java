@@ -161,8 +161,16 @@ public class SwerveSubsystem extends SubsystemBase {
      *
      * @return the robot's heading in degrees, from -180 to 180
      */
+    // public double getHeading() {
+    // return Rotation2d.fromDegrees(m_gyro.getAngle(IMUAxis.kZ)).getDegrees();
+    // }
+
     public double getHeading() {
-        return Rotation2d.fromDegrees(m_gyro.getAngle(IMUAxis.kZ)).getDegrees();
+        return Math.IEEEremainder(m_gyro.getAngle(IMUAxis.kZ), 360);
+    }
+
+    public Rotation2d getRotation2d() {
+        return Rotation2d.fromDegrees(getHeading());
     }
 
     public double getGyroAngle(IMUAxis axis) {
@@ -178,6 +186,13 @@ public class SwerveSubsystem extends SubsystemBase {
 
         SwerveModuleState[] targetStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(targetSpeeds);
         setModuleStates(targetStates);
+    }
+
+    public void stopModules() {
+        m_frontLeft.stop();
+        m_frontRight.stop();
+        m_rearLeft.stop();
+        m_rearRight.stop();
     }
 
     /**

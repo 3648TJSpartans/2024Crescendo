@@ -83,7 +83,7 @@ public class RobotContainer {
             OIConstants.kDeadband),
         () -> -MathUtil.applyDeadband(driverJoystick.getRawAxis(OIConstants.kDriverRotAxis),
             OIConstants.kDeadband),
-        true, true));
+        () -> driverJoystick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx)));
     m_IntakeSubsystem.setDefaultCommand(new IntakeButtonCmd(m_IntakeSubsystem, () -> driverJoystick.getRawButton(5),
         () -> driverJoystick.getRawButton(6)));
     // ArmSubsystem.setDefaultCommand(new ArmJoystickCmd(
