@@ -19,11 +19,12 @@ public class ShooterSubsystem extends SubsystemBase {
         m_beltMotor = new CANSparkMax(ShooterConstants.beltMotorId, MotorType.kBrushless);
     }
 
-    public void revShooter() {
-        m_shooterMotor1.set(ShooterConstants.motorSpeed);
+    public void revShooter(double speed) {
+        m_shooterMotor1.set(speed);
+
     }
 
-    public void moveShooterIntake() {
-        m_beltMotor.set(ShooterConstants.beltMotorSpeed);
+    public void moveShooterIntake(double speed) {
+        m_beltMotor.set(speed);
     }
 }

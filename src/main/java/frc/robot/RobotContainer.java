@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.ShooterConstants;
@@ -95,9 +96,6 @@ public class RobotContainer {
     // ArmSubsystem.setDefaultCommand(new ArmJoystickCmd(
     // ArmSubsystem,
     // () -> -ArmJoytick.getRawAxis(OIConstants.kDriverYAxis)));
-    m_shooterSubsystem
-        .setDefaultCommand(new ShooterCommandGroup(m_shooterSubsystem,
-            () -> driverJoystick.getRawButtonPressed(OIConstants.XButton)));
 
     configureBindings();
     autoChooser = AutoBuilder.buildAutoChooser();
@@ -122,6 +120,7 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     // SmartDashboard.putData("Example Auto", Autos.followTestAuto());
     // SmartDashboard.putData("Square Auto", Autos.followSquareAuto());
+    new JoystickButton(copilotJoystick, OIConstants.kBeltButton).whileTrue(new ShootCommand(m_shooterSubsystem));
   }
 
   /**
