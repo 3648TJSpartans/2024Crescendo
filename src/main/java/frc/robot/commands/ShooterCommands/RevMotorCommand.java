@@ -10,8 +10,8 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class RevMotorCommand extends Command {
     private final ShooterSubsystem m_shooterSubsystem;
 
-    public RevMotorCommand(ShooterSubsystem m_shooterSubsystem) {
-        this.m_shooterSubsystem = m_shooterSubsystem;
+    public RevMotorCommand(ShooterSubsystem shooterSubsystem) {
+        m_shooterSubsystem = shooterSubsystem;
         addRequirements(m_shooterSubsystem);
     }
 
@@ -22,15 +22,11 @@ public class RevMotorCommand extends Command {
 
     @Override
     public void execute() {
-        {
-            m_shooterSubsystem.revShooter(ShooterConstants.beltMotorSpeed);
-
-        }
+        m_shooterSubsystem.revShooter(ShooterConstants.motorSpeed);
     }
 
     @Override
     public void end(boolean interrupted) {
         m_shooterSubsystem.revShooter(0);
     }
-
 }

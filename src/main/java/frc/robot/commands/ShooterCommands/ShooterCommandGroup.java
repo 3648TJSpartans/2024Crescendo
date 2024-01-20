@@ -12,8 +12,8 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class ShooterCommandGroup extends SequentialCommandGroup {
     private final ShooterSubsystem m_shooterSubsystem;
 
-    public ShooterCommandGroup(ShooterSubsystem m_shooterSubsystem) {
-        this.m_shooterSubsystem = m_shooterSubsystem;
+    public ShooterCommandGroup(ShooterSubsystem shooterSubsystem) {
+        m_shooterSubsystem = shooterSubsystem;
 
         addCommands(
                 new RevMotorCommand(m_shooterSubsystem),

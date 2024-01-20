@@ -19,13 +19,13 @@ public class SolenoidCmd extends Command {
      * - "addRequirements()" initializes m_solenoidSubsystem in the constructor,
      * being called in the RobotContainer
      */
-    public SolenoidCmd(SolenoidSubsystem m_solenoidSubsystem, Supplier<Boolean> m_executeButton,
-            Supplier<Boolean> m_CompressorOn,
-            Supplier<Boolean> m_CompressorOff) {
-        this.m_solenoidSubsystem = m_solenoidSubsystem;
-        this.m_executeButton = m_executeButton;
-        this.m_CompressorOn = m_CompressorOn;
-        this.m_CompressorOff = m_CompressorOff;
+    public SolenoidCmd(SolenoidSubsystem solenoidSubsystem, Supplier<Boolean> executeButton,
+            Supplier<Boolean> compressorOn,
+            Supplier<Boolean> compressorOff) {
+        m_solenoidSubsystem = solenoidSubsystem;
+        m_executeButton = executeButton;
+        m_CompressorOn = compressorOn;
+        m_CompressorOff = compressorOff;
         addRequirements(m_solenoidSubsystem);
     }
 

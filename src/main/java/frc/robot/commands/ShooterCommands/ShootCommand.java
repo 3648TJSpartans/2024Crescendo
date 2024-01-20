@@ -12,8 +12,8 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class ShootCommand extends Command {
     private final ShooterSubsystem m_shooterSubsystem;
 
-    public ShootCommand(ShooterSubsystem m_shooterSubsystem) {
-        this.m_shooterSubsystem = m_shooterSubsystem;
+    public ShootCommand(ShooterSubsystem shooterSubsystem) {
+        m_shooterSubsystem = shooterSubsystem;
         addRequirements(m_shooterSubsystem);
     }
 
@@ -24,11 +24,13 @@ public class ShootCommand extends Command {
 
     @Override
     public void execute() {
-        m_shooterSubsystem.moveShooterIntake(ShooterConstants.motorSpeed);
+        m_shooterSubsystem.revShooter(ShooterConstants.motorSpeed);
+        m_shooterSubsystem.moveShooterIntake(ShooterConstants.beltMotorSpeed);
     }
 
     @Override
     public void end(boolean interrupted) {
+        m_shooterSubsystem.revShooter(0);
         m_shooterSubsystem.moveShooterIntake(0);
     }
 }

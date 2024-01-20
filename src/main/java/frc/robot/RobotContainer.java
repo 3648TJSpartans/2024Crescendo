@@ -91,8 +91,9 @@ public class RobotContainer {
         () -> -MathUtil.applyDeadband(driverJoystick.getRawAxis(OIConstants.kDriverRotAxis),
             OIConstants.kDeadband),
         true, true));
-    m_intakeSubsystem.setDefaultCommand(new IntakeButtonCmd(m_intakeSubsystem, () -> driverJoystick.getRawButton(5),
-        () -> driverJoystick.getRawButton(6)));
+    m_intakeSubsystem.setDefaultCommand(
+        new IntakeButtonCmd(m_intakeSubsystem, () -> driverJoystick.getRawButton(OIConstants.LSButton),
+            () -> driverJoystick.getRawButton(OIConstants.RSButton)));
     // ArmSubsystem.setDefaultCommand(new ArmJoystickCmd(
     // ArmSubsystem,
     // () -> -ArmJoytick.getRawAxis(OIConstants.kDriverYAxis)));
@@ -120,7 +121,7 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     // SmartDashboard.putData("Example Auto", Autos.followTestAuto());
     // SmartDashboard.putData("Square Auto", Autos.followSquareAuto());
-    new JoystickButton(copilotJoystick, OIConstants.kBeltButton).whileTrue(new ShootCommand(m_shooterSubsystem));
+    new JoystickButton(copilotJoystick, OIConstants.BButton).whileTrue(new ShootCommand(m_shooterSubsystem));
   }
 
   /**
@@ -129,8 +130,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-
     return autoChooser.getSelected();
-
   }
 }

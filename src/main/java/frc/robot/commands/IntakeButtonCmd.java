@@ -9,14 +9,14 @@ import frc.robot.subsystems.IntakeSubsystem;
 public class IntakeButtonCmd extends Command {
     private final Supplier<Boolean> m_leftexecuteButton;
     private final Supplier<Boolean> m_rightexecuteButton;
-    private final IntakeSubsystem IntakeSubsystem;
+    private final IntakeSubsystem m_intakeSubsystem;
 
-    public IntakeButtonCmd(IntakeSubsystem IntakeSubsystem, Supplier<Boolean> m_leftexecuteButton,
-            Supplier<Boolean> m_rightexecuteButton) {
-        this.IntakeSubsystem = IntakeSubsystem;
-        this.m_leftexecuteButton = m_leftexecuteButton;
-        this.m_rightexecuteButton = m_rightexecuteButton;
-        addRequirements(IntakeSubsystem);
+    public IntakeButtonCmd(IntakeSubsystem intakeSubsystem, Supplier<Boolean> leftexecuteButton,
+            Supplier<Boolean> rightexecuteButton) {
+        m_intakeSubsystem = intakeSubsystem;
+        m_leftexecuteButton = leftexecuteButton;
+        m_rightexecuteButton = rightexecuteButton;
+        addRequirements(m_intakeSubsystem);
     }
 
     @Override
@@ -28,12 +28,12 @@ public class IntakeButtonCmd extends Command {
     public void execute() {
         if (m_leftexecuteButton.get()) {
             System.out.println(m_leftexecuteButton.get());
-            IntakeSubsystem.setIntakeSpeed(-IntakeConstants.IntakeSpeed);
+            m_intakeSubsystem.setIntakeSpeed(-IntakeConstants.IntakeSpeed);
         } else if (m_rightexecuteButton.get()) {
             System.out.println(m_rightexecuteButton.get());
-            IntakeSubsystem.setIntakeSpeed(IntakeConstants.IntakeSpeed);
+            m_intakeSubsystem.setIntakeSpeed(IntakeConstants.IntakeSpeed);
         } else {
-            IntakeSubsystem.setIntakeSpeed(0);
+            m_intakeSubsystem.setIntakeSpeed(0);
         }
 
     }
