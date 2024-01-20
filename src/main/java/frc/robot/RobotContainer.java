@@ -121,7 +121,7 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     // SmartDashboard.putData("Example Auto", Autos.followTestAuto());
     // SmartDashboard.putData("Square Auto", Autos.followSquareAuto());
-    new JoystickButton(copilotJoystick, OIConstants.BButton).whileTrue(new ShootCommand(m_shooterSubsystem));
+    new JoystickButton(copilotJoystick, OIConstants.BButton).whileTrue(new ShooterCommandGroup(m_shooterSubsystem));
   }
 
   /**

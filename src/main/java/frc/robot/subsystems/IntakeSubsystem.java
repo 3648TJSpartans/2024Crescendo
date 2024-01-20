@@ -19,5 +19,4 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeMotor1.set(speed);
         intakeMotor2.set(-speed);
     }
-
 }

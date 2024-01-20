@@ -162,12 +162,12 @@ public final class Constants {
   }
 
   public static final class ShooterConstants {
-    public static final int shooterMotor1Id = 13;
+    public static final int shooterMotor1Id = 13; // Real ID num is 9
     public static final int shooterMotor2Id = 11;
     public static final int beltMotorId = 12;
     public static final double motorSpeed = 0.3;
     public static final double beltMotorSpeed = 0.3;
-    // public static final long idleTime = 1000;
+    public static final double idleTime = 0;
   }
 
 }
