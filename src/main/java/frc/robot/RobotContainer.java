@@ -77,15 +77,16 @@ public class RobotContainer {
     // () -> driverJoystick.getRawButton(ButtonConstants.YButton)));
 
     m_swerveSubsystem.setDefaultCommand(new SwerveJoystickCmd(m_swerveSubsystem,
-        () -> -MathUtil.applyDeadband(driverJoystick.getRawAxis(OIConstants.kDriverXAxis),
-            OIConstants.kDeadband),
         () -> -MathUtil.applyDeadband(driverJoystick.getRawAxis(OIConstants.kDriverYAxis),
+            OIConstants.kDeadband),
+        () -> -MathUtil.applyDeadband(driverJoystick.getRawAxis(OIConstants.kDriverXAxis),
             OIConstants.kDeadband),
         () -> -MathUtil.applyDeadband(driverJoystick.getRawAxis(OIConstants.kDriverRotAxis),
             OIConstants.kDeadband),
         () -> driverJoystick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx)));
-    m_IntakeSubsystem.setDefaultCommand(new IntakeButtonCmd(m_IntakeSubsystem, () -> driverJoystick.getRawButton(5),
-        () -> driverJoystick.getRawButton(6)));
+    // m_IntakeSubsystem.setDefaultCommand(new IntakeButtonCmd(m_IntakeSubsystem, ()
+    // -> driverJoystick.getRawButton(5),
+    // () -> driverJoystick.getRawButton(6)));
     // ArmSubsystem.setDefaultCommand(new ArmJoystickCmd(
     // ArmSubsystem,
     // () -> -ArmJoytick.getRawAxis(OIConstants.kDriverYAxis)));
