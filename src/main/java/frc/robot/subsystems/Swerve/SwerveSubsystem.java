@@ -170,10 +170,6 @@ public class SwerveSubsystem extends SubsystemBase {
         return Rotation2d.fromDegrees(-getHeading());
     }
 
-    public double getGyroAngle(IMUAxis axis) {
-        return m_gyro.getAngle();
-    }
-
     public ChassisSpeeds getSpeeds() {
         return DriveConstants.kDriveKinematics.toChassisSpeeds(getModuleStates());
     }
