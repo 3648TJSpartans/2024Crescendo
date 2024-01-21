@@ -1,15 +1,10 @@
 package frc.robot.subsystems.Swerve;
 
-import java.util.function.BooleanSupplier;
-import java.util.function.Supplier;
-
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 
-import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
-import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -24,7 +19,7 @@ import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 
 public class SwerveSubsystem extends SubsystemBase {
-    // public st atic Supplier<Pose2d> getPose;
+    private boolean isFieldRelative = false;
     private final SwerveModule m_frontLeft = new SwerveModule(
             DriveConstants.kFrontLeftDrivingCanId,
             DriveConstants.kFrontLeftTurningCanId,
@@ -47,13 +42,7 @@ public class SwerveSubsystem extends SubsystemBase {
     private SwerveModule[] modules;
     // The gyro sensor
     private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
-    private boolean isFeildRelative = false;
-    // Slew rate filter variables for controlling lateralacceleration
-    private double m_currentRotation = 0.0;
-    private double m_currentTranslationDir = 0.0;
-    private double m_currentTranslationMag = 0.0;
-    private SlewRateLimiter m_magLimiter = new SlewRateLimiter(DriveConstants.kMagnitudeSlewRate);
-    private SlewRateLimiter m_rotLimiter = new SlewRateLimiter(DriveConstants.kRotationalSlewRate);
+    // Slew rate filter variables for controlling acceleration
     private double m_prevTime = WPIUtilJNI.now() * 1e-6;
 
     // Odometry class for tracking robot pose
@@ -148,11 +137,11 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     public void setFieldRelative() {
-        isFeildRelative = !isFeildRelative;
+        isFieldRelative = !isFieldRelative;
     }
 
-    public boolean getFeildRelative() {
-        return isFeildRelative;
+    public boolean getFieldRelative() {
+        return isFieldRelative;
     }
 
     public SwerveModuleState[] getModuleStates() {

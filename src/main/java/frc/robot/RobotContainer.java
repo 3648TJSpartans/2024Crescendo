@@ -4,40 +4,19 @@
 
 package frc.robot;
 
-import java.time.Instant;
-import java.util.List;
-
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.event.EventLoop;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.IntakeButtonCmd;
-import frc.robot.commands.SolenoidCmd;
 import frc.robot.commands.SwerveJoystickCmd;
-import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.Solenoid.SolenoidSubsystem;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
 
 /**
@@ -54,11 +33,7 @@ public class RobotContainer {
   private final SendableChooser<Command> autoChooser;
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
   private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
-  // private final Joystick driverJoystick = new
-  // Joystick(OIConstants.kDriverControllerPort);
   private final CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
-  // private final SolenoidSubsystem solenoidSubsystem = new SolenoidSubsystem();
-
   private final Joystick copolietJoystick = new Joystick(OIConstants.kCopilotControllerPort);
 
   /**
@@ -66,21 +41,6 @@ public class RobotContainer {
    */
   public RobotContainer() {
 
-    /**
-     * "setDefaultCommand()" sets the command for how sets how "SolenoidCmd()" acts
-     * - "SolenoidCmd()" is the constructor that was created in the SolenoidCmd.java
-     * - Info about "SolenoidCmd()" is in SolenoidCmd.java documentation
-     */
-    // solenoidSubsystem.setDefaultCommand(new SolenoidCmd(
-    // solenoidSubsystem,
-    // /**
-    // * Button Int Value of AButton = 1
-    // * Button Int Value of XButton = 3
-    // * Button Int Value of YButton = 4
-    // */
-    // () -> driverJoystick.getRawButton(ButtonConstants.AButton),
-    // () -> driverJoystick.getRawButton(ButtonConstants.XButton),
-    // () -> driverJoystick.getRawButton(ButtonConstants.YButton)));
     SwerveJoystickCmd swerveJoystickCmd = new SwerveJoystickCmd(m_swerveSubsystem,
         () -> -MathUtil.applyDeadband(m_driverController.getLeftY(),
             OIConstants.kDeadband),
