@@ -11,27 +11,27 @@ import frc.robot.subsystems.Swerve.SwerveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class SwerveJoystickCmd extends Command {
-    private SwerveSubsystem swerveSubsystem;
-    private Supplier<Double> xSpeedFunction;
-    private Supplier<Double> ySpeedFunction;
-    private Supplier<Double> rotFunction;
+    private SwerveSubsystem m_swerveSubsystem;
+    private Supplier<Double> m_xSpeedFunction;
+    private Supplier<Double> m_ySpeedFunction;
+    private Supplier<Double> m_rotFunction;
     private double m_prevTime;
     double xSpeedCommanded;
     double ySpeedCommanded;
-    private SlewRateLimiter xLimiter;
-    private SlewRateLimiter yLimiter;
-    private SlewRateLimiter turningLimiter;
+    private SlewRateLimiter m_xLimiter;
+    private SlewRateLimiter m_yLimiter;
+    private SlewRateLimiter m_turningLimiter;
 
     public SwerveJoystickCmd(SwerveSubsystem swerveSubsystem,
             Supplier<Double> xSpdFunction, Supplier<Double> ySpdFunction, Supplier<Double> turningSpdFunction) {
-        this.swerveSubsystem = swerveSubsystem;
-        this.xSpeedFunction = xSpdFunction;
-        this.ySpeedFunction = ySpdFunction;
-        this.rotFunction = turningSpdFunction;
+        m_swerveSubsystem = swerveSubsystem;
+        m_xSpeedFunction = xSpdFunction;
+        m_ySpeedFunction = ySpdFunction;
+        m_rotFunction = turningSpdFunction;
 
-        this.xLimiter = new SlewRateLimiter(DriveConstants.kMaxSpeedMetersPerSecond);
-        this.yLimiter = new SlewRateLimiter(DriveConstants.kMaxSpeedMetersPerSecond);
-        this.turningLimiter = new SlewRateLimiter(DriveConstants.kMaxAngularSpeed);
+        m_xLimiter = new SlewRateLimiter(DriveConstants.kMaxSpeedMetersPerSecond);
+        m_yLimiter = new SlewRateLimiter(DriveConstants.kMaxSpeedMetersPerSecond);
+        m_turningLimiter = new SlewRateLimiter(DriveConstants.kMaxAngularSpeed);
         addRequirements(swerveSubsystem);
     }
 
@@ -43,9 +43,9 @@ public class SwerveJoystickCmd extends Command {
     @Override
     public void execute() {
         // 1. Get real-time joystick inputs
-        double xSpeed = xSpeedFunction.get();
-        double ySpeed = ySpeedFunction.get();
-        double turningSpeed = rotFunction.get();
+        double xSpeed = m_xSpeedFunction.get();
+        double ySpeed = m_ySpeedFunction.get();
+        double turningSpeed = m_rotFunction.get();
 
         // 2. Apply deadband
         xSpeed = Math.abs(xSpeed) > OIConstants.kDeadband ? xSpeed : 0.0;
@@ -53,18 +53,18 @@ public class SwerveJoystickCmd extends Command {
         turningSpeed = Math.abs(turningSpeed) > OIConstants.kDeadband ? turningSpeed : 0.0;
 
         // 3. Make the driving smoother
-        xSpeed = xLimiter.calculate(xSpeed) * DriveConstants.kMaxSpeedMetersPerSecond;
-        ySpeed = yLimiter.calculate(ySpeed) * DriveConstants.kMaxSpeedMetersPerSecond;
-        turningSpeed = turningLimiter.calculate(turningSpeed)
+        xSpeed = m_xLimiter.calculate(xSpeed) * DriveConstants.kMaxSpeedMetersPerSecond;
+        ySpeed = m_yLimiter.calculate(ySpeed) * DriveConstants.kMaxSpeedMetersPerSecond;
+        turningSpeed = m_turningLimiter.calculate(turningSpeed)
                 * DriveConstants.kMaxAngularSpeed;
 
         // 4. Construct desired chassis speeds
         ChassisSpeeds chassisSpeeds;
 
-        if (swerveSubsystem.getFieldRelative()) {
+        if (m_swerveSubsystem.getFieldRelative()) {
             // Relative to field
             chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-                    xSpeed, ySpeed, turningSpeed, swerveSubsystem.getRotation2d());
+                    xSpeed, ySpeed, turningSpeed, m_swerveSubsystem.getRotation2d());
         } else {
             // Relative to robot
             chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
@@ -74,12 +74,12 @@ public class SwerveJoystickCmd extends Command {
         SwerveModuleState[] moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
 
         // 6. Output each module states to wheels
-        swerveSubsystem.setModuleStates(moduleStates);
+        m_swerveSubsystem.setModuleStates(moduleStates);
     }
 
     @Override
     public void end(boolean interrupted) {
-        swerveSubsystem.stopModules();
+        m_swerveSubsystem.stopModules();
     }
 
     // Returns true when the command should end.
