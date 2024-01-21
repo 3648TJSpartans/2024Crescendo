@@ -16,8 +16,6 @@ public class SwerveJoystickCmd extends Command {
     private Supplier<Double> m_ySpeedFunction;
     private Supplier<Double> m_rotFunction;
     private double m_prevTime;
-    double xSpeedCommanded;
-    double ySpeedCommanded;
     private SlewRateLimiter m_xLimiter;
     private SlewRateLimiter m_yLimiter;
     private SlewRateLimiter m_turningLimiter;
