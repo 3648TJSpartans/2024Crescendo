@@ -31,15 +31,15 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ButtonConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.TrapConstants;
-import frc.robot.commands.EndgameCmdGroup;
 import frc.robot.commands.IntakeButtonCmd;
 import frc.robot.commands.SolenoidCmd;
 import frc.robot.commands.SwerveJoystickCmd;
+import frc.robot.commands.Endgame.EndgameCmdGroup;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.TrapSubsystem;
 import frc.robot.subsystems.Solenoid.SolenoidSubsystem;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
+import frc.robot.subsystems.Trap.TrapSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -57,7 +57,7 @@ public class RobotContainer {
   private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
   private final Joystick driverJoystick = new Joystick(OIConstants.kDriverControllerPort);
   // private final SolenoidSubsystem solenoidSubsystem = new SolenoidSubsystem();
-  private final TrapSubsystem trapSubsystem = new TrapSubsystem();
+  private final TrapSubsystem m_trapSubsystem = new TrapSubsystem();
 
   private final Joystick copolietJoystick = new Joystick(OIConstants.kCopilotControllerPort);
 
@@ -119,7 +119,7 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     // SmartDashboard.putData("Example Auto", Autos.followTestAuto());
     // SmartDashboard.putData("Square Auto", Autos.followSquareAuto());
-    new JoystickButton(driverJoystick, ButtonConstants.AButton).whileTrue(new EndgameCmdGroup(trapSubsystem));
+    new JoystickButton(driverJoystick, ButtonConstants.AButton).whileTrue(new EndgameCmdGroup(m_trapSubsystem));
   }
 
   /**
