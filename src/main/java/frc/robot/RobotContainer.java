@@ -5,11 +5,13 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -19,6 +21,8 @@ import frc.robot.commands.ShooterCommands.ShooterCommandGroup;
 import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.commands.SwerveJoystickCmd;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
 
 /**
@@ -34,50 +38,27 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final SendableChooser<Command> autoChooser;
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
-  private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
-  private final Joystick driverJoystick = new Joystick(OIConstants.kDriverControllerPort);
-  private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
-  // private final SolenoidSubsystem solenoidSubsystem = new SolenoidSubsystem();
-
-  private final Joystick copilotJoystick = new Joystick(OIConstants.kCopilotControllerPort);
+  private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
+  private final CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
+  private final Joystick copolietJoystick = new Joystick(OIConstants.kCopilotControllerPort);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
 
-    /**
-     * "setDefaultCommand()" sets the command for how sets how "SolenoidCmd()" acts
-     * - "SolenoidCmd()" is the constructor that was created in the SolenoidCmd.java
-     * - Info about "SolenoidCmd()" is in SolenoidCmd.java documentation
-     */
-    // solenoidSubsystem.setDefaultCommand(new SolenoidCmd(
-    // solenoidSubsystem,
-    // /**
-    // * Button Int Value of AButton = 1
-    // * Button Int Value of XButton = 3
-    // * Button Int Value of YButton = 4
-    // */
-    // () -> driverJoystick.getRawButton(OIConstants.AButton),
-    // () -> driverJoystick.getRawButton(OIConstants.XButton),
-    // () -> driverJoystick.getRawButton(OIConstants.YButton)));
-
-    m_swerveSubsystem.setDefaultCommand(new SwerveJoystickCmd(m_swerveSubsystem,
-        () -> -MathUtil.applyDeadband(driverJoystick.getRawAxis(OIConstants.kDriverXAxis),
+    SwerveJoystickCmd swerveJoystickCmd = new SwerveJoystickCmd(m_swerveSubsystem,
+        () -> -MathUtil.applyDeadband(m_driverController.getLeftY(),
             OIConstants.kDeadband),
-        () -> -MathUtil.applyDeadband(driverJoystick.getRawAxis(OIConstants.kDriverYAxis),
+        () -> -MathUtil.applyDeadband(m_driverController.getLeftX(),
             OIConstants.kDeadband),
-        () -> -MathUtil.applyDeadband(driverJoystick.getRawAxis(OIConstants.kDriverRotAxis),
-            OIConstants.kDeadband),
-        true, true));
-    m_intakeSubsystem.setDefaultCommand(
-        new IntakeButtonCmd(m_intakeSubsystem, () -> driverJoystick.getRawButton(OIConstants.LSButton),
-            () -> driverJoystick.getRawButton(OIConstants.RSButton)));
-    // ArmSubsystem.setDefaultCommand(new ArmJoystickCmd(
-    // ArmSubsystem,
-    // () -> -ArmJoytick.getRawAxis(OIConstants.kDriverYAxis)));
-
+        () -> -MathUtil.applyDeadband(m_driverController.getRightX(),
+            OIConstants.kDeadband));
+    m_swerveSubsystem.setDefaultCommand(swerveJoystickCmd);
+    m_driverController.a().onTrue(new InstantCommand(() -> m_swerveSubsystem.setFieldRelative()));
     configureBindings();
+    m_driverController.b().onTrue(new InstantCommand(() -> m_swerveSubsystem.zeroHeading()));
+
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
   }
