@@ -20,7 +20,7 @@ public class SwerveJoystickCmd extends Command {
     private Supplier<Double> xSpeedFunction;
     private Supplier<Double> ySpeedFunction;
     private Supplier<Double> rotFunction;
-    private Supplier<Boolean> fieldOrientedFunction;
+    private Supplier<Boolean> resetFieldRelative;
     // private boolean fieldRelative;
     private boolean rateLimit;
     private double m_currentTranslationMag = 0.0;
@@ -49,13 +49,12 @@ public class SwerveJoystickCmd extends Command {
     // }
 
     public SwerveJoystickCmd(SwerveSubsystem swerveSubsystem,
-            Supplier<Double> xSpdFunction, Supplier<Double> ySpdFunction, Supplier<Double> turningSpdFunction,
-            Supplier<Boolean> fieldOrientedFunction) {
+            Supplier<Double> xSpdFunction, Supplier<Double> ySpdFunction, Supplier<Double> turningSpdFunction) {
         this.swerveSubsystem = swerveSubsystem;
         this.xSpeedFunction = xSpdFunction;
         this.ySpeedFunction = ySpdFunction;
         this.rotFunction = turningSpdFunction;
-        this.fieldOrientedFunction = fieldOrientedFunction;
+
         this.xLimiter = new SlewRateLimiter(DriveConstants.kMaxSpeedMetersPerSecond);
         this.yLimiter = new SlewRateLimiter(DriveConstants.kMaxSpeedMetersPerSecond);
         this.turningLimiter = new SlewRateLimiter(DriveConstants.kMaxAngularSpeed);
@@ -87,7 +86,8 @@ public class SwerveJoystickCmd extends Command {
 
         // 4. Construct desired chassis speeds
         ChassisSpeeds chassisSpeeds;
-        if (fieldOrientedFunction.get()) {
+
+        if (swerveSubsystem.getFeildRelative()) {
             // Relative to field
             chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
                     xSpeed, ySpeed, turningSpeed, swerveSubsystem.getRotation2d());
@@ -101,6 +101,9 @@ public class SwerveJoystickCmd extends Command {
 
         // 6. Output each module states to wheels
         swerveSubsystem.setModuleStates(moduleStates);
+        // if (resetFieldRelative.get()) {
+
+        // }
     }
 
     // @Override

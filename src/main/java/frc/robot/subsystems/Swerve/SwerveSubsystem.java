@@ -47,7 +47,7 @@ public class SwerveSubsystem extends SubsystemBase {
     private SwerveModule[] modules;
     // The gyro sensor
     private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
-
+    private boolean isFeildRelative = false;
     // Slew rate filter variables for controlling lateralacceleration
     private double m_currentRotation = 0.0;
     private double m_currentTranslationDir = 0.0;
@@ -147,6 +147,14 @@ public class SwerveSubsystem extends SubsystemBase {
         m_gyro.reset();
     }
 
+    public void setFieldRelative() {
+        isFeildRelative = !isFeildRelative;
+    }
+
+    public boolean getFeildRelative() {
+        return isFeildRelative;
+    }
+
     public SwerveModuleState[] getModuleStates() {
         SwerveModuleState[] states = new SwerveModuleState[modules.length];
         for (int i = 0; i < modules.length; i++) {
@@ -165,11 +173,12 @@ public class SwerveSubsystem extends SubsystemBase {
     // }
 
     public double getHeading() {
-        return Math.IEEEremainder(m_gyro.getAngle(), 360);
+        return Math.IEEEremainder(m_gyro.getAngle() + 360, 360);
     }
 
     public Rotation2d getRotation2d() {
-        return Rotation2d.fromDegrees(getHeading());
+        SmartDashboard.putNumber("Heading", getHeading());
+        return Rotation2d.fromDegrees(-getHeading());
     }
 
     public double getGyroAngle(IMUAxis axis) {

@@ -4,12 +4,15 @@
 
 package frc.robot;
 
+import java.time.Instant;
 import java.util.List;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.event.EventLoop;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.MathUtil;
@@ -22,6 +25,7 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
@@ -50,7 +54,9 @@ public class RobotContainer {
   private final SendableChooser<Command> autoChooser;
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
   private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
-  private final Joystick driverJoystick = new Joystick(OIConstants.kDriverControllerPort);
+  // private final Joystick driverJoystick = new
+  // Joystick(OIConstants.kDriverControllerPort);
+  private final CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
   // private final SolenoidSubsystem solenoidSubsystem = new SolenoidSubsystem();
 
   private final Joystick copolietJoystick = new Joystick(OIConstants.kCopilotControllerPort);
@@ -75,23 +81,18 @@ public class RobotContainer {
     // () -> driverJoystick.getRawButton(ButtonConstants.AButton),
     // () -> driverJoystick.getRawButton(ButtonConstants.XButton),
     // () -> driverJoystick.getRawButton(ButtonConstants.YButton)));
-
-    m_swerveSubsystem.setDefaultCommand(new SwerveJoystickCmd(m_swerveSubsystem,
-        () -> -MathUtil.applyDeadband(driverJoystick.getRawAxis(OIConstants.kDriverYAxis),
+    SwerveJoystickCmd swerveJoystickCmd = new SwerveJoystickCmd(m_swerveSubsystem,
+        () -> -MathUtil.applyDeadband(m_driverController.getLeftY(),
             OIConstants.kDeadband),
-        () -> -MathUtil.applyDeadband(driverJoystick.getRawAxis(OIConstants.kDriverXAxis),
+        () -> -MathUtil.applyDeadband(m_driverController.getLeftX(),
             OIConstants.kDeadband),
-        () -> -MathUtil.applyDeadband(driverJoystick.getRawAxis(OIConstants.kDriverRotAxis),
-            OIConstants.kDeadband),
-        () -> driverJoystick.getRawButton(OIConstants.kDriverFieldOrientedButtonIdx)));
-    // m_IntakeSubsystem.setDefaultCommand(new IntakeButtonCmd(m_IntakeSubsystem, ()
-    // -> driverJoystick.getRawButton(5),
-    // () -> driverJoystick.getRawButton(6)));
-    // ArmSubsystem.setDefaultCommand(new ArmJoystickCmd(
-    // ArmSubsystem,
-    // () -> -ArmJoytick.getRawAxis(OIConstants.kDriverYAxis)));
-
+        () -> -MathUtil.applyDeadband(m_driverController.getRightX(),
+            OIConstants.kDeadband));
+    m_swerveSubsystem.setDefaultCommand(swerveJoystickCmd);
+    m_driverController.a().onTrue(new InstantCommand(() -> m_swerveSubsystem.setFieldRelative()));
     configureBindings();
+    m_driverController.b().onTrue(new InstantCommand(() -> m_swerveSubsystem.zeroHeading()));
+
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
   }
