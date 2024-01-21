@@ -26,13 +26,18 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.ButtonConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.TrapConstants;
+import frc.robot.commands.EndgameCmdGroup;
 import frc.robot.commands.IntakeButtonCmd;
 import frc.robot.commands.SolenoidCmd;
 import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.TrapSubsystem;
 import frc.robot.subsystems.Solenoid.SolenoidSubsystem;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
 
@@ -52,6 +57,7 @@ public class RobotContainer {
   private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
   private final Joystick driverJoystick = new Joystick(OIConstants.kDriverControllerPort);
   // private final SolenoidSubsystem solenoidSubsystem = new SolenoidSubsystem();
+  private final TrapSubsystem trapSubsystem = new TrapSubsystem();
 
   private final Joystick copolietJoystick = new Joystick(OIConstants.kCopilotControllerPort);
 
@@ -113,6 +119,7 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     // SmartDashboard.putData("Example Auto", Autos.followTestAuto());
     // SmartDashboard.putData("Square Auto", Autos.followSquareAuto());
+    new JoystickButton(driverJoystick, ButtonConstants.AButton).whileTrue(new EndgameCmdGroup(trapSubsystem));
   }
 
   /**

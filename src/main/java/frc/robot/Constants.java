@@ -169,5 +169,9 @@ public final class Constants {
     public static final double kTrapFF = 0;
     public static final double kTrapMinOutput = -1;
     public static final double kTrapMaxOutput = 1;
+    public static final double positionUpDown = 0;
+    public static final double positionInOut = 0;
+    public static final double speedTrack = 0;
+    public static final double speed = 0;
   }
 }
