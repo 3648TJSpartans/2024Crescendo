@@ -7,16 +7,16 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class IntakeButtonCmd extends Command {
-    private final Supplier<Boolean> m_leftexecuteButton;
-    private final Supplier<Boolean> m_rightexecuteButton;
-    private final IntakeSubsystem IntakeSubsystem;
+    private final Supplier<Boolean> m_leftExecuteButton;
+    private final Supplier<Boolean> m_rightExecuteButton;
+    private final IntakeSubsystem m_intakeSubsystem;
 
-    public IntakeButtonCmd(IntakeSubsystem IntakeSubsystem, Supplier<Boolean> m_leftexecuteButton,
-            Supplier<Boolean> m_rightexecuteButton) {
-        this.IntakeSubsystem = IntakeSubsystem;
-        this.m_leftexecuteButton = m_leftexecuteButton;
-        this.m_rightexecuteButton = m_rightexecuteButton;
-        addRequirements(IntakeSubsystem);
+    public IntakeButtonCmd(IntakeSubsystem intakeSubsystem, Supplier<Boolean> leftExecuteButton,
+            Supplier<Boolean> rightExecuteButton) {
+        m_intakeSubsystem = intakeSubsystem;
+        m_leftExecuteButton = leftExecuteButton;
+        m_rightExecuteButton = rightExecuteButton;
+        addRequirements(m_intakeSubsystem);
     }
 
     @Override
@@ -26,16 +26,12 @@ public class IntakeButtonCmd extends Command {
 
     @Override
     public void execute() {
-        if (m_leftexecuteButton.get()) {
-            System.out.println(m_leftexecuteButton.get());
-            IntakeSubsystem.setIntakeSpeed(-IntakeConstants.IntakeSpeed);
-        } else if (m_rightexecuteButton.get()) {
-            System.out.println(m_rightexecuteButton.get());
-            IntakeSubsystem.setIntakeSpeed(IntakeConstants.IntakeSpeed);
+        if (m_leftExecuteButton.get()) {
+            m_intakeSubsystem.setIntakeSpeed(-IntakeConstants.IntakeSpeed);
+        } else if (m_rightExecuteButton.get()) {
+            m_intakeSubsystem.setIntakeSpeed(IntakeConstants.IntakeSpeed);
         } else {
-            IntakeSubsystem.setIntakeSpeed(0);
+            m_intakeSubsystem.setIntakeSpeed(0);
         }
-
     }
-
 }
