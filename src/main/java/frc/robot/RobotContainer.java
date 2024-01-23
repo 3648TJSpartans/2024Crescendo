@@ -10,6 +10,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.MathUtil;
@@ -33,8 +34,10 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ArmJoystickCmd;
 import frc.robot.commands.Autos;
+import frc.robot.commands.ClimberJoystickCmd;
 import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
 
 /**
@@ -54,7 +57,8 @@ public class RobotContainer {
 
   private final ArmSubsystem ArmSubsystem = new ArmSubsystem();
   private final Joystick ArmJoytick = new Joystick(OIConstants.kArmControllerPort);
-
+  private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
+  private final CommandXboxController driverXboxController = new CommandXboxController(0);
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -72,6 +76,9 @@ public class RobotContainer {
     ArmSubsystem.setDefaultCommand(new ArmJoystickCmd(
         ArmSubsystem,
         () -> -ArmJoytick.getRawAxis(OIConstants.kDriverYAxis)));
+
+    m_climberSubsystem
+        .setDefaultCommand(new ClimberJoystickCmd(m_climberSubsystem, () -> driverXboxController.getLeftX()));
 
 
     configureBindings();

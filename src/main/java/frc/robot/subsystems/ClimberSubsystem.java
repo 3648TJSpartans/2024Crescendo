@@ -32,9 +32,9 @@ public class ClimberSubsystem extends SubsystemBase {
         m_climberPIDController1.setFF(ClimberConstants.kClimberFF);
         m_climberPIDController1.setOutputRange(ClimberConstants.kClimberMinOutput, ClimberConstants.kClimberMaxOutput);
         // Motor 2
-        m_climberMotor2 = new CANSparkMax(ArmConstants.armMotorId, MotorType.kBrushless);
+        m_climberMotor2 = new CANSparkMax(ClimberConstants.climberMotorID, MotorType.kBrushless);
         m_climberEncoder2 = m_climberMotor2.getEncoder();
-        m_climberPIDController2 = m_climberMotor1.getPIDController();
+        m_climberPIDController2 = m_climberMotor2.getPIDController();
         m_climberPIDController2.setFeedbackDevice(m_climberEncoder2);
         m_climberPIDController2.setP(ClimberConstants.kClimberP);
         m_climberPIDController2.setI(ClimberConstants.kClimberI);
