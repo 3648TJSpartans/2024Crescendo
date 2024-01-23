@@ -36,7 +36,7 @@ public class RobotContainer {
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   private final CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
-  private final CommandXboxController m_copilotController = new CommandXboxController(
+  private final CommandXboxController m_copilot = new CommandXboxController(
       OIConstants.kCopilotControllerPort);
 
   /**
@@ -46,7 +46,7 @@ public class RobotContainer {
 
     configureSwerve();
     configureIntake();
-    configureShooter();
+    // configureShooter();
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
   }
@@ -73,7 +73,7 @@ public class RobotContainer {
   }
 
   private void configureShooter() {
-    m_copilotController.a().onTrue(new ShooterCommandGroup(m_shooterSubsystem));
+    m_copilot.a().onTrue(new ShooterCommandGroup(m_shooterSubsystem));
 
   }
 

@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.539653265641935,
-      "y": 6.9272767471888095
+      "x": 1.481379644214479,
+      "y": 7.342476299859433
     },
     "rotation": 0
   },
@@ -20,13 +20,25 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.1
+            "waitTime": 0.5
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "New Path"
+            "pathName": "SpeakerToMiddleNote"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "MiddleNotetoSpeaker"
           }
         }
       ]
