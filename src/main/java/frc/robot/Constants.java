@@ -187,4 +187,17 @@ public final class Constants {
     public static final double idleTime = 0;
   }
 
+  public static final class LimeLightConstants {
+    public static final String cameraName = "OV9281";
+    // distance limelight is from center of robot(m)
+    public static final double xTranslation = 0;
+    public static final double yTranslation = 0;
+    public static final double zTranslation = 0;
+    // Rotation of the limelight in Radians
+    public static final double rollRotation = 0; // side to side
+    public static final double pitchRotation = 0; // up and down
+    public static final double yawRotation = 0;// Tilt
+
+  }
+
 }
