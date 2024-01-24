@@ -163,12 +163,12 @@ public final class Constants {
   }
 
   public static final class ArmConstants {
-    public static final int armMotorId = 16;
+    public static final int armMotorId = 20;
   }
 
   public static final class ClimberConstants {
-    public static final int climberMotor1ID = 7;
-    public static final int climberMotor2ID = 9;
+    public static final int climberMotor1ID = 14;
+    public static final int climberMotor2ID = 15;
     public static final double kClimberP = 0;
     public static final double kClimberI = 0;
     public static final double kClimberD = 0;
@@ -176,8 +176,9 @@ public final class Constants {
     public static final double kClimberMinOutput = 0;
     public static final double kClimberMaxOutput = 0;
   }
+
   public static final class ShooterConstants {
-    public static final int shooterMotor1Id = 13; // Real ID num is 9
+    public static final int shooterMotor1Id = 13;
     public static final int shooterMotor2Id = 11;
     public static final int beltMotorId = 12;
     public static final double motorSpeed = 0.3;
