@@ -4,7 +4,6 @@ import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -17,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.vision.VisionPoseEstimator;
 
 public class SwerveSubsystem extends SubsystemBase {
     private boolean isFieldRelative = false;
@@ -152,6 +152,14 @@ public class SwerveSubsystem extends SubsystemBase {
         return states;
     }
 
+    public SwerveModulePosition[] getPositions() {
+        SwerveModulePosition[] positions = new SwerveModulePosition[modules.length];
+        for (int i = 0; i < modules.length; i++) {
+            positions[i] = modules[i].getPosition();
+        }
+        return positions;
+    }
+
     /**
      * Returns the heading of the robot.
      *
@@ -197,4 +205,7 @@ public class SwerveSubsystem extends SubsystemBase {
         return m_gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
     }
 
+    public Rotation2d getYaw() {
+        return Rotation2d.fromDegrees(-m_gyro.getYaw());
+    }
 }
