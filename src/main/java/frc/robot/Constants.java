@@ -205,4 +205,31 @@ public final class Constants {
         new PIDConstants(0, 0, 0), new PIDConstants(0, 0, 0), 5, 0.565685, new ReplanningConfig()); // TODO: check
                                                                                                     // driveBaseRadius
   }
+
+  public static final class ArmConstants {
+    public static final int armMotorId = 16;
+  }
+
+  public static final class ShooterConstants {
+    public static final int shooterMotor1Id = 13; // Real ID num is 9
+    public static final int shooterMotor2Id = 11;
+    public static final int beltMotorId = 12;
+    public static final double motorSpeed = 0.3;
+    public static final double beltMotorSpeed = 0.3;
+    public static final double idleTime = 0;
+  }
+
+  public static final class LimeLightConstants {
+    public static final String cameraName = "OV9281";
+    // distance limelight is from center of robot(m)
+    public static final double xTranslation = 0;
+    public static final double yTranslation = 0;
+    public static final double zTranslation = 0;
+    // Rotation of the limelight in Radians
+    public static final double rollRotation = 0; // side to side
+    public static final double pitchRotation = 0; // up and down
+    public static final double yawRotation = 0;// Tilt
+
+  }
+
 }
