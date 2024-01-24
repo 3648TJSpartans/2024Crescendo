@@ -5,15 +5,14 @@ import java.util.function.Supplier;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ArmSubsystem;
 
-
-
 public class ArmJoystickCmd extends Command {
-    private final ArmSubsystem ArmSubsystem;
+    private final ArmSubsystem armSubsystem;
     private Supplier<Double> xSpeed;
-    public ArmJoystickCmd(ArmSubsystem subsystem, Supplier<Double> xSpeed ) {
+
+    public ArmJoystickCmd(ArmSubsystem subsystem, Supplier<Double> xSpeed) {
         this.xSpeed = xSpeed;
-        this.ArmSubsystem = subsystem;
-        addRequirements(ArmSubsystem);
+        this.armSubsystem = subsystem;
+        addRequirements(armSubsystem);
 
     }
 
@@ -25,7 +24,7 @@ public class ArmJoystickCmd extends Command {
     @Override
     public void execute() {
         double speed = xSpeed.get();
-        ArmSubsystem.MoveArm(speed);
+        armSubsystem.MoveArm(speed);
 
     }
 

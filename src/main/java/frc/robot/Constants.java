@@ -57,14 +57,30 @@ public final class Constants {
     public static final double kBackRightChassisAngularOffset = Math.PI / 2;
 
     // SPARK MAX CAN IDs
-    public static final int kFrontLeftDrivingCanId = 4;
-    public static final int kRearLeftDrivingCanId = 2;
-    public static final int kFrontRightDrivingCanId = 8;
-    public static final int kRearRightDrivingCanId = 6;
+    // Test Swerve Can:
+    // public static final int kFrontLeftDrivingCanId = 4;
+    // public static final int kFrontLeftTurningCanId = 3;
 
-    public static final int kFrontLeftTurningCanId = 3;
-    public static final int kRearLeftTurningCanId = 1;
-    public static final int kFrontRightTurningCanId = 7;
+    // public static final int kRearLeftDrivingCanId = 2;
+    // public static final int kRearLeftTurningCanId = 1;
+
+    // public static final int kFrontRightDrivingCanId = 8;
+    // public static final int kFrontRightTurningCanId = 7;
+
+    // public static final int kRearRightDrivingCanId = 6;
+    // public static final int kRearRightTurningCanId = 5;
+
+    // Final CAN
+    public static final int kFrontLeftDrivingCanId = 2;
+    public static final int kFrontLeftTurningCanId = 1;
+
+    public static final int kRearLeftDrivingCanId = 8;
+    public static final int kRearLeftTurningCanId = 7;
+
+    public static final int kFrontRightDrivingCanId = 4;
+    public static final int kFrontRightTurningCanId = 3;
+
+    public static final int kRearRightDrivingCanId = 6;
     public static final int kRearRightTurningCanId = 5;
 
     public static final boolean kGyroReversed = false;
@@ -129,14 +145,14 @@ public final class Constants {
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
     public static final int kCopilotControllerPort = 1;
-    public static final int kDriverYAxis = 1;
-    public static final int kDriverXAxis = 0;
-    public static final int kDriverRotAxis = 4;
-    public static final int kDriverFieldOrientedButtonIdx = 1;
-    public static final int kcopilotXAxis = 0;
     public static final double kDeadband = 0.05;
 
-    public static int kArmControllerPort = 1;
+  }
+
+  public static final class IntakeConstants {
+    public static final int IntakeMotor1Id = 9;
+    public static final int IntakeMotor2Id = 10;
+    public static final double IntakeSpeed = .65;
   }
 
   public static final class AutoConstants {
@@ -147,7 +163,7 @@ public final class Constants {
   }
 
   public static final class ArmConstants {
-    public static final int armMotorId = 8;
+    public static final int armMotorId = 16;
   }
 
   public static final class ClimberConstants {
@@ -160,4 +176,13 @@ public final class Constants {
     public static final double kClimberMinOutput = 0;
     public static final double kClimberMaxOutput = 0;
   }
+  public static final class ShooterConstants {
+    public static final int shooterMotor1Id = 13; // Real ID num is 9
+    public static final int shooterMotor2Id = 11;
+    public static final int beltMotorId = 12;
+    public static final double motorSpeed = 0.3;
+    public static final double beltMotorSpeed = 0.3;
+    public static final double idleTime = 0;
+  }
+
 }
