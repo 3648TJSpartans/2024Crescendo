@@ -151,7 +151,8 @@ public final class Constants {
   }
 
   public static final class ClimberConstants {
-    public static final int climberMotorID = 7;
+    public static final int climberMotor1ID = 7;
+    public static final int climberMotor2ID = 9;
     public static final double kClimberP = 0;
     public static final double kClimberI = 0;
     public static final double kClimberD = 0;

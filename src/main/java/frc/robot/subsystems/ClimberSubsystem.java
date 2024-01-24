@@ -22,7 +22,7 @@ public class ClimberSubsystem extends SubsystemBase {
 
     public ClimberSubsystem() {
         //Motor 1
-        m_climberMotor1 = new CANSparkMax(ArmConstants.armMotorId, MotorType.kBrushless);
+        m_climberMotor1 = new CANSparkMax(ClimberConstants.climberMotor1ID, MotorType.kBrushless);
         m_climberEncoder1 = m_climberMotor1.getEncoder();
         m_climberPIDController1 = m_climberMotor1.getPIDController();
         m_climberPIDController1.setFeedbackDevice(m_climberEncoder1);
@@ -32,7 +32,7 @@ public class ClimberSubsystem extends SubsystemBase {
         m_climberPIDController1.setFF(ClimberConstants.kClimberFF);
         m_climberPIDController1.setOutputRange(ClimberConstants.kClimberMinOutput, ClimberConstants.kClimberMaxOutput);
         // Motor 2
-        m_climberMotor2 = new CANSparkMax(ClimberConstants.climberMotorID, MotorType.kBrushless);
+        m_climberMotor2 = new CANSparkMax(ClimberConstants.climberMotor2ID, MotorType.kBrushless);
         m_climberEncoder2 = m_climberMotor2.getEncoder();
         m_climberPIDController2 = m_climberMotor2.getPIDController();
         m_climberPIDController2.setFeedbackDevice(m_climberEncoder2);
@@ -46,7 +46,7 @@ public class ClimberSubsystem extends SubsystemBase {
     public void setClimberPosition(double position) {
         m_climberPIDController1.setReference(position, CANSparkMax.ControlType.kPosition);
         m_climberPIDController2.setReference(position, CANSparkMax.ControlType.kPosition);
-                        
+
     }
 
     public double getClimberPosition() {
