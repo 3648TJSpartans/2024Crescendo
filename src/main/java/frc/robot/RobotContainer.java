@@ -5,6 +5,10 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.MathUtil;
@@ -13,6 +17,12 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.ArmJoystickCmd;
+import frc.robot.commands.Autos;
+import frc.robot.commands.ClimberJoystickCmd;
+import frc.robot.commands.SwerveJoystickCmd;
+import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.commands.IntakeButtonCmd;
 import frc.robot.commands.ShooterCommands.ShooterCommandGroup;
 import frc.robot.commands.SwerveJoystickCmd;
@@ -32,6 +42,9 @@ import frc.robot.subsystems.Swerve.SwerveSubsystem;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final SendableChooser<Command> autoChooser;
+
+  private final CommandXboxController driverXboxController = new CommandXboxController(0);
+  private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
