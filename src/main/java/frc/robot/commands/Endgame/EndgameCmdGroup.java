@@ -8,14 +8,14 @@ import frc.robot.subsystems.Trap.TrapSubsystem;
 
 
 public class EndgameCmdGroup extends SequentialCommandGroup {
-    private final TrapSubsystem m_TrapSubsystem;
+    private final TrapSubsystem m_trapSubsystem;
 
-    public EndgameCmdGroup(TrapSubsystem m_trapSubsystem) {
-        m_TrapSubsystem = m_trapSubsystem;
+    public EndgameCmdGroup(TrapSubsystem trapSubsystem) {
+        m_trapSubsystem = trapSubsystem;
         addCommands(new EndgameUpDownCmd(m_trapSubsystem, TrapConstants.kpositionUpDown),
                     new WaitCommand(2.5),
                     new EndgameInOutCmd(m_trapSubsystem, TrapConstants.kpositionInOut),
-                    new WaitCommand(2.5), 
+                    new WaitCommand(2.5),
                     new EndgameTrackCmd(m_trapSubsystem, TrapConstants.kspeedTrack));
     }
 }

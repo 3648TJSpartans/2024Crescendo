@@ -34,6 +34,8 @@ import frc.robot.Constants.TrapConstants;
 import frc.robot.commands.IntakeButtonCmd;
 import frc.robot.commands.SolenoidCmd;
 import frc.robot.commands.SwerveJoystickCmd;
+import frc.robot.commands.TrapJoystickCmd;
+import frc.robot.commands.TrapJoystickInOutCmd;
 import frc.robot.commands.Endgame.EndgameCmdGroup;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -56,6 +58,7 @@ public class RobotContainer {
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
   private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
   private final Joystick driverJoystick = new Joystick(OIConstants.kDriverControllerPort);
+  private final CommandXboxController driverXboxController = new CommandXboxController(0);
   // private final SolenoidSubsystem solenoidSubsystem = new SolenoidSubsystem();
   private final TrapSubsystem m_trapSubsystem = new TrapSubsystem();
 
@@ -120,6 +123,16 @@ public class RobotContainer {
     // SmartDashboard.putData("Example Auto", Autos.followTestAuto());
     // SmartDashboard.putData("Square Auto", Autos.followSquareAuto());
     new JoystickButton(driverJoystick, ButtonConstants.AButton).whileTrue(new EndgameCmdGroup(m_trapSubsystem));
+
+    m_trapSubsystem
+        .setDefaultCommand(new TrapJoystickCmd(m_trapSubsystem, () -> driverXboxController.getLeftX()));
+    m_trapSubsystem
+        .setDefaultCommand(new TrapJoystickInOutCmd(m_trapSubsystem, () -> driverXboxController.getLeftY()));
+    m_trapSubsystem
+        .setDefaultCommand(new TrapJoystickCmd(m_trapSubsystem, () -> driverXboxController.getRightX()));
+    m_trapSubsystem
+        .setDefaultCommand(new TrapJoystickCmd(m_trapSubsystem, () -> driverXboxController.getRightY()));
+
   }
 
   /**
