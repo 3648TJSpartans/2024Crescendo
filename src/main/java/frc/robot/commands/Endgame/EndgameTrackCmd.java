@@ -19,7 +19,7 @@ public class EndgameTrackCmd extends Command {
 
     @Override
     public void initialize(){
-        m_startTime = System.currentTimeMillis();    
+        m_startTime = System.currentTimeMillis();
     }
 
     @Override

@@ -35,7 +35,6 @@ import frc.robot.commands.IntakeButtonCmd;
 import frc.robot.commands.SolenoidCmd;
 import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.commands.TrapJoystickCmd;
-import frc.robot.commands.TrapJoystickInOutCmd;
 import frc.robot.commands.Endgame.EndgameCmdGroup;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -125,13 +124,11 @@ public class RobotContainer {
     new JoystickButton(driverJoystick, ButtonConstants.AButton).whileTrue(new EndgameCmdGroup(m_trapSubsystem));
 
     m_trapSubsystem
-        .setDefaultCommand(new TrapJoystickCmd(m_trapSubsystem, () -> driverXboxController.getLeftX()));
-    m_trapSubsystem
-        .setDefaultCommand(new TrapJoystickInOutCmd(m_trapSubsystem, () -> driverXboxController.getLeftY()));
-    m_trapSubsystem
-        .setDefaultCommand(new TrapJoystickCmd(m_trapSubsystem, () -> driverXboxController.getRightX()));
-    m_trapSubsystem
-        .setDefaultCommand(new TrapJoystickCmd(m_trapSubsystem, () -> driverXboxController.getRightY()));
+        .setDefaultCommand(new TrapJoystickCmd(
+            m_trapSubsystem,
+            () -> driverXboxController.getLeftY(),
+            () -> driverXboxController.getLeftX(),
+            () -> driverXboxController.getRightY()));
 
   }
 

@@ -13,9 +13,9 @@ public class EndgameCmdGroup extends SequentialCommandGroup {
     public EndgameCmdGroup(TrapSubsystem trapSubsystem) {
         m_trapSubsystem = trapSubsystem;
         addCommands(new EndgameUpDownCmd(m_trapSubsystem, TrapConstants.kpositionUpDown),
-                    new WaitCommand(2.5),
+                    new WaitCommand(TrapConstants.kTrapTime),
                     new EndgameInOutCmd(m_trapSubsystem, TrapConstants.kpositionInOut),
-                    new WaitCommand(2.5),
-                    new EndgameTrackCmd(m_trapSubsystem, TrapConstants.kspeedTrack));
+                    new WaitCommand(TrapConstants.kTrapTime),
+                    new EndgameTrackCmd(m_trapSubsystem, TrapConstants.kspeed));
     }
 }

@@ -7,12 +7,17 @@ import frc.robot.subsystems.Trap.TrapSubsystem;
 
 public class TrapJoystickCmd extends Command {
     private final TrapSubsystem m_trapSubsystem;
-    private Supplier<Double> m_speed;
+    private Supplier<Double> m_speedUpDown;
+    private Supplier<Double> m_speedInOut;
+    private Supplier<Double> m_speedTrack;
 
 
-    public TrapJoystickCmd(TrapSubsystem trapSubsystem, Supplier<Double> speed){
+    public TrapJoystickCmd(TrapSubsystem trapSubsystem, Supplier<Double> speedUpDown, Supplier<Double> speedInOut,
+                            Supplier<Double> speedTrack){
         m_trapSubsystem = trapSubsystem;
-        m_speed = speed;
+        m_speedUpDown = speedUpDown;
+        m_speedInOut = speedInOut;
+        m_speedTrack = speedTrack;
         addRequirements(m_trapSubsystem);
     }
 
@@ -22,10 +27,12 @@ public class TrapJoystickCmd extends Command {
 
     @Override
     public void execute(){
-        double speed = m_speed.get();
-        m_trapSubsystem.moveUpDown(speed);
-        m_trapSubsystem.moveInOut(speed);
-        m_trapSubsystem.moveTrack(speed);
+        double speedUpDown = m_speedUpDown.get();
+        double speedInOut = m_speedInOut.get();
+        double speedTrack = m_speedTrack.get();
+        m_trapSubsystem.moveUpDown(speedUpDown);
+        m_trapSubsystem.moveInOut(speedInOut);
+        m_trapSubsystem.moveTrack(speedTrack);
     }
 
     @Override
