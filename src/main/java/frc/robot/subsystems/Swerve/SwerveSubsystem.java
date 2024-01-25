@@ -4,8 +4,10 @@ import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.math.estimator.PoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
@@ -19,6 +21,7 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.vision.VisionPoseEstimator;
 
 public class SwerveSubsystem extends SubsystemBase {
+    private VisionPoseEstimator poseEstimation;
     private boolean isFieldRelative = false;
     private final SwerveModule m_frontLeft = new SwerveModule(
             DriveConstants.kFrontLeftDrivingCanId,
@@ -64,6 +67,7 @@ public class SwerveSubsystem extends SubsystemBase {
             } catch (Exception e) {
             }
         }).start();
+        poseEstimation = new VisionPoseEstimator(this);
         modules = new SwerveModule[] { m_frontLeft, m_frontRight, m_rearLeft, m_rearRight };
         AutoBuilder.configureHolonomic(this::getPose, this::resetOdometry,
                 this::getSpeeds, this::driveRobotRelative,
@@ -81,6 +85,9 @@ public class SwerveSubsystem extends SubsystemBase {
                         m_rearLeft.getPosition(),
                         m_rearRight.getPosition()
                 });
+        poseEstimation.updateVisionPose(this, getPose());
+        poseEstimation.justUpdate(this);
+
     }
 
     public Pose2d getPose() {
@@ -153,11 +160,12 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     public SwerveModulePosition[] getPositions() {
-        SwerveModulePosition[] positions = new SwerveModulePosition[modules.length];
-        for (int i = 0; i < modules.length; i++) {
-            positions[i] = modules[i].getPosition();
-        }
-        return positions;
+        return new SwerveModulePosition[] {
+                m_frontLeft.getPosition(),
+                m_frontRight.getPosition(),
+                m_rearLeft.getPosition(),
+                m_rearRight.getPosition()
+        };
     }
 
     /**
@@ -203,6 +211,11 @@ public class SwerveSubsystem extends SubsystemBase {
      */
     public double getTurnRate() {
         return m_gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+    }
+
+    public Rotation3d getGyro() {
+        return new Rotation3d(Math.toRadians(m_gyro.getRoll()), Math.toRadians(m_gyro.getPitch()),
+                Math.toRadians(m_gyro.getYaw()));
     }
 
     public Rotation2d getYaw() {
