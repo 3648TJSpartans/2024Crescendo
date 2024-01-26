@@ -186,4 +186,19 @@ public final class Constants {
     public static final double idleTime = 0;
   }
 
+  public static final class TrapConstants {
+    public static final double kTrapP = 0;
+    public static final double kTrapI = 0;
+    public static final double kTrapD = 0;
+    public static final double kTrapFF = 0;
+    public static final double kTrapMinOutput = -1;
+    public static final double kTrapMaxOutput = 1;
+    public static final double kpositionUpDown = 0;
+    public static final double kpositionInOut = 0;
+    public static final double kspeed = 0;
+    public static final int kUpDownMotorId = 0;
+    public static final int kInOutMotorId = 0;
+    public static final int kTrackMotorId = 0;
+    public static final double kTrapTime = 2.5;
+  }
 }
