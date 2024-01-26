@@ -1,4 +1,4 @@
-package frc.robot.subsystems.Trap;
+package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.TrapConstants;
@@ -20,7 +20,7 @@ public class TrapSubsystem extends SubsystemBase {
 
     // "m_trapMotorInOut" based off ArmSubsystem.java
     // "m_trapMotorUpDown" based off ClimberSubsystem.java
-    public TrapSubsystem(){
+    public TrapSubsystem() {
         // Up & Down Motor
         m_trapMotorUpDown = new CANSparkMax(TrapConstants.kUpDownMotorId, MotorType.kBrushless);
         m_trapEncoderRelative = m_trapMotorUpDown.getEncoder();
@@ -40,29 +40,29 @@ public class TrapSubsystem extends SubsystemBase {
         m_trapMotorTrack = new CANSparkMax(TrapConstants.kTrackMotorId, MotorType.kBrushless);
     }
 
-    public void setUpDownPosition(double position){
+    public void setUpDownPosition(double position) {
         m_UpDownPIDController.setReference(position, CANSparkMax.ControlType.kPosition);
     }
 
-    public static double getUpDownPosition(){
+    public static double getUpDownPosition() {
         double m_setPosition = m_trapEncoderRelative.getPosition();
         return m_setPosition;
     }
 
-    public void moveUpDown(double speed){
+    public void moveUpDown(double speed) {
         m_trapMotorUpDown.set(speed);
     }
 
-    public static double getInOutAngle(){
+    public static double getInOutAngle() {
         double m_InOutAngle = m_trapEncoderAbsolute.getPosition();
         return m_InOutAngle;
     }
 
-    public void moveInOut(double speed){
+    public void moveInOut(double speed) {
         m_trapMotorInOut.set(speed);
     }
 
-    public void moveTrack(double speed){
+    public void moveTrack(double speed) {
         m_trapMotorTrack.set(speed);
     }
 }

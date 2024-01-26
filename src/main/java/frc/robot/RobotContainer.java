@@ -11,26 +11,17 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants.ButtonConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.commands.ClimberJoystickCmd;
 import frc.robot.commands.IntakeButtonCmd;
 import frc.robot.commands.ShooterCommands.ShooterCommandGroup;
-import frc.robot.Constants.TrapConstants;
-import frc.robot.commands.IntakeButtonCmd;
-import frc.robot.commands.SolenoidCmd;
-import frc.robot.commands.SwerveJoystickCmd;
-import frc.robot.commands.TrapJoystickCmd;
-import frc.robot.commands.Endgame.EndgameCmdGroup;
-import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.TrapSubsystem;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
-import frc.robot.subsystems.Trap.TrapSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -44,9 +35,7 @@ import frc.robot.subsystems.Trap.TrapSubsystem;
 public class RobotContainer {
         // The robot's subsystems and commands are defined here...
         private final SendableChooser<Command> autoChooser;
-  // The robot's subsystems and commands are defined here...
-
-  private final TrapSubsystem m_trapSubsystem = new TrapSubsystem();
+        // The robot's subsystems and commands are defined here...
 
         private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
         private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
@@ -116,11 +105,6 @@ public class RobotContainer {
          * joysticks}.
          */
         private void configureBindings() {
-                // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-                // SmartDashboard.putData("Example Auto", Autos.followTestAuto());
-                // SmartDashboard.putData("Square Auto", Autos.followSquareAuto());
-                // new JoystickButton(copilotJoystick, OIConstants.BButton).whileTrue(new
-                // ShooterCommandGroup(m_shooterSubsystem));
 
         }
 

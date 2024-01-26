@@ -3,7 +3,7 @@ package frc.robot.commands;
 import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Trap.TrapSubsystem;
+import frc.robot.subsystems.TrapSubsystem;
 
 public class TrapJoystickCmd extends Command {
     private final TrapSubsystem m_trapSubsystem;
@@ -11,9 +11,8 @@ public class TrapJoystickCmd extends Command {
     private Supplier<Double> m_speedInOut;
     private Supplier<Double> m_speedTrack;
 
-
     public TrapJoystickCmd(TrapSubsystem trapSubsystem, Supplier<Double> speedUpDown, Supplier<Double> speedInOut,
-                            Supplier<Double> speedTrack){
+            Supplier<Double> speedTrack) {
         m_trapSubsystem = trapSubsystem;
         m_speedUpDown = speedUpDown;
         m_speedInOut = speedInOut;
@@ -22,11 +21,11 @@ public class TrapJoystickCmd extends Command {
     }
 
     @Override
-    public void initialize(){
+    public void initialize() {
     }
 
     @Override
-    public void execute(){
+    public void execute() {
         double speedUpDown = m_speedUpDown.get();
         double speedInOut = m_speedInOut.get();
         double speedTrack = m_speedTrack.get();
@@ -36,11 +35,11 @@ public class TrapJoystickCmd extends Command {
     }
 
     @Override
-    public void end(boolean interrupted){
+    public void end(boolean interrupted) {
     }
 
     @Override
-    public boolean isFinished(){
+    public boolean isFinished() {
         return false;
     }
 }

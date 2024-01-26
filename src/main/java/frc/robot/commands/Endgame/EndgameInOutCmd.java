@@ -1,33 +1,32 @@
 package frc.robot.commands.Endgame;
 
-
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.TrapConstants;
-import frc.robot.subsystems.Trap.TrapSubsystem;
+import frc.robot.subsystems.TrapSubsystem;
 
 public class EndgameInOutCmd extends Command {
     private final TrapSubsystem m_trapSubsystem;
     private final double m_positionInOut;
 
-
-    public EndgameInOutCmd(TrapSubsystem trapSubsystem, double positionInOut){
+    public EndgameInOutCmd(TrapSubsystem trapSubsystem, double positionInOut) {
         m_trapSubsystem = trapSubsystem;
         m_positionInOut = positionInOut;
         addRequirements(m_trapSubsystem);
     }
 
     @Override
-    public void initialize(){}
+    public void initialize() {
+    }
 
     @Override
-    public void execute(){
+    public void execute() {
         m_trapSubsystem.moveInOut(TrapConstants.kspeed);
     }
 
-    public boolean isFinished(){
-        if (TrapSubsystem.getInOutAngle() >= TrapConstants.kpositionInOut){
+    public boolean isFinished() {
+        if (TrapSubsystem.getInOutAngle() >= TrapConstants.kpositionInOut) {
             return true;
-        } 
-            return false;
+        }
+        return false;
     }
 }
