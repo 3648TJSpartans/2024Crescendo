@@ -20,7 +20,6 @@ import frc.robot.commands.IntakeButtonCmd;
 import frc.robot.commands.ShooterCommands.ShooterCommandGroup;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.subsystems.TrapSubsystem;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
 
 /**
@@ -83,6 +82,10 @@ public class RobotContainer {
 
   private void configureShooter() {
     m_copilotController.a().onTrue(new ShooterCommandGroup(m_shooterSubsystem));
+    m_copilotController.b()
+        .onTrue(new InstantCommand(() -> m_shooterSubsystem.moveShooterShuffleBoard()));
+    m_copilotController.x()
+        .onTrue(new InstantCommand(() -> m_shooterSubsystem.moveBeltShuffleBoard()));
 
   }
 

@@ -155,13 +155,6 @@ public final class Constants {
     public static final double IntakeSpeed = .65;
   }
 
-  public static final class AutoConstants {
-    public static final double maxModuleSpeed = 5;
-    public static final HolonomicPathFollowerConfig pathFollowerConfig = new HolonomicPathFollowerConfig(
-        new PIDConstants(0, 0, 0), new PIDConstants(0, 0, 0), 5, 0.565685, new ReplanningConfig()); // TODO: check
-                                                                                                    // driveBaseRadius
-  }
-
   public static final class ArmConstants {
     public static final int armMotorId = 20;
   }
@@ -179,10 +172,10 @@ public final class Constants {
 
   public static final class ShooterConstants {
 
-    public static final int shooterMotor1Id = 13;
-    public static final int shooterMotor2Id = 11;
-    public static final int beltMotorId1 = 12;
-    public static final int beltMotorId2 = 14;
+    public static final int shooterMotor1Id = 14;
+    public static final int shooterMotor2Id = 15;
+    public static final int beltMotorId1 = 13;
+    public static final int beltMotorId2 = 16;
     public static final double motorSpeed = 0.3;
     public static final double beltMotorSpeed = 0.3;
     public static final double idleTime = 0;
@@ -202,5 +195,12 @@ public final class Constants {
     public static final int kInOutMotorId = 0;
     public static final int kTrackMotorId = 0;
     public static final double kTrapTime = 2.5;
+  }
+
+  public static final class AutoConstants {
+    public static final double maxModuleSpeed = 5;
+    public static final HolonomicPathFollowerConfig pathFollowerConfig = new HolonomicPathFollowerConfig(
+        new PIDConstants(0, 0, 0), new PIDConstants(0, 0, 0), 5, 0.565685, new ReplanningConfig()); // TODO: check
+                                                                                                    // driveBaseRadius
   }
 }
