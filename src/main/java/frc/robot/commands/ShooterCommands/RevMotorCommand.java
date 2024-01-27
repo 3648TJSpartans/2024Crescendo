@@ -15,7 +15,7 @@ public class RevMotorCommand extends Command {
 
     @Override
     public void initialize() {
-        Finished = false;
+        Finished = true;
 
     }
 
@@ -23,7 +23,7 @@ public class RevMotorCommand extends Command {
     public void execute() {
         if (m_shooterSubsystem.NoteLocation()) {
             m_shooterSubsystem.revShooter(ShooterConstants.motorSpeed);
-            Finished = true;
+            Finished = false;
         }
     }
 
@@ -33,3 +33,6 @@ public class RevMotorCommand extends Command {
     }
 
 }
+
+// False is beam broken or object fully detected
+// True is beam unbroken
