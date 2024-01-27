@@ -177,7 +177,7 @@ public final class Constants {
 
   public static final class ArmConstants {
     public static final int armMotorId = 16;
-    public static final int armMotorId = 20;
+
   }
 
   public static final class ClimberConstants {
@@ -200,10 +200,12 @@ public final class Constants {
     public static final double idleTime = 0;
   }
 
-public static final class IRSensorConstants {
+  public static final class IRSensorConstants {
+    public static final int IRSensorID = 4;
 
-}
-public static final class TrapConstants {
+  }
+
+  public static final class TrapConstants {
     public static final double kTrapP = 0;
     public static final double kTrapI = 0;
     public static final double kTrapD = 0;

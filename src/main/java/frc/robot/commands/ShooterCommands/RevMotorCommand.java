@@ -6,35 +6,30 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 public class RevMotorCommand extends Command {
     private final ShooterSubsystem m_shooterSubsystem;
-    private boolean finished;
+    private boolean Finished;
 
     public RevMotorCommand(ShooterSubsystem shooterSubsystem) {
         m_shooterSubsystem = shooterSubsystem;
         addRequirements(m_shooterSubsystem);
     }
-}
 
     @Override
     public void initialize() {
-        finished = false;
+        Finished = false;
 
     }
 
     @Override
     public void execute() {
-        if (NoteLocaiton()){
+        if (m_shooterSubsystem.NoteLocation()) {
             m_shooterSubsystem.revShooter(ShooterConstants.motorSpeed);
-            finished = true;
+            Finished = true;
         }
     }
 
     @Override
-    public void end(boolean interrupted) {
+    public void end(boolean isFinished) {
         m_shooterSubsystem.revShooter(0);
     }
-    @Ovveride
-    public boolean isFinished() {
 
-    }
-
-
+}
