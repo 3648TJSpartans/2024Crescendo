@@ -8,12 +8,12 @@ import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.PhotonPoseEstimator.PoseStrategy;
+import org.photonvision.simulation.PhotonCameraSim;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
-import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -21,11 +21,9 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.LimeLightConstants;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
@@ -38,6 +36,7 @@ public class VisionPoseEstimator {
     private SwerveDrivePoseEstimator m_visionPoseEstimator;
     private final SwerveSubsystem m_swerveSubsystem;
     private PhotonCamera photonCamera;
+    PhotonCameraSim cameraSim;
     private Transform3d m_robotOnCamera;
     private PoseStrategy m_poseStrategy = PoseStrategy.AVERAGE_BEST_TARGETS;
 
@@ -53,6 +52,7 @@ public class VisionPoseEstimator {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         photonCamera = new PhotonCamera(LimeLightConstants.cameraName);
         m_nonVisionPoseEstimator = new SwerveDrivePoseEstimator(DriveConstants.kDriveKinematics,
                 swerveSubsystem.getRotation2d(), swerveSubsystem.getPositions(), new Pose2d());
@@ -119,6 +119,7 @@ public class VisionPoseEstimator {
             SmartDashboard.putNumber("Pos3d Z:", lowestDeltaPose.estimatedPose.getZ());
 
         }
+        SmartDashboard.putNumber("time", result.getTimestampSeconds());
     }
 
     public Pose2d getVisionPose() {

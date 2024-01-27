@@ -87,6 +87,8 @@ public class SwerveSubsystem extends SubsystemBase {
                 });
         poseEstimation.updateVisionPose(this, getPose());
         poseEstimation.justUpdate(this);
+        SmartDashboard.putNumber("Estimated Pose X:", poseEstimation.getVisionPose().getX());
+        SmartDashboard.putNumber("Estimated Pose Y:", poseEstimation.getVisionPose().getY());
 
     }
 
