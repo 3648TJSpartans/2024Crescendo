@@ -20,8 +20,7 @@ public class EndgameClimberCmd extends Command {
 
     @Override
     public void execute(){
-        double speed = m_speed;
-        m_climberSubsystem.MoveClimber(speed);
+        m_climberSubsystem.MoveClimber(m_speed);
     }
 
     @Override
