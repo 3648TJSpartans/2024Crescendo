@@ -168,6 +168,7 @@ public final class Constants {
     public static final double kClimberFF = 0;
     public static final double kClimberMinOutput = 0;
     public static final double kClimberMaxOutput = 0;
+    public static final double kClimberHeight = 0;
   }
 
   public static final class ShooterConstants {
