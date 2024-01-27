@@ -39,8 +39,8 @@ public class RobotContainer {
 
         private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
         private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
-        private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
-        private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
+        // private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+        // private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
         private final CommandXboxController m_driverController = new CommandXboxController(
                         OIConstants.kDriverControllerPort);
         private final CommandXboxController m_copilotController = new CommandXboxController(
@@ -52,7 +52,8 @@ public class RobotContainer {
         public RobotContainer() {
 
                 configureSwerve();
-                configureIntake();
+                configureClimber();
+                // configureIntake();
                 // configureShooter();
                 autoChooser = AutoBuilder.buildAutoChooser();
                 SmartDashboard.putData("Auto Chooser", autoChooser);
@@ -72,18 +73,18 @@ public class RobotContainer {
                 m_driverController.b().onTrue(new InstantCommand(() -> m_swerveSubsystem.zeroHeading()));
         }
 
-        private void configureIntake() {
-                m_intakeSubsystem.setDefaultCommand(
-                                new IntakeButtonCmd(m_intakeSubsystem,
-                                                () -> m_driverController.leftBumper().getAsBoolean(),
-                                                () -> m_driverController.rightBumper().getAsBoolean()));
+        // private void configureIntake() {
+        // m_intakeSubsystem.setDefaultCommand(
+        // new IntakeButtonCmd(m_intakeSubsystem,
+        // () -> m_driverController.leftBumper().getAsBoolean(),
+        // () -> m_driverController.rightBumper().getAsBoolean()));
 
-        }
+        // }
 
-        private void configureShooter() {
-                m_copilotController.a().onTrue(new ShooterCommandGroup(m_shooterSubsystem));
+        // private void configureShooter() {
+        // m_copilotController.a().onTrue(new ShooterCommandGroup(m_shooterSubsystem));
 
-        }
+        // }
 
         private void configureClimber() {
                 m_climberSubsystem.setDefaultCommand(

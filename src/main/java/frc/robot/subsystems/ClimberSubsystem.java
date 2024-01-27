@@ -51,6 +51,6 @@ public class ClimberSubsystem extends SubsystemBase {
 
     public void MoveClimber(double speed) {
         m_climberMotor1.set(speed);
-        m_climberMotor2.set(speed);
+        m_climberMotor2.set(-speed);
     }
 }
