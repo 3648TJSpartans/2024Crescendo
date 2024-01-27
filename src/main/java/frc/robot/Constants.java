@@ -11,6 +11,7 @@ import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.math.controller.HolonomicDriveController;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
@@ -143,8 +144,20 @@ public final class Constants {
   }
 
   public static final class OIConstants {
+    public static final int AButton = 1;
+    public static final int BButton = 2;
+    public static final int YButton = 3;
+    public static final int XButton = 4;
+    public static final int LSButton = 5;
+    public static final int RSButton = 6;
     public static final int kDriverControllerPort = 0;
     public static final int kCopilotControllerPort = 1;
+    public static final int kResetHeadingButton = 1;
+    public static final int kDriverYAxis = 1;
+    public static final int kDriverXAxis = 0;
+    public static final int kDriverRotAxis = 4;
+    public static final int kDriverFieldOrientedButtonIdx = 6;
+    public static final int kcopilotXAxis = 0;
     public static final double kDeadband = 0.05;
 
   }
@@ -163,6 +176,7 @@ public final class Constants {
   }
 
   public static final class ArmConstants {
+    public static final int armMotorId = 16;
     public static final int armMotorId = 20;
   }
 
@@ -186,7 +200,10 @@ public final class Constants {
     public static final double idleTime = 0;
   }
 
-  public static final class TrapConstants {
+public static final class IRSensorConstants {
+
+}
+public static final class TrapConstants {
     public static final double kTrapP = 0;
     public static final double kTrapI = 0;
     public static final double kTrapD = 0;
