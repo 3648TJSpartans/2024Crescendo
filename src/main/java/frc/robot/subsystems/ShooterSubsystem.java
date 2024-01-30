@@ -17,8 +17,6 @@ public class ShooterSubsystem extends SubsystemBase {
     public ShooterSubsystem() {
         m_shooterMotor1 = new CANSparkMax(ShooterConstants.shooterMotor1Id, MotorType.kBrushless);
         m_shooterMotor2 = new CANSparkMax(ShooterConstants.shooterMotor2Id, MotorType.kBrushless);
-        m_shooterMotor2.follow(m_shooterMotor1);
-        m_shooterMotor1.setInverted(true);
         m_beltMotor1 = new CANSparkMax(ShooterConstants.beltMotorId1, MotorType.kBrushless);
         m_beltMotor2 = new CANSparkMax(ShooterConstants.beltMotorId2, MotorType.kBrushless);
         SmartDashboard.putNumber("Belt Speed", 0);
@@ -28,6 +26,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public void revShooter(double speed) {
         m_shooterMotor1.set(speed);
+        m_shooterMotor2.set(speed);
 
     }
 
@@ -36,15 +35,15 @@ public class ShooterSubsystem extends SubsystemBase {
         m_beltMotor2.set(speed);
     }
 
-    public void moveBeltShuffleBoard() {
-        double speed = SmartDashboard.getNumber("Belt Speed", 0);
-        m_beltMotor1.set(speed);
-        m_beltMotor2.set(speed);
+    public void shuffleboardShooter() {
+        m_shooterMotor1.set(SmartDashboard.getNumber("Shooter Speed", 0));
+        m_shooterMotor2.set(SmartDashboard.getNumber("Shooter Speed", 0));
 
     }
 
-    public void moveShooterShuffleBoard() {
-        double speed = SmartDashboard.getNumber("Shooter Speed", 0);
-        m_shooterMotor1.set(speed);
+    public void shuffleboardBelts() {
+        m_beltMotor1.set(SmartDashboard.getNumber("Belt Speed", 0));
+        m_beltMotor2.set(SmartDashboard.getNumber("Belt Speed", 0));
     }
+
 }

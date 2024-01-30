@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -81,17 +82,27 @@ public class RobotContainer {
   }
 
   private void configureShooter() {
-    m_copilotController.a().onTrue(new ShooterCommandGroup(m_shooterSubsystem));
+    // m_copilotController.a().onTrue(new ShooterCommandGroup(m_shooterSubsystem));
+
     m_copilotController.b()
-        .onTrue(new InstantCommand(() -> m_shooterSubsystem.moveShooterShuffleBoard()));
+        .onTrue(new InstantCommand(() -> m_shooterSubsystem.shuffleboardShooter()));
     m_copilotController.x()
-        .onTrue(new InstantCommand(() -> m_shooterSubsystem.moveBeltShuffleBoard()));
+        .onTrue(new InstantCommand(() -> m_shooterSubsystem.shuffleboardBelts()));
+    m_copilotController.b()
+        .onFalse(new InstantCommand(() -> m_shooterSubsystem.revShooter(0)));
+    m_copilotController.x()
+        .onFalse(new InstantCommand(() -> m_shooterSubsystem.moveShooterIntake(0)));
 
   }
 
   private void configureClimber() {
-    m_climberSubsystem.setDefaultCommand(
-        new ClimberJoystickCmd(m_climberSubsystem, () -> m_copilotController.getLeftX()));
+    // m_climberSubsystem.setDefaultCommand(
+    // new ClimberJoystickCmd(m_climberSubsystem, () ->
+    // -MathUtil.applyDeadband(m_copilotController.getLeftX(),
+    // OIConstants.kDeadband)));
+    m_copilotController.y()
+        .onTrue(new InstantCommand(() -> m_climberSubsystem.setClimberPosition(ClimberConstants.kClimberDown)));
+    m_copilotController.a().onTrue(new InstantCommand(() -> m_climberSubsystem.setClimberPosition(20)));
   }
 
   /**

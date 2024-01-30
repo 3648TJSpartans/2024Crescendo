@@ -24,6 +24,5 @@ public class RevMotorCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        m_shooterSubsystem.revShooter(0);
     }
 }

@@ -26,6 +26,7 @@ public class ShootCommand extends Command {
     public void execute() {
         m_shooterSubsystem.revShooter(ShooterConstants.motorSpeed);
         m_shooterSubsystem.moveShooterIntake(ShooterConstants.beltMotorSpeed);
+
     }
 
     @Override

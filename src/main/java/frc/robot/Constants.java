@@ -160,14 +160,15 @@ public final class Constants {
   }
 
   public static final class ClimberConstants {
-    public static final int climberMotor1ID = 11;
-    public static final int climberMotor2ID = 12;
-    public static final double kClimberP = 0;
+    public static final int climberLeftMotorID = 11;
+    public static final int climberRightMotorID = 12;
+    public static final double kClimberP = .006;
     public static final double kClimberI = 0;
     public static final double kClimberD = 0;
-    public static final double kClimberFF = 0;
-    public static final double kClimberMinOutput = 0;
-    public static final double kClimberMaxOutput = 0;
+    public static final double kClimberFF = .1;
+    public static final IdleMode kClimberIdleMode = IdleMode.kBrake;
+    public static final double kClimberDown = 80;
+
   }
 
   public static final class ShooterConstants {
@@ -176,9 +177,10 @@ public final class Constants {
     public static final int shooterMotor2Id = 15;
     public static final int beltMotorId1 = 13;
     public static final int beltMotorId2 = 16;
-    public static final double motorSpeed = 0.3;
-    public static final double beltMotorSpeed = 0.3;
-    public static final double idleTime = 0;
+    public static final double motorSpeed = -1;
+    public static final double beltMotorSpeed = 0.5;
+    public static final double revIdleTime = .1;
+    public static final double shootTime = 1;
   }
 
   public static final class TrapConstants {
