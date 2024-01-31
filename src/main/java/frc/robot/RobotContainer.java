@@ -102,7 +102,7 @@ public class RobotContainer {
     // OIConstants.kDeadband)));
     m_copilotController.y()
         .onTrue(new InstantCommand(() -> m_climberSubsystem.setClimberPosition(ClimberConstants.kClimberDown)));
-    m_copilotController.a().onTrue(new InstantCommand(() -> m_climberSubsystem.setClimberPosition(20)));
+    m_copilotController.a().onTrue(new InstantCommand(() -> m_climberSubsystem.setClimberPosition(5)));
   }
 
   /**
