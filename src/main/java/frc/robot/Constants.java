@@ -206,19 +206,6 @@ public final class Constants {
                                                                                                     // driveBaseRadius
   }
 
-  public static final class ArmConstants {
-    public static final int armMotorId = 16;
-  }
-
-  public static final class ShooterConstants {
-    public static final int shooterMotor1Id = 13; // Real ID num is 9
-    public static final int shooterMotor2Id = 11;
-    public static final int beltMotorId = 12;
-    public static final double motorSpeed = 0.3;
-    public static final double beltMotorSpeed = 0.3;
-    public static final double idleTime = 0;
-  }
-
   public static final class LimeLightConstants {
     public static final String cameraName = "OV9281";
     // distance limelight is from center of robot(m)
