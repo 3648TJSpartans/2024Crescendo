@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.Utils.ShuffleBoardSubsystem;
 
 public class ShooterSubsystem extends SubsystemBase {
     private final CANSparkMax m_shooterMotor1;
@@ -23,7 +24,7 @@ public class ShooterSubsystem extends SubsystemBase {
         m_beltMotor2 = new CANSparkMax(ShooterConstants.beltMotorId2, MotorType.kBrushless);
         SmartDashboard.putNumber("Belt Speed", 0);
         SmartDashboard.putNumber("Shooter Speed", 0);
-
+        ShuffleBoardSubsystem(this.getName());
     }
 
     public void revShooter(double speed) {
