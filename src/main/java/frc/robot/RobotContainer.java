@@ -99,7 +99,6 @@ private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
         .onFalse(new InstantCommand(() -> m_shooterSubsystem.revShooter(0)));
     m_copilotController.x()
         .onFalse(new InstantCommand(() -> m_shooterSubsystem.moveShooterIntake(0)));
-
   }
 
   private void configureClimber() {
