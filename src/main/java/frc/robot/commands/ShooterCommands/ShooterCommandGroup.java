@@ -1,10 +1,5 @@
 package frc.robot.commands.ShooterCommands;
 
-import java.util.function.Supplier;
-
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.ShooterConstants;
@@ -17,9 +12,9 @@ public class ShooterCommandGroup extends SequentialCommandGroup {
         m_shooterSubsystem = shooterSubsystem;
 
         addCommands(
-                new RevMotorCommand(m_shooterSubsystem).withTimeout(.5),
+                new RevMotorCommand(m_shooterSubsystem).withTimeout(ShooterConstants.revIdleTime),
                 new WaitCommand(ShooterConstants.revIdleTime),
-                new ShootCommand(m_shooterSubsystem).withTimeout(2),
+                new ShootCommand(m_shooterSubsystem).withTimeout(ShooterConstants.shootTime),
                 new WaitCommand(ShooterConstants.shootTime));
     }
 

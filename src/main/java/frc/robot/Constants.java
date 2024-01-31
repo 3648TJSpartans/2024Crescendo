@@ -179,8 +179,8 @@ public final class Constants {
     public static final int beltMotorId2 = 16;
     public static final double motorSpeed = -1;
     public static final double beltMotorSpeed = 0.5;
-    public static final double revIdleTime = .1;
-    public static final double shootTime = 1;
+    public static final double revIdleTime = .5;
+    public static final double shootTime = 2;
   }
 
   public static final class TrapConstants {
@@ -196,7 +196,16 @@ public final class Constants {
     public static final int kUpDownMotorId = 0;
     public static final int kInOutMotorId = 0;
     public static final int kTrackMotorId = 0;
-    public static final double kTrapTime = 2.5;
+
+  }
+
+  public static final class EndgameConstants {
+    public static final double kTrapUpTime = 2.5;
+    public static final double kTrapReleaseTime = 3;
+    public static final double kclimberTime = 5;
+    public static final double kTrapOutTime = 2;
+    public static final double waitTime = 3;
+
   }
 
   public static final class AutoConstants {
