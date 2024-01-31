@@ -14,7 +14,7 @@ public class ClimberSubsystem extends SubsystemBase {
     private final CANSparkMax m_climberMotor2;
     private final SparkPIDController m_climberPIDController1;
     private final SparkPIDController m_climberPIDController2;
-    private final RelativeEncoder m_climberEncoder1;
+    private static RelativeEncoder m_climberEncoder1;
     private final RelativeEncoder m_climberEncoder2;
 
     public ClimberSubsystem() {
@@ -50,7 +50,7 @@ public class ClimberSubsystem extends SubsystemBase {
 
     }
 
-    public double getClimberPosition() {
+    public static double getClimberPosition() {
         double m_setPosition = m_climberEncoder1.getPosition();
         return m_setPosition;
     }
