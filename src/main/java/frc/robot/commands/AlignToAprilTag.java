@@ -22,9 +22,16 @@ public class AlignToAprilTag extends Command {
 
     @Override
     public void initialize() {
+
         Pose2d closetNode = m_swerveSubsystem.getClosestAprilTag();
         finalDesiredPose = closetNode.transformBy(
                 new Transform2d(new Translation2d(FieldConstants.goalDistance, 0), Rotation2d.fromDegrees(0)));
+    }
+
+    @Override
+    public void execute() {
+        double alignOffset = FieldConstants.goalDistance;
+
     }
 
 }

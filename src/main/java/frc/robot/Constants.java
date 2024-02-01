@@ -225,14 +225,14 @@ public final class Constants {
   }
 
   public static final class LimeLightConstants {
-    public static final String cameraName = "Camera_Module_v1";
+    public static final String cameraName = "camera";
     // distance limelight is from center of robot(m)
     public static final double xTranslation = 0;
     public static final double yTranslation = 0;
-    public static final double zTranslation = 0;
+    public static final double zTranslation = .9144;
     // Rotation of the limelight in Radians
     public static final double rollRotation = 0; // side to side
-    public static final double pitchRotation = 0; // up and down
+    public static final double pitchRotation = Math.toRadians(100); // up and down
     public static final double yawRotation = 0;// Tilt
 
   }
