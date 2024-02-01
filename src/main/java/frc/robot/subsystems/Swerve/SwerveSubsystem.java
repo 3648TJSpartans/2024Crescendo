@@ -2,6 +2,7 @@ package frc.robot.subsystems.Swerve;
 
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
@@ -17,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Utils.ShuffleBoardSubsystem;
 
 public class SwerveSubsystem extends SubsystemBase {
     private boolean isFieldRelative = false;
@@ -40,6 +42,10 @@ public class SwerveSubsystem extends SubsystemBase {
             DriveConstants.kRearRightTurningCanId,
             DriveConstants.kBackRightChassisAngularOffset);
     private SwerveModule[] modules;
+
+    private final CANSparkMax[] m_motors;
+    private final ShuffleBoardSubsystem m_shuffleBoardSubsystem;
+
     // The gyro sensor
     private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
     // Slew rate filter variables for controlling acceleration
@@ -68,6 +74,11 @@ public class SwerveSubsystem extends SubsystemBase {
         AutoBuilder.configureHolonomic(this::getPose, this::resetOdometry,
                 this::getSpeeds, this::driveRobotRelative,
                 AutoConstants.pathFollowerConfig, this::shouldFlipPath, this);
+        m_motors = new CANSparkMax[] { m_frontLeft.getDrivingMotor(), m_frontLeft.getTurningMotor(),
+                m_frontRight.getDrivingMotor(), m_frontRight.getTurningMotor(), m_rearLeft.getDrivingMotor(),
+                m_rearLeft.getTurningMotor(), m_rearRight.getDrivingMotor(), m_rearRight.getTurningMotor() };
+        m_shuffleBoardSubsystem = new ShuffleBoardSubsystem(this.getName());
+        m_shuffleBoardSubsystem.addVals(this.getName(), m_motors);
     }
 
     @Override

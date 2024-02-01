@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.TrapConstants;
+import frc.robot.Utils.ShuffleBoardSubsystem;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
@@ -14,9 +15,11 @@ public class TrapSubsystem extends SubsystemBase {
     private final CANSparkMax m_trapMotorUpDown;
     private final CANSparkMax m_trapMotorInOut;
     private final CANSparkMax m_trapMotorTrack;
+    private final CANSparkMax[] m_motors;
     private static AbsoluteEncoder m_trapEncoderAbsolute;
     private static RelativeEncoder m_trapEncoderRelative;
     private final SparkPIDController m_UpDownPIDController;
+    private final ShuffleBoardSubsystem m_shuffleBoardSubsystem;
 
     // "m_trapMotorInOut" based off ArmSubsystem.java
     // "m_trapMotorUpDown" based off ClimberSubsystem.java
@@ -38,6 +41,10 @@ public class TrapSubsystem extends SubsystemBase {
 
         // Track Motor
         m_trapMotorTrack = new CANSparkMax(TrapConstants.kTrackMotorId, MotorType.kBrushless);
+
+        m_motors = new CANSparkMax[] { m_trapMotorUpDown, m_trapMotorInOut, m_trapMotorTrack };
+        m_shuffleBoardSubsystem = new ShuffleBoardSubsystem(this.getName());
+        m_shuffleBoardSubsystem.addVals(this.getName(), m_motors);
     }
 
     public void setUpDownPosition(double position) {
