@@ -103,6 +103,7 @@ public final class Constants {
     public static final double kFreeSpeedRpm = 5676;
     public static final double kDrivingMotorFreeSpeedRps = kFreeSpeedRpm / 60;
     public static final double kWheelDiameterMeters = 0.0762;
+    public static final double kBlueWheelDiameterMeters = .08;
     public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
     // 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15
     // teeth on the bevel pinion
@@ -224,7 +225,7 @@ public final class Constants {
   }
 
   public static final class LimeLightConstants {
-    public static final String cameraName = "OV9281";
+    public static final String cameraName = "Camera_Module_v1";
     // distance limelight is from center of robot(m)
     public static final double xTranslation = 0;
     public static final double yTranslation = 0;
