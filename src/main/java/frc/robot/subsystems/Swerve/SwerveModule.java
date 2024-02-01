@@ -129,6 +129,14 @@ public class SwerveModule {
                 return m_turningEncoder.getPosition();
         }
 
+        public CANSparkMax getDrivingMotor() {
+                return m_drivingSparkMax;
+        }
+
+        public CANSparkMax getTurningMotor() {
+                return m_turningSparkMax;
+        }
+
         public void setDesiredState(SwerveModuleState desiredState) {
                 // Apply chassis angular offset to the desired state.
                 SwerveModuleState correctedDesiredState = new SwerveModuleState();

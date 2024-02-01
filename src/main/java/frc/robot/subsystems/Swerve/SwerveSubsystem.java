@@ -1,31 +1,27 @@
 package frc.robot.subsystems.Swerve;
 
-import java.util.Optional;
-
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.revrobotics.CANSparkMax;
 
-import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.WPIUtilJNI;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.vision.VisionPoseEstimator;
+import frc.robot.Utils.ShuffleBoardSubsystem;
 
 public class SwerveSubsystem extends SubsystemBase {
-    // define all modules
+    private boolean isFieldRelative = false;
     private final SwerveModule m_frontLeft = new SwerveModule(
             DriveConstants.kFrontLeftDrivingCanId,
             DriveConstants.kFrontLeftTurningCanId,
@@ -46,7 +42,10 @@ public class SwerveSubsystem extends SubsystemBase {
             DriveConstants.kRearRightTurningCanId,
             DriveConstants.kBackRightChassisAngularOffset);
     private SwerveModule[] modules;
-    private boolean isFieldRelative = false;
+
+    private final CANSparkMax[] m_motors;
+    private final ShuffleBoardSubsystem m_shuffleBoardSubsystem;
+
     // The gyro sensor
     private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
     // Slew rate filter variables for controlling acceleration
@@ -71,9 +70,15 @@ public class SwerveSubsystem extends SubsystemBase {
             } catch (Exception e) {
             }
         }).start();
-
         modules = new SwerveModule[] { m_frontLeft, m_frontRight, m_rearLeft, m_rearRight };
-
+        AutoBuilder.configureHolonomic(this::getPose, this::resetOdometry,
+                this::getSpeeds, this::driveRobotRelative,
+                AutoConstants.pathFollowerConfig, this::shouldFlipPath, this);
+        m_motors = new CANSparkMax[] { m_frontLeft.getDrivingMotor(), m_frontLeft.getTurningMotor(),
+                m_frontRight.getDrivingMotor(), m_frontRight.getTurningMotor(), m_rearLeft.getDrivingMotor(),
+                m_rearLeft.getTurningMotor(), m_rearRight.getDrivingMotor(), m_rearRight.getTurningMotor() };
+        m_shuffleBoardSubsystem = new ShuffleBoardSubsystem(this.getName());
+        m_shuffleBoardSubsystem.addVals(this.getName(), m_motors);
     }
 
     @Override
@@ -87,21 +92,14 @@ public class SwerveSubsystem extends SubsystemBase {
                         m_rearLeft.getPosition(),
                         m_rearRight.getPosition()
                 });
-        SmartDashboard.putNumber("Gyro Pose X:", getPose().getX());
-        SmartDashboard.putNumber("Gyro Pose Y:", getPose().getY());
-        // SmartDashboard.putNumber("New Estimated Pose X", getVisionPose().getX());
-        // SmartDashboard.putNumber("New Estimated Pose Y", getVisionPose().getY());
-        // SmartDashboard.putNumber("New Estimated Pose X Graph",
-        // getVisionPose().getX());
-        // SmartDashboard.putNumber("New Estimated Pose Y Graph",
-        // getVisionPose().getY());
-        // Optional<Alliance> ally = DriverStation.getAlliance();
-        // SmartDashboard.putString("Alliance Color", ally.toString());
-
     }
 
     public Pose2d getPose() {
         return m_odometry.getPoseMeters();
+    }
+
+    public Boolean shouldFlipPath() {
+        return true;
     }
 
     public void resetOdometry(Pose2d pose) {
@@ -165,15 +163,6 @@ public class SwerveSubsystem extends SubsystemBase {
         return states;
     }
 
-    public SwerveModulePosition[] getPositions() {
-        return new SwerveModulePosition[] {
-                m_frontLeft.getPosition(),
-                m_frontRight.getPosition(),
-                m_rearLeft.getPosition(),
-                m_rearRight.getPosition()
-        };
-    }
-
     /**
      * Returns the heading of the robot.
      *
@@ -210,8 +199,13 @@ public class SwerveSubsystem extends SubsystemBase {
         m_rearRight.stop();
     }
 
-    public Rotation2d getYaw() {
-        return Rotation2d.fromDegrees(-m_gyro.getYaw());
+    /**
+     * Returns the turn rate of the robot.
+     *
+     * @return The turn rate of the robot, in degrees per second
+     */
+    public double getTurnRate() {
+        return m_gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
     }
 
 }

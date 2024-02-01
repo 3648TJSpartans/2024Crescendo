@@ -1,9 +1,8 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Servo;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.TrapConstants;
+import frc.robot.Utils.ShuffleBoardSubsystem;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
@@ -15,10 +14,12 @@ import com.revrobotics.CANSparkMax;
 public class TrapSubsystem extends SubsystemBase {
     private final CANSparkMax m_trapMotorUpDown;
     private final CANSparkMax m_trapMotorInOut;
-    private final Servo m_trapMotorTrack;
+    private final CANSparkMax m_trapMotorTrack;
+    private final CANSparkMax[] m_motors;
     private static AbsoluteEncoder m_trapEncoderAbsolute;
     private static RelativeEncoder m_trapEncoderRelative;
     private final SparkPIDController m_UpDownPIDController;
+    private final ShuffleBoardSubsystem m_shuffleBoardSubsystem;
 
     // "m_trapMotorInOut" based off ArmSubsystem.java
     // "m_trapMotorUpDown" based off ClimberSubsystem.java
@@ -39,12 +40,11 @@ public class TrapSubsystem extends SubsystemBase {
         m_trapEncoderAbsolute = m_trapMotorInOut.getAbsoluteEncoder(Type.kDutyCycle);
 
         // Track Motor
-        m_trapMotorTrack = new Servo(TrapConstants.kTrackMotorId);
-    }
+        m_trapMotorTrack = new CANSparkMax(TrapConstants.kTrackMotorId, MotorType.kBrushless);
 
-    @Override
-    public void periodic() {
-        SmartDashboard.putNumber("Trap Encoder Value", m_trapEncoderRelative.getPosition());
+        m_motors = new CANSparkMax[] { m_trapMotorUpDown, m_trapMotorInOut, m_trapMotorTrack };
+        m_shuffleBoardSubsystem = new ShuffleBoardSubsystem(this.getName());
+        m_shuffleBoardSubsystem.addVals(this.getName(), m_motors);
     }
 
     public void setUpDownPosition(double position) {
@@ -69,8 +69,7 @@ public class TrapSubsystem extends SubsystemBase {
         m_trapMotorInOut.set(speed);
     }
 
-    public void setTrack(double angle) {
-        m_trapMotorTrack.set(angle);
+    public void moveTrack(double speed) {
+        m_trapMotorTrack.set(speed);
     }
-
 }
