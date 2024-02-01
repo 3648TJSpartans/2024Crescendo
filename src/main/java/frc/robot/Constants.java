@@ -193,9 +193,9 @@ public final class Constants {
     public static final double kpositionUpDown = 0;
     public static final double kpositionInOut = 0;
     public static final double kspeed = 0;
-    public static final int kUpDownMotorId = 0;
-    public static final int kInOutMotorId = 0;
-    public static final int kTrackMotorId = 0;
+    public static final int kUpDownMotorId = 17;
+    public static final int kInOutMotorId = 18;
+    public static final int kTrackMotorId = 19;
 
   }
 
