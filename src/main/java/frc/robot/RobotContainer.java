@@ -44,7 +44,6 @@ public class RobotContainer {
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
-  private final TrapSubsystem m_trapSubsystem = new TrapSubsystem();
   private final CommandXboxController m_driverController = new CommandXboxController(
       OIConstants.kDriverControllerPort);
   private final CommandXboxController m_copilotController = new CommandXboxController(
@@ -105,15 +104,6 @@ public class RobotContainer {
     m_copilotController.leftBumper()
         .onTrue(new InstantCommand(() -> m_climberSubsystem.setClimberPosition(ClimberConstants.kClimberDown)));
     m_copilotController.rightBumper().onTrue(new InstantCommand(() -> m_climberSubsystem.setClimberPosition(5)));
-  }
-
-  private void configureTrap() {
-    m_trapSubsystem
-        .setDefaultCommand(new TrapJoystickCmd(m_trapSubsystem,
-            () -> -MathUtil.applyDeadband(m_copilotController.getLeftY(), OIConstants.kDeadband),
-            () -> -MathUtil.applyDeadband(m_copilotController.getRightY(), OIConstants.kDeadband),
-            () -> -MathUtil.applyDeadband(m_copilotController.getLeftX(), OIConstants.kDeadband)));
-
   }
 
   /**
