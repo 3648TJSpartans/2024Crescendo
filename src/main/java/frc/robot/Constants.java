@@ -237,4 +237,8 @@ public final class Constants {
 
   }
 
+  public static final class FieldConstants {
+    public static final double goalDistance = Units.feetToMeters(3.5);
+  }
+
 }
