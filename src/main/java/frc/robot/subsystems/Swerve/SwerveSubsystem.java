@@ -223,4 +223,8 @@ public class SwerveSubsystem extends SubsystemBase {
     public Rotation2d getYaw() {
         return Rotation2d.fromDegrees(-m_gyro.getYaw());
     }
+
+    public Pose2d getClosestAprilTag() {
+        return poseEstimation.getClosesAprilTag();
+    }
 }

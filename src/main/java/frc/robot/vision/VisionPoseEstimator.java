@@ -1,6 +1,7 @@
 package frc.robot.vision;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +41,8 @@ public class VisionPoseEstimator {
     private Transform3d m_robotOnCamera;
     private PoseStrategy m_poseStrategy = PoseStrategy.AVERAGE_BEST_TARGETS;
 
+    private final Pose2d[] aprilTagPoses = new Pose2d[16];
+
     public VisionPoseEstimator(SwerveSubsystem swerveSubsystem) {
         m_swerveSubsystem = swerveSubsystem;
         m_robotOnCamera = new Transform3d(
@@ -58,6 +61,9 @@ public class VisionPoseEstimator {
                 swerveSubsystem.getRotation2d(), swerveSubsystem.getPositions(), new Pose2d());
         m_visionPoseEstimator = new SwerveDrivePoseEstimator(DriveConstants.kDriveKinematics,
                 swerveSubsystem.getRotation2d(), swerveSubsystem.getPositions(), new Pose2d());
+        for (int i = 1; i < 16; i++) {
+            aprilTagPoses[i] = layout.getTagPose(i).get().toPose2d();
+        }
 
     }
 
@@ -124,6 +130,10 @@ public class VisionPoseEstimator {
 
     public Pose2d getVisionPose() {
         return m_visionPoseEstimator.getEstimatedPosition();
+    }
+
+    public Pose2d getClosesAprilTag() {
+        return getVisionPose().nearest(Arrays.asList(aprilTagPoses));
     }
 
 }
