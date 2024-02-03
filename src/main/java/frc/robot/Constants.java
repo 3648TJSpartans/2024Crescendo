@@ -221,10 +221,10 @@ public final class Constants {
     // distance limelight is from center of robot(m)
     public static final double xTranslation = 0;
     public static final double yTranslation = 0;
-    public static final double zTranslation = .9144;
+    public static final double zTranslation = 0;// .9144;
     // Rotation of the limelight in Radians
     public static final double rollRotation = 0; // side to side
-    public static final double pitchRotation = Math.toRadians(100); // up and down
+    public static final double pitchRotation = Math.toRadians(15); // up and down
     public static final double yawRotation = 0;// Tilt
 
   }

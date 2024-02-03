@@ -2,6 +2,7 @@ package frc.robot.subsystems.Swerve;
 
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.util.PathPlannerLogging;
 
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.math.estimator.PoseEstimator;
@@ -69,7 +70,7 @@ public class SwerveSubsystem extends SubsystemBase {
         }).start();
         poseEstimation = new VisionPoseEstimator(this);
         modules = new SwerveModule[] { m_frontLeft, m_frontRight, m_rearLeft, m_rearRight };
-        AutoBuilder.configureHolonomic(this::getPose, this::resetOdometry,
+        AutoBuilder.configureHolonomic(this::getVisionPose, this::resetOdometry,
                 this::getSpeeds, this::driveRobotRelative,
                 AutoConstants.pathFollowerConfig, this::shouldFlipPath, this);
     }
@@ -85,15 +86,20 @@ public class SwerveSubsystem extends SubsystemBase {
                         m_rearLeft.getPosition(),
                         m_rearRight.getPosition()
                 });
-        poseEstimation.updateVisionPose(this, getPose());
-        poseEstimation.justUpdate(this);
-        SmartDashboard.putNumber("Estimated Pose X:", poseEstimation.getVisionPose().getX());
-        SmartDashboard.putNumber("Estimated Pose Y:", poseEstimation.getVisionPose().getY());
+        poseEstimation.update();
+        SmartDashboard.putNumber("Gyro Pose X:", getPose().getX());
+        SmartDashboard.putNumber("Gyro Pose Y:", getPose().getY());
+        SmartDashboard.putNumber("New Estimated Pose X", poseEstimation.getVisionPose().getX());
+        SmartDashboard.putNumber("New Estimated Pose Y", poseEstimation.getVisionPose().getY());
 
     }
 
     public Pose2d getPose() {
         return m_odometry.getPoseMeters();
+    }
+
+    public Pose2d getVisionPose() {
+        return poseEstimation.getVisionPose();
     }
 
     public Boolean shouldFlipPath() {
@@ -206,11 +212,6 @@ public class SwerveSubsystem extends SubsystemBase {
         m_rearRight.stop();
     }
 
-    /**
-     * Returns the turn rate of the robot.
-     *
-     * @return The turn rate of the robot, in degrees per second
-     */
     public double getTurnRate() {
         return m_gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
     }
@@ -225,6 +226,6 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     public Pose2d getClosestAprilTag() {
-        return poseEstimation.getClosesAprilTag();
+        return poseEstimation.getClosestAprilTag();
     }
 }
