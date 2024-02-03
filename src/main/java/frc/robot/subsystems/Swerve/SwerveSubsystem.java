@@ -1,9 +1,13 @@
 package frc.robot.subsystems.Swerve;
 
+import java.util.Optional;
+
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.PathPlannerLogging;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.math.estimator.PoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -91,6 +95,10 @@ public class SwerveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Gyro Pose Y:", getPose().getY());
         SmartDashboard.putNumber("New Estimated Pose X", poseEstimation.getVisionPose().getX());
         SmartDashboard.putNumber("New Estimated Pose Y", poseEstimation.getVisionPose().getY());
+        SmartDashboard.putNumber("New Estimated Pose X Graph", poseEstimation.getVisionPose().getX());
+        SmartDashboard.putNumber("New Estimated Pose Y Graph", poseEstimation.getVisionPose().getY());
+        Optional<Alliance> ally = DriverStation.getAlliance();
+        SmartDashboard.putString("Alliance Color", ally.toString());
 
     }
 
@@ -103,7 +111,12 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     public Boolean shouldFlipPath() {
-        return true;
+        var alliance = DriverStation.getAlliance();
+        if (alliance.isPresent()) {
+            return alliance.get() == DriverStation.Alliance.Red;
+        } else {
+            return false;
+        }
     }
 
     public void resetOdometry(Pose2d pose) {
