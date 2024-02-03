@@ -31,15 +31,13 @@ import frc.robot.subsystems.Swerve.SwerveSubsystem;
 
 public class VisionPoseEstimator {
 
-    PhotonPoseEstimator m_photonPoseEstimator;
     private AprilTagFieldLayout layout;
-    private SwerveDrivePoseEstimator m_nonVisionPoseEstimator;
     private SwerveDrivePoseEstimator m_visionPoseEstimator;
     private final SwerveSubsystem m_swerveSubsystem;
     private PhotonCamera photonCamera;
-    PhotonCameraSim cameraSim;
     private Transform3d m_robotOnCamera;
-    private PoseStrategy m_poseStrategy = PoseStrategy.AVERAGE_BEST_TARGETS;
+    private PoseStrategy m_poseStrategy = PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR;
+    private PhotonPoseEstimator photonPoseEstimator;
 
     private final Pose2d[] aprilTagPoses = new Pose2d[16];
 
@@ -55,84 +53,31 @@ public class VisionPoseEstimator {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         photonCamera = new PhotonCamera(LimeLightConstants.cameraName);
-        m_nonVisionPoseEstimator = new SwerveDrivePoseEstimator(DriveConstants.kDriveKinematics,
-                swerveSubsystem.getRotation2d(), swerveSubsystem.getPositions(), new Pose2d());
+        photonPoseEstimator = new PhotonPoseEstimator(layout, m_poseStrategy, photonCamera, m_robotOnCamera);
+
         m_visionPoseEstimator = new SwerveDrivePoseEstimator(DriveConstants.kDriveKinematics,
-                swerveSubsystem.getRotation2d(), swerveSubsystem.getPositions(), new Pose2d());
+                m_swerveSubsystem.getRotation2d(), m_swerveSubsystem.getPositions(), new Pose2d());
         for (int i = 1; i < 16; i++) {
             aprilTagPoses[i] = layout.getTagPose(i).get().toPose2d();
         }
 
     }
 
-    public void justUpdate(SwerveSubsystem swerve) {
-        m_nonVisionPoseEstimator.update(swerve.getYaw(), swerve.getPositions());
-        m_visionPoseEstimator.update(swerve.getYaw(), swerve.getPositions());
-    }
-
-    public void updateVisionPose(SwerveSubsystem swerve, Pose2d referencePose) {
-        PhotonPipelineResult result = photonCamera.getLatestResult();
-        if (result.hasTargets()) {
-            double smallestPoseDelta = 10e9;
-            EstimatedRobotPose lowestDeltaPose = null;
-            Translation2d robotToTarget = null;
-            for (PhotonTrackedTarget target : result.getTargets()) {
-                int id = target.getFiducialId();
-                SmartDashboard.putNumber("id", id);
-                Pose3d targetPosition = layout.getTagPose(id).get();
-
-                // TODO check sign of pitch and maybe add pitch from gyro
-                Rotation3d gyroCalculatedAngle;
-                double yaw = swerve.getYaw().getRadians();
-                Optional<Alliance> ally = DriverStation.getAlliance();
-                if (ally.get() == Alliance.Red) {
-                    gyroCalculatedAngle = new Rotation3d(0,
-                            -m_robotOnCamera.getRotation().getY() + swerve.getGyro().getY(),
-                            -yaw);
-                } else {
-                    gyroCalculatedAngle = new Rotation3d(0,
-                            -m_robotOnCamera.getRotation().getY() + swerve.getGyro().getY(),
-                            (yaw > 0 ? 1 : -1) * Math.PI - yaw);
-                }
-
-                Translation3d transformToTarget = target.getBestCameraToTarget().getTranslation();
-                Pose3d estimatedPose = targetPosition
-                        .transformBy(new Transform3d(transformToTarget, gyroCalculatedAngle).inverse())
-                        .transformBy(m_robotOnCamera.inverse());
-
-                // SmartDashboard.putNumber("estimatedPose", estimatedPose.getX());
-
-                double poseDelta = referencePose.getTranslation()
-                        .getDistance(estimatedPose.getTranslation().toTranslation2d());
-                if (poseDelta < smallestPoseDelta) {
-                    smallestPoseDelta = poseDelta;
-                    lowestDeltaPose = new EstimatedRobotPose(estimatedPose, result.getTimestampSeconds(),
-                            List.of(target), m_poseStrategy);
-                    robotToTarget = transformToTarget.toTranslation2d();
-                }
-            }
-
-            if (robotToTarget == null)
-                return;
-            double tagDistance = robotToTarget.getNorm();
-
-            m_visionPoseEstimator.addVisionMeasurement(lowestDeltaPose.estimatedPose.toPose2d(),
-                    lowestDeltaPose.timestampSeconds);
-            SmartDashboard.putNumber("Pos3d X:", lowestDeltaPose.estimatedPose.getX());
-            SmartDashboard.putNumber("Pos3d Y:", lowestDeltaPose.estimatedPose.getY());
-            SmartDashboard.putNumber("Pos3d Z:", lowestDeltaPose.estimatedPose.getZ());
-
-        }
-        SmartDashboard.putNumber("time", result.getTimestampSeconds());
+    public void update() {
+        photonPoseEstimator.update().ifPresent(estimatedRobotPose -> {
+            SmartDashboard.putNumber("Robot Pose X", estimatedRobotPose.estimatedPose.getX());
+            SmartDashboard.putNumber("Robot Pose Y", estimatedRobotPose.estimatedPose.getY());
+            m_visionPoseEstimator.addVisionMeasurement(estimatedRobotPose.estimatedPose.toPose2d(),
+                    estimatedRobotPose.timestampSeconds);
+        });
     }
 
     public Pose2d getVisionPose() {
         return m_visionPoseEstimator.getEstimatedPosition();
     }
 
-    public Pose2d getClosesAprilTag() {
+    public Pose2d getClosestAprilTag() {
         return getVisionPose().nearest(Arrays.asList(aprilTagPoses));
     }
 
