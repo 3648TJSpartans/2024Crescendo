@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.481379644214479,
-      "y": 7.342476299859433
+      "x": 2.2507724430795997,
+      "y": 5.429534659312925
     },
-    "rotation": 178.31835878853136
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "LeftStartToSpeaker"
+            "pathName": "LeftPath"
           }
         }
       ]
