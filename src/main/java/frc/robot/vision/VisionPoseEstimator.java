@@ -71,6 +71,7 @@ public class VisionPoseEstimator {
             m_visionPoseEstimator.addVisionMeasurement(estimatedRobotPose.estimatedPose.toPose2d(),
                     estimatedRobotPose.timestampSeconds);
         });
+        m_visionPoseEstimator.update(m_swerveSubsystem.getYaw(), m_swerveSubsystem.getPositions());
     }
 
     public Pose2d getVisionPose() {
