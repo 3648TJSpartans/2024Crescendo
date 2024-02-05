@@ -6,7 +6,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 public class RevMotorCommand extends Command {
     private final ShooterSubsystem m_shooterSubsystem;
-    private boolean Note;
+    private boolean m_note;
 
     public RevMotorCommand(ShooterSubsystem shooterSubsystem) {
         m_shooterSubsystem = shooterSubsystem;
@@ -15,7 +15,7 @@ public class RevMotorCommand extends Command {
 
     @Override
     public void initialize() {
-        Note = true;
+        m_note = true;
 
     }
 
@@ -23,14 +23,14 @@ public class RevMotorCommand extends Command {
     public void execute() {
         if (m_shooterSubsystem.NoteLocation()) {
             m_shooterSubsystem.revShooter(ShooterConstants.motorSpeed);
-            Note = false;
+            m_note = false;
         }
     }
 
     @Override
     public boolean isFinished() {
         m_shooterSubsystem.revShooter(0);
-        return Note;
+        return m_note;
     }
 
 }
