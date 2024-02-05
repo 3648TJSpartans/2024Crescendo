@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.TrapConstants;
 
@@ -39,6 +40,11 @@ public class TrapSubsystem extends SubsystemBase {
 
         // Track Motor
         m_trapMotorTrack = new Servo(TrapConstants.kTrackMotorId);
+    }
+
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("Trap Encoder Value", m_trapEncoderRelative.getPosition());
     }
 
     public void setUpDownPosition(double position) {

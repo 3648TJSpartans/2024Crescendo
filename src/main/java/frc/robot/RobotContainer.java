@@ -112,13 +112,24 @@ public class RobotContainer {
   }
 
   private void configureTrap() {
+    // this commented code is for once you have the encoder values and can test the
+    // set position button, you can't have the button and the default command
+    // controlling the subsystem at the same time or else the set pos won't work.
     // m_copilotController.a().onTrue(new InstantCommand(() ->
-    // m_trapSubsystem.setUpDownPosition(TrapConstants.kUpDownMotorId)));
+    // m_trapSubsystem.setUpDownPosition(TrapConstants.kpositionUpDown)));
 
+    // use the joystick to figure out the values of the encoder and find the
+    // position of the encoder when it is fully extended, then once you found the
+    // value comment out the setDefaultCommand
+    // I have added a shuffleboard value in the subsystem that will update the
+    // encoder values it will display in the shuffleboard as Trap Encoder Value
     m_trapSubsystem.setDefaultCommand(new TrapJoystickCmd(m_trapSubsystem,
         () -> -MathUtil.applyDeadband(m_copilotController.getLeftY(), OIConstants.kDeadband),
         () -> -MathUtil.applyDeadband(m_copilotController.getRightY(), OIConstants.kDeadband)));
 
+    // this part is untested I have no idea if it works, the idea is that you press
+    // it once and it moves the servo to drop the note and then you press it again
+    // to move the servo back into a position where it can hold the note
     m_copilotController.a().toggleOnTrue(
         Commands.startEnd(() -> m_trapSubsystem.moveTrack(180), () -> m_trapSubsystem.moveTrack(0), m_trapSubsystem));
 
