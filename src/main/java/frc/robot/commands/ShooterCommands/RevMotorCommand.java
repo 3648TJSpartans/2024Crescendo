@@ -6,7 +6,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 public class RevMotorCommand extends Command {
     private final ShooterSubsystem m_shooterSubsystem;
-    private boolean Finished;
+    private boolean Note;
 
     public RevMotorCommand(ShooterSubsystem shooterSubsystem) {
         m_shooterSubsystem = shooterSubsystem;
@@ -15,7 +15,7 @@ public class RevMotorCommand extends Command {
 
     @Override
     public void initialize() {
-        Finished = true;
+        Note = true;
 
     }
 
@@ -23,7 +23,7 @@ public class RevMotorCommand extends Command {
     public void execute() {
         if (m_shooterSubsystem.NoteLocation()) {
             m_shooterSubsystem.revShooter(ShooterConstants.motorSpeed);
-            Finished = false;
+            Note = false;
         }
     }
 
@@ -34,5 +34,13 @@ public class RevMotorCommand extends Command {
 
 }
 
-// False is beam broken or object fully detected
+// public void end(boolean interrupted) {
+// }
+
+// @Override
+// public boolean isFinished() {
+// return false;
+// }
+
+// False is beam broken or object detected
 // True is beam unbroken
