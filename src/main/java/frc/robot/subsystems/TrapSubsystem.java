@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.TrapConstants;
+import frc.robot.Utils.LogSubsystem;
 import frc.robot.Utils.ShuffleBoardSubsystem;
 
 import com.revrobotics.AbsoluteEncoder;
@@ -20,6 +21,7 @@ public class TrapSubsystem extends SubsystemBase {
     private static RelativeEncoder m_trapEncoderRelative;
     private final SparkPIDController m_UpDownPIDController;
     private final ShuffleBoardSubsystem m_shuffleBoardSubsystem;
+    private static LogSubsystem m_logSubsystem;
 
     // "m_trapMotorInOut" based off ArmSubsystem.java
     // "m_trapMotorUpDown" based off ClimberSubsystem.java
@@ -45,6 +47,8 @@ public class TrapSubsystem extends SubsystemBase {
         m_motors = new CANSparkMax[] { m_trapMotorUpDown, m_trapMotorInOut, m_trapMotorTrack };
         m_shuffleBoardSubsystem = new ShuffleBoardSubsystem(this.getName());
         m_shuffleBoardSubsystem.addVals(this.getName(), m_motors);
+
+        m_logSubsystem = new LogSubsystem(this.getName());
     }
 
     public void setUpDownPosition(double position) {
@@ -53,23 +57,28 @@ public class TrapSubsystem extends SubsystemBase {
 
     public static double getUpDownPosition() {
         double m_setPosition = m_trapEncoderRelative.getPosition();
+        m_logSubsystem.logValue(m_setPosition);
         return m_setPosition;
     }
 
     public void moveUpDown(double speed) {
         m_trapMotorUpDown.set(speed);
+        m_logSubsystem.logValue(speed);
     }
 
     public static double getInOutAngle() {
         double m_InOutAngle = m_trapEncoderAbsolute.getPosition();
+        m_logSubsystem.logValue(m_InOutAngle);
         return m_InOutAngle;
     }
 
     public void moveInOut(double speed) {
         m_trapMotorInOut.set(speed);
+        m_logSubsystem.logValue(speed);
     }
 
     public void moveTrack(double speed) {
         m_trapMotorTrack.set(speed);
+        m_logSubsystem.logValue(speed);
     }
 }
