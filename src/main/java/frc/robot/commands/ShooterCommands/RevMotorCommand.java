@@ -28,18 +28,14 @@ public class RevMotorCommand extends Command {
     }
 
     @Override
-    public void end(boolean isFinished) {
+    public boolean isFinished() {
         m_shooterSubsystem.revShooter(0);
+        return Note;
     }
 
 }
 
 // public void end(boolean interrupted) {
-// }
-
-// @Override
-// public boolean isFinished() {
-// return false;
 // }
 
 // False is beam broken or object detected
