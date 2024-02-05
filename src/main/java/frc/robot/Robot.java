@@ -7,6 +7,11 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Utils.LogSubsystem;
+import edu.wpi.first.util.datalog.DataLog;
+import edu.wpi.first.util.datalog.DoubleLogEntry;
+import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -22,6 +27,8 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
+  private DoubleLogEntry m_encoderLog;
+
   /**
    * This function is run when the robot is first started up and should be used
    * for any
@@ -33,6 +40,10 @@ public class Robot extends TimedRobot {
     // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    // Starts a LogEntry in DriverStation
+    DataLogManager.start();
+    DataLog log = DataLogManager.getLog();
+    m_encoderLog = new DoubleLogEntry(log, "Encoder Value");
   }
 
   /**
