@@ -195,7 +195,7 @@ public final class Constants {
     public static final double kspeed = 0;
     public static final int kUpDownMotorId = 17;
     public static final int kInOutMotorId = 18;
-    public static final int kTrackMotorId = 19;
+    public static final int kTrackMotorId = 0; // Servo
 
   }
 

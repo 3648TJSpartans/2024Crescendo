@@ -9,11 +9,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.TrapConstants;
 import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.commands.TrapJoystickCmd;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -86,14 +88,14 @@ public class RobotContainer {
   }
 
   private void configureShooter() {
-    m_copilotController.a().onTrue(new ShooterCommandGroup(m_shooterSubsystem));
+    // m_copilotController.a().onTrue(new ShooterCommandGroup(m_shooterSubsystem));
 
-    m_copilotController.b()
-        .onTrue(new InstantCommand(() -> m_shooterSubsystem.shuffleboardShooter()));
+    // m_copilotController.b()
+    // .onTrue(new InstantCommand(() -> m_shooterSubsystem.shuffleboardShooter()));
     m_copilotController.x()
         .onTrue(new InstantCommand(() -> m_shooterSubsystem.shuffleboardBelts()));
-    m_copilotController.b()
-        .onFalse(new InstantCommand(() -> m_shooterSubsystem.revShooter(0)));
+    // m_copilotController.b()
+    // .onFalse(new InstantCommand(() -> m_shooterSubsystem.revShooter(0)));
     m_copilotController.x()
         .onFalse(new InstantCommand(() -> m_shooterSubsystem.moveShooterIntake(0)));
 
@@ -110,11 +112,15 @@ public class RobotContainer {
   }
 
   private void configureTrap() {
-    m_trapSubsystem
-        .setDefaultCommand(new TrapJoystickCmd(m_trapSubsystem,
-            () -> -MathUtil.applyDeadband(m_copilotController.getLeftY(), OIConstants.kDeadband),
-            () -> -MathUtil.applyDeadband(m_copilotController.getRightY(), OIConstants.kDeadband),
-            () -> -MathUtil.applyDeadband(m_copilotController.getLeftX(), OIConstants.kDeadband)));
+    // m_copilotController.a().onTrue(new InstantCommand(() ->
+    // m_trapSubsystem.setUpDownPosition(TrapConstants.kUpDownMotorId)));
+
+    m_trapSubsystem.setDefaultCommand(new TrapJoystickCmd(m_trapSubsystem,
+        () -> -MathUtil.applyDeadband(m_copilotController.getLeftY(), OIConstants.kDeadband),
+        () -> -MathUtil.applyDeadband(m_copilotController.getRightY(), OIConstants.kDeadband)));
+
+    m_copilotController.a().toggleOnTrue(
+        Commands.startEnd(() -> m_trapSubsystem.moveTrack(180), () -> m_trapSubsystem.moveTrack(0), m_trapSubsystem));
 
   }
 
