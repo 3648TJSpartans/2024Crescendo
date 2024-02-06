@@ -18,6 +18,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.TrapConstants;
 import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.commands.TrapJoystickCmd;
+import frc.robot.commands.Endgame.EndgameCmdGroup;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.commands.ClimberJoystickCmd;
 import frc.robot.commands.IntakeButtonCmd;
@@ -60,7 +61,7 @@ public class RobotContainer {
     configureClimber();
     configureIntake();
     configureShooter();
-    configureTrap();
+    // configureTrap();
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
   }
@@ -88,50 +89,40 @@ public class RobotContainer {
   }
 
   private void configureShooter() {
-    // m_copilotController.a().onTrue(new ShooterCommandGroup(m_shooterSubsystem));
+    m_copilotController.a().onTrue(new ShooterCommandGroup(m_shooterSubsystem));
 
-    // m_copilotController.b()
-    // .onTrue(new InstantCommand(() -> m_shooterSubsystem.shuffleboardShooter()));
+    m_copilotController.b()
+        .onTrue(new InstantCommand(() -> m_shooterSubsystem.shuffleboardShooter()));
     m_copilotController.x()
         .onTrue(new InstantCommand(() -> m_shooterSubsystem.shuffleboardBelts()));
-    // m_copilotController.b()
-    // .onFalse(new InstantCommand(() -> m_shooterSubsystem.revShooter(0)));
+    m_copilotController.b()
+        .onFalse(new InstantCommand(() -> m_shooterSubsystem.revShooter(0)));
     m_copilotController.x()
         .onFalse(new InstantCommand(() -> m_shooterSubsystem.moveShooterIntake(0)));
 
   }
 
   private void configureClimber() {
-    // m_climberSubsystem.setDefaultCommand(
-    // new ClimberJoystickCmd(m_climberSubsystem, () ->
-    // -MathUtil.applyDeadband(m_copilotController.getLeftX(),
-    // OIConstants.kDeadband)));
     m_copilotController.leftBumper()
         .onTrue(new InstantCommand(() -> m_climberSubsystem.setClimberPosition(ClimberConstants.kClimberDown)));
     m_copilotController.rightBumper().onTrue(new InstantCommand(() -> m_climberSubsystem.setClimberPosition(5)));
   }
 
   private void configureTrap() {
-    // this commented code is for once you have the encoder values and can test the
-    // set position button, you can't have the button and the default command
-    // controlling the subsystem at the same time or else the set pos won't work.
-    // m_copilotController.a().onTrue(new InstantCommand(() ->
-    // m_trapSubsystem.setUpDownPosition(TrapConstants.kpositionUpDown)));
 
-    // use the joystick to figure out the values of the encoder and find the
-    // position of the encoder when it is fully extended, then once you found the
-    // value comment out the setDefaultCommand
-    // I have added a shuffleboard value in the subsystem that will update the
-    // encoder values it will display in the shuffleboard as Trap Encoder Value
-    m_trapSubsystem.setDefaultCommand(new TrapJoystickCmd(m_trapSubsystem,
-        () -> -MathUtil.applyDeadband(m_copilotController.getLeftY(), OIConstants.kDeadband),
-        () -> -MathUtil.applyDeadband(m_copilotController.getRightY(), OIConstants.kDeadband)));
+    m_copilotController.b()
+        .onTrue(new EndgameCmdGroup(m_trapSubsystem, m_climberSubsystem));
+    m_copilotController.x()
+        .toggleOnTrue(Commands.startEnd(() -> m_trapSubsystem.setUpDownPosition(TrapConstants.kpositionUp),
+            () -> m_trapSubsystem.setUpDownPosition(0), m_trapSubsystem));
 
-    // this part is untested I have no idea if it works, the idea is that you press
-    // it once and it moves the servo to drop the note and then you press it again
-    // to move the servo back into a position where it can hold the note
+    // m_trapSubsystem.setDefaultCommand(new TrapJoystickCmd(m_trapSubsystem,
+    // () -> -MathUtil.applyDeadband(m_copilotController.getLeftY(),
+    // OIConstants.kDeadband),
+    // () -> -MathUtil.applyDeadband(m_copilotController.getRightY(),
+    // OIConstants.kDeadband)));
     m_copilotController.a().toggleOnTrue(
-        Commands.startEnd(() -> m_trapSubsystem.moveTrack(180), () -> m_trapSubsystem.moveTrack(0), m_trapSubsystem));
+        Commands.startEnd(() -> m_trapSubsystem.setTrack(160), () -> m_trapSubsystem.setTrack(0), m_trapSubsystem));
 
   }
 

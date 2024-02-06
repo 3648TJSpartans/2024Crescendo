@@ -20,13 +20,13 @@ public class EndgameUpDownCmd extends Command {
 
     @Override
     public void execute() {
-        m_trapSubsystem.moveUpDown(TrapConstants.kspeed);
+        m_trapSubsystem.setUpDownPosition(m_positionUpDown);
     }
 
-    public boolean isFinished() {
-        if (TrapSubsystem.getUpDownPosition() >= TrapConstants.kpositionUpDown) {
-            return true;
-        }
-        return false;
-    }
+    // public boolean isFinished() {
+    // if (TrapSubsystem.getUpDownPosition() >= TrapConstants.kpositionUp) {
+    // return true;
+    // }
+    // return false;
+    // }
 }

@@ -69,7 +69,7 @@ public class TrapSubsystem extends SubsystemBase {
         m_trapMotorInOut.set(speed);
     }
 
-    public void moveTrack(double angle) {
+    public void setTrack(double angle) {
         m_trapMotorTrack.set(angle);
     }
 }

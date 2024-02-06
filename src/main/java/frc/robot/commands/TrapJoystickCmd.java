@@ -26,7 +26,7 @@ public class TrapJoystickCmd extends Command {
         double speedUpDown = m_speedUpDown.get();
         double speedInOut = m_speedInOut.get();
         m_trapSubsystem.moveUpDown(speedUpDown);
-        m_trapSubsystem.moveInOut(speedInOut);
+        // m_trapSubsystem.moveInOut(speedInOut);
     }
 
     @Override

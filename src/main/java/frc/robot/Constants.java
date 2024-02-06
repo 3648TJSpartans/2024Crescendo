@@ -184,15 +184,16 @@ public final class Constants {
   }
 
   public static final class TrapConstants {
-    public static final double kTrapP = 0;
+    public static final double kTrapP = .03;
     public static final double kTrapI = 0;
     public static final double kTrapD = 0;
     public static final double kTrapFF = 0;
     public static final double kTrapMinOutput = -1;
     public static final double kTrapMaxOutput = 1;
-    public static final double kpositionUpDown = 0;
+    public static final double kpositionUp = 24;
     public static final double kpositionInOut = 0;
-    public static final double kspeed = 0;
+    public static final double kTrapEngaged = 150;
+    public static final double kTrapDisengaged = 0;
     public static final int kUpDownMotorId = 17;
     public static final int kInOutMotorId = 18;
     public static final int kTrackMotorId = 0; // Servo
@@ -201,10 +202,10 @@ public final class Constants {
 
   public static final class EndgameConstants {
     public static final double kTrapUpTime = 2.5;
-    public static final double kTrapReleaseTime = 3;
-    public static final double kclimberTime = 5;
-    public static final double kTrapOutTime = 2;
-    public static final double waitTime = 3;
+    public static final double kTrapReleaseTime = .25;
+    public static final double kclimberTime = 2;
+    public static final double kTrapOutTime = .5;
+    public static final double waitTime = .25;
 
   }
 
