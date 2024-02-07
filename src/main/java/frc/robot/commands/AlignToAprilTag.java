@@ -20,6 +20,7 @@ public class AlignToAprilTag extends Command {
     public AlignToAprilTag(SwerveSubsystem swerveSubsystem) {
 
         m_swerveSubsystem = swerveSubsystem;
+
         addRequirements(m_swerveSubsystem);
     }
 

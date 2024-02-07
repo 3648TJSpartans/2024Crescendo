@@ -32,8 +32,7 @@ import frc.robot.subsystems.Swerve.SwerveSubsystem;
 public class VisionPoseEstimator {
 
     private AprilTagFieldLayout layout;
-    private SwerveDrivePoseEstimator m_visionPoseEstimator;
-    private final SwerveSubsystem m_swerveSubsystem;
+
     private PhotonCamera photonCamera;
     private Transform3d m_robotOnCamera;
     private PoseStrategy m_poseStrategy = PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR;
@@ -41,8 +40,7 @@ public class VisionPoseEstimator {
 
     private final Pose2d[] aprilTagPoses = new Pose2d[16];
 
-    public VisionPoseEstimator(SwerveSubsystem swerveSubsystem) {
-        m_swerveSubsystem = swerveSubsystem;
+    public VisionPoseEstimator() {
         m_robotOnCamera = new Transform3d(
                 new Translation3d(LimeLightConstants.xTranslation, LimeLightConstants.yTranslation,
                         LimeLightConstants.zTranslation),
@@ -56,30 +54,13 @@ public class VisionPoseEstimator {
         photonCamera = new PhotonCamera(LimeLightConstants.cameraName);
         photonPoseEstimator = new PhotonPoseEstimator(layout, m_poseStrategy, photonCamera, m_robotOnCamera);
 
-        m_visionPoseEstimator = new SwerveDrivePoseEstimator(DriveConstants.kDriveKinematics,
-                m_swerveSubsystem.getRotation2d(), m_swerveSubsystem.getPositions(), new Pose2d());
         for (int i = 1; i < 16; i++) {
             aprilTagPoses[i] = layout.getTagPose(i).get().toPose2d();
         }
 
     }
 
-    public void update() {
-        photonPoseEstimator.update().ifPresent(estimatedRobotPose -> {
-            SmartDashboard.putNumber("Robot Pose X", estimatedRobotPose.estimatedPose.getX());
-            SmartDashboard.putNumber("Robot Pose Y", estimatedRobotPose.estimatedPose.getY());
-            m_visionPoseEstimator.addVisionMeasurement(estimatedRobotPose.estimatedPose.toPose2d(),
-                    estimatedRobotPose.timestampSeconds);
-        });
-        m_visionPoseEstimator.update(m_swerveSubsystem.getYaw(), m_swerveSubsystem.getPositions());
+    public PhotonPoseEstimator getPhotonPoseEstimator() {
+        return photonPoseEstimator;
     }
-
-    public Pose2d getVisionPose() {
-        return m_visionPoseEstimator.getEstimatedPosition();
-    }
-
-    public Pose2d getClosestAprilTag() {
-        return getVisionPose().nearest(Arrays.asList(aprilTagPoses));
-    }
-
 }
