@@ -77,6 +77,10 @@ public class SwerveSubsystem extends SubsystemBase {
         m_visionPoseEstimator = new SwerveDrivePoseEstimator(DriveConstants.kDriveKinematics,
                 this.getRotation2d(), this.getPositions(), new Pose2d());
         modules = new SwerveModule[] { m_frontLeft, m_frontRight, m_rearLeft, m_rearRight };
+
+    }
+
+    public void configAuto() {
         AutoBuilder.configureHolonomic(this::getVisionPose, this::resetOdometry,
                 this::getSpeeds, this::driveRobotRelative,
                 AutoConstants.pathFollowerConfig, this::shouldFlipPath, this);

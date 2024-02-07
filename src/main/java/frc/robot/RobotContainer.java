@@ -6,6 +6,7 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -56,14 +57,15 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-
+    NamedCommands.registerCommand("shoot", new ShooterCommandGroup(m_shooterSubsystem));
+    m_swerveSubsystem.configAuto();
+    autoChooser = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("Auto Chooser", autoChooser);
     configureSwerve();
     configureClimber();
     configureIntake();
     configureShooter();
-    autoChooser = AutoBuilder.buildAutoChooser();
-    SmartDashboard.putData("Auto Chooser", autoChooser);
-    NamedCommands.registerCommand("shoot", new ShooterCommandGroup(m_shooterSubsystem));
+
   }
 
   private void configureSwerve() {
@@ -134,6 +136,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return autoChooser.getSelected();
+    return new PathPlannerAuto("Amp1pieceAuto");
   }
 }
