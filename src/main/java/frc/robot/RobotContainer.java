@@ -5,6 +5,8 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.MathUtil;
@@ -22,6 +24,7 @@ import frc.robot.commands.Endgame.EndgameCmdGroup;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.commands.ClimberJoystickCmd;
 import frc.robot.commands.IntakeButtonCmd;
+import frc.robot.commands.ShooterCommands.RevMotorCommand;
 import frc.robot.commands.ShooterCommands.ShooterCommandGroup;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -63,6 +66,7 @@ private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
     configureTrap();
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
+    NamedCommands.registerCommand("shoot", new ShooterCommandGroup(m_shooterSubsystem));
   }
 
   private void configureSwerve() {
