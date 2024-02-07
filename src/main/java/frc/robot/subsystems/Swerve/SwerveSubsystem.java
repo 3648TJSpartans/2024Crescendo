@@ -4,12 +4,8 @@ import java.util.Optional;
 
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.util.PathPlannerLogging;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.math.estimator.PoseEstimator;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
@@ -19,6 +15,9 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.WPIUtilJNI;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.AutoConstants;
@@ -26,8 +25,7 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.vision.VisionPoseEstimator;
 
 public class SwerveSubsystem extends SubsystemBase {
-    private VisionPoseEstimator poseEstimation;
-    private boolean isFieldRelative = false;
+    // define all modules
     private final SwerveModule m_frontLeft = new SwerveModule(
             DriveConstants.kFrontLeftDrivingCanId,
             DriveConstants.kFrontLeftTurningCanId,
@@ -48,6 +46,9 @@ public class SwerveSubsystem extends SubsystemBase {
             DriveConstants.kRearRightTurningCanId,
             DriveConstants.kBackRightChassisAngularOffset);
     private SwerveModule[] modules;
+    private VisionPoseEstimator poseEstimation;
+    private SwerveDrivePoseEstimator m_visionPoseEstimator;
+    private boolean isFieldRelative = false;
     // The gyro sensor
     private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
     // Slew rate filter variables for controlling acceleration
@@ -72,7 +73,9 @@ public class SwerveSubsystem extends SubsystemBase {
             } catch (Exception e) {
             }
         }).start();
-        poseEstimation = new VisionPoseEstimator(this);
+        poseEstimation = new VisionPoseEstimator();
+        m_visionPoseEstimator = new SwerveDrivePoseEstimator(DriveConstants.kDriveKinematics,
+                this.getRotation2d(), this.getPositions(), new Pose2d());
         modules = new SwerveModule[] { m_frontLeft, m_frontRight, m_rearLeft, m_rearRight };
         AutoBuilder.configureHolonomic(this::getVisionPose, this::resetOdometry,
                 this::getSpeeds, this::driveRobotRelative,
@@ -90,16 +93,25 @@ public class SwerveSubsystem extends SubsystemBase {
                         m_rearLeft.getPosition(),
                         m_rearRight.getPosition()
                 });
-        poseEstimation.update();
+        updatePoseEstimation();
         SmartDashboard.putNumber("Gyro Pose X:", getPose().getX());
         SmartDashboard.putNumber("Gyro Pose Y:", getPose().getY());
-        SmartDashboard.putNumber("New Estimated Pose X", poseEstimation.getVisionPose().getX());
-        SmartDashboard.putNumber("New Estimated Pose Y", poseEstimation.getVisionPose().getY());
-        SmartDashboard.putNumber("New Estimated Pose X Graph", poseEstimation.getVisionPose().getX());
-        SmartDashboard.putNumber("New Estimated Pose Y Graph", poseEstimation.getVisionPose().getY());
+        SmartDashboard.putNumber("New Estimated Pose X", getVisionPose().getX());
+        SmartDashboard.putNumber("New Estimated Pose Y", getVisionPose().getY());
+        SmartDashboard.putNumber("New Estimated Pose X Graph", getVisionPose().getX());
+        SmartDashboard.putNumber("New Estimated Pose Y Graph", getVisionPose().getY());
         Optional<Alliance> ally = DriverStation.getAlliance();
         SmartDashboard.putString("Alliance Color", ally.toString());
 
+    }
+
+    public void updatePoseEstimation() {
+        poseEstimation.getPhotonPoseEstimator().update().ifPresent(estimatedRobotPose -> {
+            m_visionPoseEstimator.addVisionMeasurement(estimatedRobotPose.estimatedPose.toPose2d(),
+                    estimatedRobotPose.timestampSeconds);
+        });
+        m_visionPoseEstimator.update(this.getYaw(),
+                this.getPositions());
     }
 
     public Pose2d getPose() {
@@ -107,7 +119,7 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     public Pose2d getVisionPose() {
-        return poseEstimation.getVisionPose();
+        return m_visionPoseEstimator.getEstimatedPosition();
     }
 
     public Boolean shouldFlipPath() {
@@ -238,7 +250,4 @@ public class SwerveSubsystem extends SubsystemBase {
         return Rotation2d.fromDegrees(-m_gyro.getYaw());
     }
 
-    public Pose2d getClosestAprilTag() {
-        return poseEstimation.getClosestAprilTag();
-    }
 }
