@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.ClimberConstants;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.TrapConstants;
 import frc.robot.commands.SwerveJoystickCmd;
@@ -60,6 +61,10 @@ private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
    */
   public RobotContainer() {
     NamedCommands.registerCommand("shoot", new ShooterCommandGroup(m_shooterSubsystem));
+    NamedCommands.registerCommand("startIntake",
+        new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(IntakeConstants.IntakeSpeed)));
+    NamedCommands.registerCommand("stopIntake", new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(0)));
+
     m_swerveSubsystem.configAuto();
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
@@ -158,6 +163,6 @@ private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new PathPlannerAuto("Amp1pieceAuto");
+    return autoChooser.getSelected();
   }
 }
