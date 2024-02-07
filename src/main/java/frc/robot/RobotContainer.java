@@ -6,6 +6,7 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -58,15 +59,15 @@ private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-
- //   configureSwerve();
-    configureClimber();
-  //  configureIntake();
-    // configureShooter();
-    configureTrap();
+    NamedCommands.registerCommand("shoot", new ShooterCommandGroup(m_shooterSubsystem));
+    m_swerveSubsystem.configAuto();
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
-    NamedCommands.registerCommand("shoot", new ShooterCommandGroup(m_shooterSubsystem));
+    configureSwerve();
+    configureClimber();
+    configureIntake();
+    configureShooter();
+
   }
 
   private void configureSwerve() {
@@ -157,6 +158,6 @@ private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return autoChooser.getSelected();
+    return new PathPlannerAuto("Amp1pieceAuto");
   }
 }
