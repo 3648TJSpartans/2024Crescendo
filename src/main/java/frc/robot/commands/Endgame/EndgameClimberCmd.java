@@ -27,12 +27,12 @@ public class EndgameClimberCmd extends Command {
     public void end(boolean interrupted) {
     }
 
-    @Override
-    public boolean isFinished() {
-        if (ClimberSubsystem.getClimberPosition() >= ClimberConstants.kClimberDown) {
-            return true;
-        }
-        return false;
-    }
+    // @Override
+    // public boolean isFinished() {
+    //     if (ClimberSubsystem.getClimberPosition() >= ClimberConstants.kClimberDown) {
+    //         return true;
+    //     }
+    //     return false;
+    // }
 
 }
