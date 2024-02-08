@@ -162,12 +162,14 @@ public final class Constants {
   public static final class ClimberConstants {
     public static final int climberLeftMotorID = 11;
     public static final int climberRightMotorID = 12;
-    public static final double kClimberP = .006;
+    public static final double kClimberP = .01;
     public static final double kClimberI = 0;
     public static final double kClimberD = 0;
-    public static final double kClimberFF = .1;
+    public static final double kClimberFF = 0;
     public static final IdleMode kClimberIdleMode = IdleMode.kBrake;
     public static final double kClimberDown = 80;
+    public static final Double kClimberMinOutPut = -1.0;
+	  public static final Double kTrapMaxOutput = 1.0;
 
   }
 
@@ -190,7 +192,7 @@ public final class Constants {
     public static final double kTrapFF = 0;
     public static final double kTrapMinOutput = -1;
     public static final double kTrapMaxOutput = 1;
-    public static final double kpositionUp = 24;
+    public static final double kpositionUp = -24;
     public static final double kpositionInOut = 0;
     public static final double kTrapEngaged = 150;
     public static final double kTrapDisengaged = 0;

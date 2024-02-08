@@ -42,7 +42,7 @@ public class RobotContainer {
   private final SendableChooser<Command> autoChooser;
   // The robot's subsystems and commands are defined here...
 
-  private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
+private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
@@ -57,11 +57,11 @@ public class RobotContainer {
    */
   public RobotContainer() {
 
-    configureSwerve();
+ //   configureSwerve();
     configureClimber();
-    configureIntake();
-    configureShooter();
-    // configureTrap();
+  //  configureIntake();
+    // configureShooter();
+    configureTrap();
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
   }
@@ -103,15 +103,20 @@ public class RobotContainer {
   }
 
   private void configureClimber() {
+
     m_copilotController.leftBumper()
-        .onTrue(new InstantCommand(() -> m_climberSubsystem.setClimberPosition(ClimberConstants.kClimberDown)));
+         .onTrue(new InstantCommand(() -> m_climberSubsystem.setClimberPosition(ClimberConstants.kClimberDown)));
     m_copilotController.rightBumper().onTrue(new InstantCommand(() -> m_climberSubsystem.setClimberPosition(5)));
+  //  m_copilotController.a().onTrue(new InstantCommand(() -> m_climberSubsystem.setClimberPosition(80)));
+    // m_climberSubsystem.setDefaultCommand(new ClimberJoystickCmd(m_climberSubsystem,
+    // () -> -MathUtil.applyDeadband(m_copilotController.getLeftY(),
+    // OIConstants.kDeadband)));
   }
 
   private void configureTrap() {
 
-    m_copilotController.b()
-        .onTrue(new EndgameCmdGroup(m_trapSubsystem, m_climberSubsystem));
+    // m_copilotController.b()
+    //     .onTrue(new EndgameCmdGroup(m_trapSubsystem, m_climberSubsystem));
     m_copilotController.x()
         .toggleOnTrue(Commands.startEnd(() -> m_trapSubsystem.setUpDownPosition(TrapConstants.kpositionUp),
             () -> m_trapSubsystem.setUpDownPosition(0), m_trapSubsystem));

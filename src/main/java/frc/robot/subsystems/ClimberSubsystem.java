@@ -8,6 +8,8 @@ import com.revrobotics.SparkPIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
+import frc.robot.Constants.TrapConstants;
+import frc.robot.commands.ClimberJoystickCmd;
 
 public class ClimberSubsystem extends SubsystemBase {
     private final CANSparkMax m_climberMotor1;
@@ -18,7 +20,6 @@ public class ClimberSubsystem extends SubsystemBase {
     private final RelativeEncoder m_climberEncoder2;
 
     public ClimberSubsystem() {
-        // Motor 1
         m_climberMotor1 = new CANSparkMax(ClimberConstants.climberLeftMotorID, MotorType.kBrushless);
         m_climberEncoder1 = m_climberMotor1.getEncoder();
         m_climberPIDController1 = m_climberMotor1.getPIDController();
@@ -26,8 +27,9 @@ public class ClimberSubsystem extends SubsystemBase {
         m_climberPIDController1.setP(ClimberConstants.kClimberP);
         m_climberPIDController1.setI(ClimberConstants.kClimberI);
         m_climberPIDController1.setD(ClimberConstants.kClimberD);
-        m_climberMotor1.setIdleMode(ClimberConstants.kClimberIdleMode);
-        // Motor 2
+        m_climberPIDController1.setFF(ClimberConstants.kClimberFF);
+        m_climberPIDController1.setOutputRange(ClimberConstants.kClimberMinOutPut, ClimberConstants.kTrapMaxOutput);
+
         m_climberMotor2 = new CANSparkMax(ClimberConstants.climberRightMotorID, MotorType.kBrushless);
         m_climberEncoder2 = m_climberMotor2.getEncoder();
         m_climberPIDController2 = m_climberMotor2.getPIDController();
@@ -35,24 +37,22 @@ public class ClimberSubsystem extends SubsystemBase {
         m_climberPIDController2.setP(ClimberConstants.kClimberP);
         m_climberPIDController2.setI(ClimberConstants.kClimberI);
         m_climberPIDController2.setD(ClimberConstants.kClimberD);
-        m_climberMotor2.setIdleMode(ClimberConstants.kClimberIdleMode);
-        m_climberMotor1.burnFlash();
-        m_climberMotor2.burnFlash();
-
+        m_climberPIDController2.setFF(ClimberConstants.kClimberFF);
+        m_climberPIDController2.setOutputRange(ClimberConstants.kClimberMinOutPut, ClimberConstants.kTrapMaxOutput);
     }
 
     public void setClimberPosition(double position) {
         m_climberPIDController1.setReference(-position,
-                CANSparkMax.ControlType.kPosition);
+                    CANSparkMax.ControlType.kPosition);
         m_climberPIDController2.setReference(position,
-                CANSparkMax.ControlType.kPosition);
-        System.out.println("test");
+                    CANSparkMax.ControlType.kPosition);
 
     }
 
-    public static double getClimberPosition() {
-        double m_setPosition = m_climberEncoder1.getPosition();
-        return m_setPosition;
+
+    public double getClimberPosition() {
+        double position = m_climberEncoder1.getPosition();
+        return position;
     }
 
     public void MoveClimber(double speed) {
