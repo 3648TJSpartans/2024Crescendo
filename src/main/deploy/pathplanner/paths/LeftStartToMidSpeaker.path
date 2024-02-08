@@ -49,7 +49,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "AmpSide",
+  "folder": "LeftStartMidSpeaker",
   "previewStartingState": null,
   "useDefaultConstraints": false
 }

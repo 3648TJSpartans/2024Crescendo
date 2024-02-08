@@ -43,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "AmpSide",
+  "folder": "LeftStartLeftSpeaker",
   "previewStartingState": null,
   "useDefaultConstraints": false
 }
