@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.481379644214479,
-      "y": 7.342476299859433
+      "x": 0.7685180281204813,
+      "y": 3.4157423100144597
     },
     "rotation": 0
   },
@@ -14,24 +14,24 @@
         {
           "type": "path",
           "data": {
-            "pathName": "LeftStartToLeftSpeaker"
+            "pathName": "RightStartToMidSpeaker"
           }
         },
         {
-          "type": "path",
+          "type": "wait",
           "data": {
-            "pathName": "SpeakerToLeftNote"
+            "waitTime": 0.5
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "LeftNoteToSpeaker"
+            "name": "shoot"
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "RightStartMidSpeaker",
   "choreoAuto": false
 }

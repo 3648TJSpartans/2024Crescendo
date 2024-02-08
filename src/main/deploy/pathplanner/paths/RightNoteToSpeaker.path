@@ -8,7 +8,7 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.0180339887498935,
+        "x": 3.118499879213861,
         "y": 4.11
       },
       "isLocked": false,
@@ -20,8 +20,8 @@
         "y": 4.42
       },
       "prevControl": {
-        "x": -0.06034531628727813,
-        "y": 3.1030432808934068
+        "x": -0.4649166087868226,
+        "y": 3.4425189032146895
       },
       "nextControl": null,
       "isLocked": false,
@@ -43,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "AmpSide",
+  "folder": "RightStartRightSpeaker",
   "previewStartingState": null,
   "useDefaultConstraints": false
 }

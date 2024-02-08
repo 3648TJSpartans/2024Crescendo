@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.481379644214479,
-      "y": 7.342476299859433
+      "x": 0.7685180281204813,
+      "y": 3.4157423100144597
     },
-    "rotation": 178.31835878853136
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -14,24 +14,24 @@
         {
           "type": "path",
           "data": {
-            "pathName": "LeftStartToMidSpeaker"
+            "pathName": "RightStartToMidSpeaker"
           }
         },
         {
-          "type": "wait",
+          "type": "path",
           "data": {
-            "waitTime": 0.5
+            "pathName": "SpeakerToMiddleNote"
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "shoot"
+            "pathName": "MiddleNotetoSpeaker"
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "RightStartMidSpeaker",
   "choreoAuto": false
 }
