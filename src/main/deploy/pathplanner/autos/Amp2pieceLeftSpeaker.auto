@@ -5,7 +5,7 @@
       "x": 1.481379644214479,
       "y": 7.342476299859433
     },
-    "rotation": 178.31835878853136
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -14,19 +14,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "LeftStartToMidSpeaker"
+            "pathName": "LeftStartToLeftSpeaker"
           }
         },
         {
-          "type": "wait",
+          "type": "path",
           "data": {
-            "waitTime": 0.5
+            "pathName": "SpeakerToLeftNote"
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "shoot"
+            "pathName": "LeftNoteToSpeaker"
           }
         }
       ]
