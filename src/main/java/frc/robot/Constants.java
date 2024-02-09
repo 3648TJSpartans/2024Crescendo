@@ -241,4 +241,13 @@ public final class Constants {
     public static final double goalDistance = Units.feetToMeters(3.5);
   }
 
+  public static final class AlignConstants {
+
+    public static final double kmaxVelocityMps = 0;
+    public static final double kmaxAccelerationMpsSq = 0;
+    public static final double kmaxAngularVelocityRps = 0;
+    public static final double kmaxAngularAccelerationRpsSq = 0;
+
+  }
+
 }
