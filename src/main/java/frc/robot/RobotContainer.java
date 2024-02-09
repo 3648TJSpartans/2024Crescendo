@@ -22,6 +22,7 @@ import frc.robot.Constants.TrapConstants;
 import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.commands.TrapJoystickCmd;
 import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.commands.AlignCommands;
 import frc.robot.commands.ClimberJoystickCmd;
 import frc.robot.commands.IntakeButtonCmd;
 import frc.robot.commands.ShooterCommands.RevMotorCommand;
@@ -62,7 +63,6 @@ public class RobotContainer {
     NamedCommands.registerCommand("startIntake",
         new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(IntakeConstants.IntakeSpeed)));
     NamedCommands.registerCommand("stopIntake", new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(0)));
-
     m_swerveSubsystem.configAuto();
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
@@ -70,7 +70,6 @@ public class RobotContainer {
     configureClimber();
     configureIntake();
     configureShooter();
-
   }
 
   private void configureSwerve() {
@@ -85,6 +84,8 @@ public class RobotContainer {
     m_driverController.a().onTrue(new InstantCommand(() -> m_swerveSubsystem.setFieldRelative()));
     configureBindings();
     m_driverController.b().onTrue(new InstantCommand(() -> m_swerveSubsystem.zeroHeading()));
+    m_driverController.x().onTrue(AlignCommands.alignToAmp(m_swerveSubsystem));
+
   }
 
   private void configureIntake() {
