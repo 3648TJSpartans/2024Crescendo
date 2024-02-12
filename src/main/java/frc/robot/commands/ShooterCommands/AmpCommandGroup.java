@@ -11,7 +11,8 @@ public class AmpCommandGroup extends SequentialCommandGroup {
         m_shooterSubsystem = shooterSubsystem;
         addCommands(new RevMotorCommand(m_shooterSubsystem, ShooterConstants.shooterAmpSpeed)
                 .withTimeout(ShooterConstants.revAmpTime),
-                new ShootCommand(m_shooterSubsystem, ShooterConstants.shooterAmpSpeed, ShooterConstants.beltAmpSpeed));
+                new ShootCommand(m_shooterSubsystem, ShooterConstants.shooterAmpSpeed, ShooterConstants.beltAmpSpeed)
+                        .withTimeout(ShooterConstants.shootAmpTime));
 
     }
 }

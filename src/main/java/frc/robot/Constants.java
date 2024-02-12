@@ -186,7 +186,7 @@ public final class Constants {
     public static final double shooterAmpSpeed = .5;// TODO test all amp variables
     public static final double beltAmpSpeed = .5;
     public static final double revAmpTime = .5;
-    public static final double shootAmptime = .5;
+    public static final double shootAmpTime = .5;
 
   }
 
