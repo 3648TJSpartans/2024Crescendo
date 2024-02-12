@@ -4,14 +4,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.TrapConstants;
 import frc.robot.subsystems.TrapSubsystem;
 
-public class EndgameTrackCmd extends Command {
+public class EndgameTrackDisengagedCmd extends Command {
     private final TrapSubsystem m_trapSubsystem;
-    private final double m_speedTrack;
+    private final double m_trackPos;
     private long m_startTime;
 
-    public EndgameTrackCmd(TrapSubsystem trapSubsystem, double speedTrack) {
+    public EndgameTrackDisengagedCmd(TrapSubsystem trapSubsystem, double trackPos) {
         m_trapSubsystem = trapSubsystem;
-        m_speedTrack = speedTrack;
+        m_trackPos = trackPos;
         addRequirements(m_trapSubsystem);
     }
 
@@ -22,13 +22,17 @@ public class EndgameTrackCmd extends Command {
 
     @Override
     public void execute() {
-        m_trapSubsystem.moveTrack(TrapConstants.kspeed);
+        m_trapSubsystem.setTrack(m_trackPos);
     }
 
-    public boolean isFinished() {
-        if (System.currentTimeMillis() > m_startTime + 3000) {
-            return true;
-        }
-        return false;
+    @Override
+    public void end(boolean interrupted) {
     }
+
+    // public boolean isFinished() {
+    // if (System.currentTimeMillis() > m_startTime + 3000) {
+    // return true;
+    // }
+    // return false;
+    // }
 }

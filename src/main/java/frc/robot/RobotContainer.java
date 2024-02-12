@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -21,10 +22,12 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.TrapConstants;
 import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.commands.TrapJoystickCmd;
+import frc.robot.commands.Endgame.EndgameCmdGroup;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.commands.AlignCommands;
 import frc.robot.commands.ClimberJoystickCmd;
 import frc.robot.commands.IntakeButtonCmd;
+import frc.robot.commands.ShooterCommands.AmpCommandGroup;
 import frc.robot.commands.ShooterCommands.RevMotorCommand;
 import frc.robot.commands.ShooterCommands.ShooterCommandGroup;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -50,6 +53,7 @@ public class RobotContainer {
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
+  private final TrapSubsystem m_trapSubsystem = new TrapSubsystem();
   private final CommandXboxController m_driverController = new CommandXboxController(
       OIConstants.kDriverControllerPort);
   private final CommandXboxController m_copilotController = new CommandXboxController(
@@ -60,6 +64,7 @@ public class RobotContainer {
    */
   public RobotContainer() {
     NamedCommands.registerCommand("shoot", new ShooterCommandGroup(m_shooterSubsystem));
+    NamedCommands.registerCommand("ampShoot", new AmpCommandGroup(m_shooterSubsystem));
     NamedCommands.registerCommand("startIntake",
         new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(IntakeConstants.IntakeSpeed)));
     NamedCommands.registerCommand("stopIntake", new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(0)));
@@ -98,6 +103,7 @@ public class RobotContainer {
 
   private void configureShooter() {
     m_copilotController.a().onTrue(new ShooterCommandGroup(m_shooterSubsystem));
+
     m_copilotController.b()
         .onTrue(new InstantCommand(() -> m_shooterSubsystem.shuffleboardShooter()));
     m_copilotController.x()

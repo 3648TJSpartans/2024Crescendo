@@ -25,24 +25,24 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void revShooter(double speed) {
-        m_shooterMotor1.set(speed);
+        m_shooterMotor1.set(-speed);
         m_shooterMotor2.set(speed);
 
     }
 
     public void moveShooterIntake(double speed) {
-        m_beltMotor1.set(speed);
+        m_beltMotor1.set(-speed);
         m_beltMotor2.set(speed);
     }
 
     public void shuffleboardShooter() {
-        m_shooterMotor1.set(SmartDashboard.getNumber("Shooter Speed", 0));
+        m_shooterMotor1.set(-SmartDashboard.getNumber("Shooter Speed", 0));
         m_shooterMotor2.set(SmartDashboard.getNumber("Shooter Speed", 0));
 
     }
 
     public void shuffleboardBelts() {
-        m_beltMotor1.set(SmartDashboard.getNumber("Belt Speed", 0));
+        m_beltMotor1.set(-SmartDashboard.getNumber("Belt Speed", 0));
         m_beltMotor2.set(SmartDashboard.getNumber("Belt Speed", 0));
     }
 

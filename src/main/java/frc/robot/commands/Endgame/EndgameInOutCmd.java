@@ -20,7 +20,7 @@ public class EndgameInOutCmd extends Command {
 
     @Override
     public void execute() {
-        m_trapSubsystem.moveInOut(TrapConstants.kspeed);
+        m_trapSubsystem.moveInOut(TrapConstants.kpositionInOut);
     }
 
     public boolean isFinished() {
