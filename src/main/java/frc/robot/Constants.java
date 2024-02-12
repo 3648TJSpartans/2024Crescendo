@@ -169,7 +169,7 @@ public final class Constants {
     public static final IdleMode kClimberIdleMode = IdleMode.kBrake;
     public static final double kClimberDown = 80;
     public static final Double kClimberMinOutPut = -1.0;
-	  public static final Double kTrapMaxOutput = 1.0;
+    public static final Double kTrapMaxOutput = 1.0;
 
   }
 
@@ -179,10 +179,15 @@ public final class Constants {
     public static final int shooterMotor2Id = 15;
     public static final int beltMotorId1 = 13;
     public static final int beltMotorId2 = 16;
-    public static final double motorSpeed = -1;
-    public static final double beltMotorSpeed = 0.5;
-    public static final double revIdleTime = .5;
-    public static final double shootTime = 2;
+    public static final double shooterSpeakerSpeed = -1;
+    public static final double beltSpeakerSpeed = 0.5;
+    public static final double revSpeakerTime = .5;
+    public static final double shootSpeakerTime = 2;
+    public static final double shooterAmpSpeed = .5;// TODO test all amp variables
+    public static final double beltAmpSpeed = .5;
+    public static final double revAmpTime = .5;
+    public static final double shootAmpTime = .5;
+
   }
 
   public static final class TrapConstants {
