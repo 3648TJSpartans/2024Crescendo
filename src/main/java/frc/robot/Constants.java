@@ -10,6 +10,8 @@ import com.pathplanner.lib.util.ReplanningConfig;
 import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.math.controller.HolonomicDriveController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -230,7 +232,12 @@ public final class Constants {
   }
 
   public static final class FieldConstants {
-    public static final double goalDistance = Units.feetToMeters(3.5);
+    public static final double middleLineX = 8.0;
+    public static final Pose2d ampPoseBlue = new Pose2d(1.85, 7.62, Rotation2d.fromDegrees(180));
+    public static final Pose2d ampPoseRed = new Pose2d(14.71, 7.59, Rotation2d.fromDegrees(180));
+    public static final Pose2d middleSpeakerBlue = new Pose2d(1.39, 5.57, Rotation2d.fromDegrees(0));
+    public static final Pose2d middleSpeakerRed = new Pose2d(15.14, 5.55, Rotation2d.fromDegrees(0));
+
   }
 
   public static final class AlignConstants {

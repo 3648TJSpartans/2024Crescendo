@@ -20,6 +20,7 @@ import com.pathplanner.lib.util.ReplanningConfig;
 
 import frc.robot.Constants.AlignConstants;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.FieldConstants;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -31,26 +32,38 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
 
 public final class AlignCommands extends Command {
+  static SwerveSubsystem m_swerveSubsystem;
+
   /** Example static factory for an autonomous command. */
 
-  public static Command alignToAmp() {
-    List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(
+  public static Command alignToAmp(SwerveSubsystem swerveSubsystem) {
+    m_swerveSubsystem = swerveSubsystem;
+    Pose2d ampPose;
+    if (m_swerveSubsystem.getVisionPose().getX() < FieldConstants.middleLineX) {
+      ampPose = FieldConstants.ampPoseBlue;
 
-        new Pose2d(1.85, 7.25, Rotation2d.fromDegrees(90)));
-
+    } else {
+      ampPose = FieldConstants.ampPoseRed;
+    }
+    List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(ampPose);
     PathPlannerPath path = new PathPlannerPath(
         bezierPoints,
         new PathConstraints(AlignConstants.kmaxVelocityMps, AlignConstants.kmaxAccelerationMpsSq,
             AlignConstants.kmaxAngularVelocityRps, AlignConstants.kmaxAngularAccelerationRpsSq),
-        new GoalEndState(0.0, Rotation2d.fromDegrees(-90)));
+        new GoalEndState(0.0, ampPose.getRotation()));
 
     return AutoBuilder.followPath(path);
   }
 
-  public static Command alignToSpeakerMiddle() {
-    List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(
-
-        new Pose2d(1.47, 5.54, Rotation2d.fromDegrees(180)));
+  public static Command alignToSpeakerMiddle(SwerveSubsystem swerveSubsystem) {
+    m_swerveSubsystem = swerveSubsystem;
+    Pose2d middleSpeakerPose;
+    if (m_swerveSubsystem.getVisionPose().getX() < FieldConstants.middleLineX) {
+      middleSpeakerPose = FieldConstants.middleSpeakerBlue;
+    } else {
+      middleSpeakerPose = FieldConstants.middleSpeakerRed;
+    }
+    List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(middleSpeakerPose);
     PathPlannerPath path = new PathPlannerPath(
         bezierPoints,
         new PathConstraints(AlignConstants.kmaxVelocityMps, AlignConstants.kmaxAccelerationMpsSq,
