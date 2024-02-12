@@ -4,24 +4,24 @@
     {
       "anchor": {
         "x": 2.9,
-        "y": 4.11
+        "y": 7.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.118499879213861,
-        "y": 4.11
+        "x": 1.7993845894897031,
+        "y": 6.382975227740848
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 0.7,
-        "y": 4.42
+        "x": 1.87,
+        "y": 7.7
       },
       "prevControl": {
-        "x": 1.291814322523206,
-        "y": 4.948879222225315
+        "x": 1.3559455021020668,
+        "y": 7.125300724400575
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,11 +39,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -61.06153921899754,
+    "rotation": -90.2698791840857,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "RightStartRightSpeaker",
+  "folder": "Amp",
   "previewStartingState": null,
   "useDefaultConstraints": false
 }
