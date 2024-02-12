@@ -192,7 +192,7 @@ public final class Constants {
     public static final double kTrapFF = 0;
     public static final double kTrapMinOutput = -1;
     public static final double kTrapMaxOutput = 1;
-    public static final double kpositionUp = -24;
+    public static final double kpositionUp = 24;
     public static final double kpositionInOut = 0;
     public static final double kTrapEngaged = 150;
     public static final double kTrapDisengaged = 0;

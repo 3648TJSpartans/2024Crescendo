@@ -19,6 +19,7 @@ import frc.robot.Constants.TrapConstants;
 import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.commands.TrapJoystickCmd;
 import frc.robot.commands.Endgame.EndgameCmdGroup;
+import frc.robot.commands.Endgame.EndgameUpDownCmd;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.commands.ClimberJoystickCmd;
 import frc.robot.commands.IntakeButtonCmd;
@@ -57,7 +58,7 @@ private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
    */
   public RobotContainer() {
 
- //   configureSwerve();
+   configureSwerve();
     configureClimber();
   //  configureIntake();
     // configureShooter();
@@ -115,11 +116,15 @@ private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
 
   private void configureTrap() {
 
-    // m_copilotController.b()
-    //     .onTrue(new EndgameCmdGroup(m_trapSubsystem, m_climberSubsystem));
+    m_copilotController.b()
+        .onTrue(new EndgameCmdGroup(m_trapSubsystem, m_climberSubsystem));
     m_copilotController.x()
         .toggleOnTrue(Commands.startEnd(() -> m_trapSubsystem.setUpDownPosition(TrapConstants.kpositionUp),
             () -> m_trapSubsystem.setUpDownPosition(0), m_trapSubsystem));
+    m_trapSubsystem.setDefaultCommand(new TrapJoystickCmd(m_trapSubsystem,
+    () -> -MathUtil.applyDeadband(m_copilotController.getRightY(),
+    OIConstants.kDeadband), () -> -MathUtil.applyDeadband(m_copilotController.getRightX(),
+    OIConstants.kDeadband)));
 
     // m_trapSubsystem.setDefaultCommand(new TrapJoystickCmd(m_trapSubsystem,
     // () -> -MathUtil.applyDeadband(m_copilotController.getLeftY(),
