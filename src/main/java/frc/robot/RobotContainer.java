@@ -27,6 +27,7 @@ import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.commands.AlignCommands;
 import frc.robot.commands.ClimberJoystickCmd;
 import frc.robot.commands.IntakeButtonCmd;
+import frc.robot.commands.ShooterCommands.AmpCommandGroup;
 import frc.robot.commands.ShooterCommands.RevMotorCommand;
 import frc.robot.commands.ShooterCommands.ShooterCommandGroup;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -63,6 +64,7 @@ public class RobotContainer {
    */
   public RobotContainer() {
     NamedCommands.registerCommand("shoot", new ShooterCommandGroup(m_shooterSubsystem));
+    NamedCommands.registerCommand("ampShoot", new AmpCommandGroup(m_shooterSubsystem));
     NamedCommands.registerCommand("startIntake",
         new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(IntakeConstants.IntakeSpeed)));
     NamedCommands.registerCommand("stopIntake", new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(0)));
