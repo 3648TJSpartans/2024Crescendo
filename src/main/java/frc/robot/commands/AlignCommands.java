@@ -65,19 +65,6 @@ public final class AlignCommands extends Command {
     return AutoBuilder.followPath(path);
   }
 
-  public static Command alignToSpeaker(VisionPoseEstimator visionPoseEstimator, SwerveSubsystem swerveSubsystem) {
-    m_visionPoseEstimator = visionPoseEstimator;
-    m_swerveSubsystem = swerveSubsystem;
-
-    return null;
-
-  }
-
-  public static Command alignToStage(VisionPoseEstimator visionPoseEstimator) {
-    m_visionPoseEstimator = visionPoseEstimator;
-    return null;
-  }
-
   private AlignCommands() {
     throw new UnsupportedOperationException("This is a utility class!");
   }

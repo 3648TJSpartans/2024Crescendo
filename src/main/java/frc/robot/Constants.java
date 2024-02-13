@@ -247,6 +247,8 @@ public final class Constants {
     public static final Pose2d ampPoseRed1 = new Pose2d(14.71, 7.55, Rotation2d.fromDegrees(180));
     public static final double angleThreshold = 0; // TODO change
     public static final double speakerTargetDistance = 0; // TODO change
+    public static final int blueSpeakerAprilID = 7;
+    public static final int redSpeakerAprilID = 3;
 
   }
 

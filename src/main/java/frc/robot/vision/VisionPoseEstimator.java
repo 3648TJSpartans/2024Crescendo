@@ -42,8 +42,6 @@ public class VisionPoseEstimator {
     private final SwerveSubsystem m_swerveSubsystem;
     private final SwerveDrivePoseEstimator m_swervePoseEstimator;
 
-    private final Pose2d[] aprilTagPoses = new Pose2d[16];
-
     public VisionPoseEstimator(SwerveSubsystem swerveSubsystem) {
         m_swerveSubsystem = swerveSubsystem;
         m_swervePoseEstimator = new SwerveDrivePoseEstimator(DriveConstants.kDriveKinematics,
@@ -60,10 +58,6 @@ public class VisionPoseEstimator {
         }
         photonCamera = new PhotonCamera(LimeLightConstants.cameraName);
         m_photonPoseEstimator = new PhotonPoseEstimator(layout, m_poseStrategy, photonCamera, m_robotOnCamera);
-
-        for (int i = 1; i < 16; i++) {
-            aprilTagPoses[i] = layout.getTagPose(i).get().toPose2d();
-        }
 
     }
 
@@ -82,6 +76,7 @@ public class VisionPoseEstimator {
 
     public PhotonPipelineResult getLatestResult() {
         return photonCamera.getLatestResult();
+
     }
 
     public double getDistanceToApirlTag(PhotonTrackedTarget target, int ID) {
