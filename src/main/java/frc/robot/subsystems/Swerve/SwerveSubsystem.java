@@ -100,10 +100,13 @@ public class SwerveSubsystem extends SubsystemBase {
         updatePoseEstimation();
         SmartDashboard.putNumber("Gyro Pose X:", getPose().getX());
         SmartDashboard.putNumber("Gyro Pose Y:", getPose().getY());
+        SmartDashboard.putNumber("Gyro Pose Rotation:", getVisionPose().getRotation().getDegrees());
         SmartDashboard.putNumber("New Estimated Pose X", getVisionPose().getX());
         SmartDashboard.putNumber("New Estimated Pose Y", getVisionPose().getY());
+        SmartDashboard.putNumber("New Estimated Pose Rotation", getVisionPose().getRotation().getDegrees());
         SmartDashboard.putNumber("New Estimated Pose X Graph", getVisionPose().getX());
         SmartDashboard.putNumber("New Estimated Pose Y Graph", getVisionPose().getY());
+        SmartDashboard.putNumber("New Estimated Pose Rotation Graph", getVisionPose().getRotation().getDegrees());
         Optional<Alliance> ally = DriverStation.getAlliance();
         SmartDashboard.putString("Alliance Color", ally.toString());
 
@@ -165,6 +168,7 @@ public class SwerveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Front Right Encoder Value", m_frontRight.getAbsoluteEncoder());
         SmartDashboard.putNumber("Back Left Encoder Value", m_rearLeft.getAbsoluteEncoder());
         SmartDashboard.putNumber("Back Right Encoder Value", m_rearRight.getAbsoluteEncoder());
+        SmartDashboard.putNumber("Rotation", -m_gyro.getYaw());
 
     }
 

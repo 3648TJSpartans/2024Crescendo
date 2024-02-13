@@ -73,7 +73,7 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Chooser", autoChooser);
     configureSwerve();
     configureClimber();
-    configureIntake();
+    // configureIntake();
     configureShooter();
   }
 
@@ -89,15 +89,18 @@ public class RobotContainer {
     m_driverController.a().onTrue(new InstantCommand(() -> m_swerveSubsystem.setFieldRelative()));
     configureBindings();
     m_driverController.b().onTrue(new InstantCommand(() -> m_swerveSubsystem.zeroHeading()));
-    m_driverController.x().onTrue(AlignCommands.alignToAmp(m_swerveSubsystem));
+   // m_driverController.x().onTrue(AlignCommands.alignToAmp(m_swerveSubsystem));
 
   }
 
   private void configureIntake() {
-    m_intakeSubsystem.setDefaultCommand(
-        new IntakeButtonCmd(m_intakeSubsystem,
-            () -> m_driverController.leftBumper().getAsBoolean(),
-            () -> m_driverController.rightBumper().getAsBoolean()));
+    m_driverController.leftBumper().onTrue(new InstantCommand(()-> m_intakeSubsystem.setIntakeSpeed(IntakeConstants.IntakeSpeed)));
+    m_driverController.rightBumper().onTrue(new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(-IntakeConstants.IntakeSpeed)));
+    m_driverController.leftBumper().onFalse(new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(0)));
+    // m_intakeSubsystem.setDefaultCommand(
+    //     new IntakeButtonCmd(m_intakeSubsystem,
+    //         () -> m_driverController.leftBumper().getAsBoolean(),
+    //         () -> m_driverController.rightBumper().getAsBoolean()));
 
   }
 

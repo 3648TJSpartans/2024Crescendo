@@ -36,43 +36,43 @@ public final class AlignCommands extends Command {
 
   /** Example static factory for an autonomous command. */
 
-  public static Command alignToAmp(SwerveSubsystem swerveSubsystem) {
-    m_swerveSubsystem = swerveSubsystem;
-    Pose2d ampPose;
-    if (m_swerveSubsystem.getVisionPose().getX() < FieldConstants.middleLineX) {
-      ampPose = FieldConstants.ampPoseBlue;
+  // public static Command alignToAmp(SwerveSubsystem swerveSubsystem) {
+  //   m_swerveSubsystem = swerveSubsystem;
+  //   Pose2d ampPose;
+  //   if (m_swerveSubsystem.getVisionPose().getX() < FieldConstants.middleLineX) {
+  //     ampPose = FieldConstants.ampPoseBlue;
 
-    } else {
-      ampPose = FieldConstants.ampPoseRed;
-    }
-    List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(ampPose);
-    PathPlannerPath path = new PathPlannerPath(
-        bezierPoints,
-        new PathConstraints(AlignConstants.kmaxVelocityMps, AlignConstants.kmaxAccelerationMpsSq,
-            AlignConstants.kmaxAngularVelocityRps, AlignConstants.kmaxAngularAccelerationRpsSq),
-        new GoalEndState(0.0, ampPose.getRotation()));
+  //   } else {
+  //     ampPose = FieldConstants.ampPoseRed;
+  //   }
+  //   List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(ampPose);
+  //   PathPlannerPath path = new PathPlannerPath(
+  //       bezierPoints,
+  //       new PathConstraints(AlignConstants.kmaxVelocityMps, AlignConstants.kmaxAccelerationMpsSq,
+  //           AlignConstants.kmaxAngularVelocityRps, AlignConstants.kmaxAngularAccelerationRpsSq),
+  //       new GoalEndState(0.0, ampPose.getRotation()));
 
-    return AutoBuilder.followPath(path);
-  }
+  //   return AutoBuilder.followPath(path);
+  // }
 
-  public static Command alignToSpeakerMiddle(SwerveSubsystem swerveSubsystem) {
-    m_swerveSubsystem = swerveSubsystem;
-    Pose2d middleSpeakerPose;
-    if (m_swerveSubsystem.getVisionPose().getX() < FieldConstants.middleLineX) {
-      middleSpeakerPose = FieldConstants.middleSpeakerBlue;
-    } else {
-      middleSpeakerPose = FieldConstants.middleSpeakerRed;
-    }
-    List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(middleSpeakerPose);
-    PathPlannerPath path = new PathPlannerPath(
-        bezierPoints,
-        new PathConstraints(AlignConstants.kmaxVelocityMps, AlignConstants.kmaxAccelerationMpsSq,
-            AlignConstants.kmaxAngularVelocityRps, AlignConstants.kmaxAngularAccelerationRpsSq),
-        new GoalEndState(0.0, Rotation2d.fromDegrees(180)));
+  // public static Command alignToSpeakerMiddle(SwerveSubsystem swerveSubsystem) {
+  //   m_swerveSubsystem = swerveSubsystem;
+  //   Pose2d middleSpeakerPose;
+  //   if (m_swerveSubsystem.getVisionPose().getX() < FieldConstants.middleLineX) {
+  //     middleSpeakerPose = FieldConstants.middleSpeakerBlue;
+  //   } else {
+  //     middleSpeakerPose = FieldConstants.middleSpeakerRed;
+  //   }
+  //   List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(middleSpeakerPose);
+  //   PathPlannerPath path = new PathPlannerPath(
+  //       bezierPoints,
+  //       new PathConstraints(AlignConstants.kmaxVelocityMps, AlignConstants.kmaxAccelerationMpsSq,
+  //           AlignConstants.kmaxAngularVelocityRps, AlignConstants.kmaxAngularAccelerationRpsSq),
+  //       new GoalEndState(0.0, Rotation2d.fromDegrees(180)));
 
-    return AutoBuilder.followPath(path);
+  //   return AutoBuilder.followPath(path);
 
-  }
+  // }
 
   private AlignCommands() {
     throw new UnsupportedOperationException("This is a utility class!");
