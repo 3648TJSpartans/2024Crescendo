@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -22,6 +23,7 @@ import frc.robot.Constants.AlignConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.FieldConstants;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
+import frc.robot.vision.VisionPoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -32,47 +34,49 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
 
 public final class AlignCommands extends Command {
-  static SwerveSubsystem m_swerveSubsystem;
+  private static VisionPoseEstimator m_visionPoseEstimator;
+  private static SwerveSubsystem m_swerveSubsystem;
 
   /** Example static factory for an autonomous command. */
 
-  // public static Command alignToAmp(SwerveSubsystem swerveSubsystem) {
-  //   m_swerveSubsystem = swerveSubsystem;
-  //   Pose2d ampPose;
-  //   if (m_swerveSubsystem.getVisionPose().getX() < FieldConstants.middleLineX) {
-  //     ampPose = FieldConstants.ampPoseBlue;
+  public static Command alignToAmp(VisionPoseEstimator visionPoseEstimator) {
+    m_visionPoseEstimator = visionPoseEstimator;
+    Pose2d ampPose1;
+    Pose2d ampPose2;
+    List<Translation2d> bezierPoints;
+    if (m_visionPoseEstimator.getVisionPose().getX() < FieldConstants.middleLineX) {
+      ampPose2 = FieldConstants.ampPoseBlue2;
+      ampPose1 = FieldConstants.ampPoseBlue1;
 
-  //   } else {
-  //     ampPose = FieldConstants.ampPoseRed;
-  //   }
-  //   List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(ampPose);
-  //   PathPlannerPath path = new PathPlannerPath(
-  //       bezierPoints,
-  //       new PathConstraints(AlignConstants.kmaxVelocityMps, AlignConstants.kmaxAccelerationMpsSq,
-  //           AlignConstants.kmaxAngularVelocityRps, AlignConstants.kmaxAngularAccelerationRpsSq),
-  //       new GoalEndState(0.0, ampPose.getRotation()));
+      bezierPoints = PathPlannerPath.bezierFromPoses(ampPose1, ampPose2);
 
-  //   return AutoBuilder.followPath(path);
-  // }
+    } else {
+      ampPose2 = FieldConstants.ampPoseRed2;
+      ampPose1 = FieldConstants.ampPoseRed1;
+      bezierPoints = PathPlannerPath.bezierFromPoses(ampPose1, ampPose2);
+    }
 
-  // public static Command alignToSpeakerMiddle(SwerveSubsystem swerveSubsystem) {
-  //   m_swerveSubsystem = swerveSubsystem;
-  //   Pose2d middleSpeakerPose;
-  //   if (m_swerveSubsystem.getVisionPose().getX() < FieldConstants.middleLineX) {
-  //     middleSpeakerPose = FieldConstants.middleSpeakerBlue;
-  //   } else {
-  //     middleSpeakerPose = FieldConstants.middleSpeakerRed;
-  //   }
-  //   List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(middleSpeakerPose);
-  //   PathPlannerPath path = new PathPlannerPath(
-  //       bezierPoints,
-  //       new PathConstraints(AlignConstants.kmaxVelocityMps, AlignConstants.kmaxAccelerationMpsSq,
-  //           AlignConstants.kmaxAngularVelocityRps, AlignConstants.kmaxAngularAccelerationRpsSq),
-  //       new GoalEndState(0.0, Rotation2d.fromDegrees(180)));
+    PathPlannerPath path = new PathPlannerPath(
+        bezierPoints,
+        new PathConstraints(AlignConstants.kmaxVelocityMps, AlignConstants.kmaxAccelerationMpsSq,
+            AlignConstants.kmaxAngularVelocityRps, AlignConstants.kmaxAngularAccelerationRpsSq),
+        new GoalEndState(0.0, ampPose1.getRotation()));
 
-  //   return AutoBuilder.followPath(path);
+    return AutoBuilder.followPath(path);
+  }
 
-  // }
+  public static Command alignToSpeaker(VisionPoseEstimator visionPoseEstimator, SwerveSubsystem swerveSubsystem) {
+    m_visionPoseEstimator = visionPoseEstimator;
+    m_swerveSubsystem = swerveSubsystem;
+
+    return null;
+
+  }
+
+  public static Command alignToStage(VisionPoseEstimator visionPoseEstimator) {
+    m_visionPoseEstimator = visionPoseEstimator;
+    return null;
+  }
 
   private AlignCommands() {
     throw new UnsupportedOperationException("This is a utility class!");
