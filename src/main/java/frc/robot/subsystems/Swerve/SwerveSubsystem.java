@@ -20,7 +20,7 @@ import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Utils.ShuffleBoardSubsystem;
 
-public class SwerveSubsystem extends SubsystemBase {
+public class SwerveSubsystem extends ShuffleBoardSubsystem {
     private boolean isFieldRelative = false;
     private final SwerveModule m_frontLeft = new SwerveModule(
             DriveConstants.kFrontLeftDrivingCanId,
@@ -43,8 +43,6 @@ public class SwerveSubsystem extends SubsystemBase {
             DriveConstants.kBackRightChassisAngularOffset);
     private SwerveModule[] modules;
 
-    private final ShuffleBoardSubsystem m_shuffleBoardSubsystem;
-
     // The gyro sensor
     private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
     // Slew rate filter variables for controlling acceleration
@@ -62,6 +60,8 @@ public class SwerveSubsystem extends SubsystemBase {
             });
 
     public SwerveSubsystem() {
+        // This is required to call the constructor of the ShuffleBoardSubsystem
+        super();
         new Thread(() -> {
             try {
                 Thread.sleep(1000);
@@ -73,12 +73,12 @@ public class SwerveSubsystem extends SubsystemBase {
         AutoBuilder.configureHolonomic(this::getPose, this::resetOdometry,
                 this::getSpeeds, this::driveRobotRelative,
                 AutoConstants.pathFollowerConfig, this::shouldFlipPath, this);
-        m_shuffleBoardSubsystem = new ShuffleBoardSubsystem(this.getName());
-        m_shuffleBoardSubsystem.addValsbyClass(this.getName(), this.getClass());
     }
 
     @Override
     public void periodic() {
+        // This is required to call the periodic method of the ShuffleBoardSubsystem
+        super.periodic();
         // Update the odometry in the periodic block
         m_odometry.update(
                 Rotation2d.fromDegrees(m_gyro.getAngle()),
