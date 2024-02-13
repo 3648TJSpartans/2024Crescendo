@@ -43,7 +43,6 @@ public class SwerveSubsystem extends SubsystemBase {
             DriveConstants.kBackRightChassisAngularOffset);
     private SwerveModule[] modules;
 
-    private final CANSparkMax[] m_motors;
     private final ShuffleBoardSubsystem m_shuffleBoardSubsystem;
 
     // The gyro sensor
@@ -74,11 +73,8 @@ public class SwerveSubsystem extends SubsystemBase {
         AutoBuilder.configureHolonomic(this::getPose, this::resetOdometry,
                 this::getSpeeds, this::driveRobotRelative,
                 AutoConstants.pathFollowerConfig, this::shouldFlipPath, this);
-        m_motors = new CANSparkMax[] { m_frontLeft.getDrivingMotor(), m_frontLeft.getTurningMotor(),
-                m_frontRight.getDrivingMotor(), m_frontRight.getTurningMotor(), m_rearLeft.getDrivingMotor(),
-                m_rearLeft.getTurningMotor(), m_rearRight.getDrivingMotor(), m_rearRight.getTurningMotor() };
         m_shuffleBoardSubsystem = new ShuffleBoardSubsystem(this.getName());
-        m_shuffleBoardSubsystem.addVals(this.getName(), m_motors);
+        m_shuffleBoardSubsystem.addValsbyClass(this.getName(), this.getClass());
     }
 
     @Override

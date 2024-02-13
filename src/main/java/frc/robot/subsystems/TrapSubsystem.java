@@ -16,7 +16,6 @@ public class TrapSubsystem extends SubsystemBase {
     private final CANSparkMax m_trapMotorUpDown;
     private final CANSparkMax m_trapMotorInOut;
     private final CANSparkMax m_trapMotorTrack;
-    private final CANSparkMax[] m_motors;
     private static AbsoluteEncoder m_trapEncoderAbsolute;
     private static RelativeEncoder m_trapEncoderRelative;
     private final SparkPIDController m_UpDownPIDController;
@@ -44,9 +43,8 @@ public class TrapSubsystem extends SubsystemBase {
         // Track Motor
         m_trapMotorTrack = new CANSparkMax(TrapConstants.kTrackMotorId, MotorType.kBrushless);
 
-        m_motors = new CANSparkMax[] { m_trapMotorUpDown, m_trapMotorInOut, m_trapMotorTrack };
         m_shuffleBoardSubsystem = new ShuffleBoardSubsystem(this.getName());
-        m_shuffleBoardSubsystem.addVals(this.getName(), m_motors);
+        m_shuffleBoardSubsystem.addValsbyClass(this.getName(), this.getClass());
 
         m_logSubsystem = new LogSubsystem(this.getName());
     }

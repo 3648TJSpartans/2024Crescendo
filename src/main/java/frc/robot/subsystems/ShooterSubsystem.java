@@ -12,14 +12,11 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.Utils.LogSubsystem;
 import frc.robot.Utils.ShuffleBoardSubsystem;
 
-import java.util.ArrayList;
-
 public class ShooterSubsystem extends SubsystemBase {
     private final CANSparkMax m_shooterMotor1;
     private final CANSparkMax m_shooterMotor2;
     private final CANSparkMax m_beltMotor1;
     private final CANSparkMax m_beltMotor2;
-    private final CANSparkMax[] m_motors;
     private final ShuffleBoardSubsystem m_shuffleBoardSubsystem;
     private final LogSubsystem m_logSubsystem;
 
@@ -30,9 +27,8 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterMotor1.setInverted(true);
         m_beltMotor1 = new CANSparkMax(ShooterConstants.beltMotorId1, MotorType.kBrushless);
         m_beltMotor2 = new CANSparkMax(ShooterConstants.beltMotorId2, MotorType.kBrushless);
-        m_motors = new CANSparkMax[] { m_beltMotor1, m_beltMotor2, m_shooterMotor1, m_shooterMotor2 };
         m_shuffleBoardSubsystem = new ShuffleBoardSubsystem(this.getName());
-        m_shuffleBoardSubsystem.addVals(this.getName(), m_motors);
+        m_shuffleBoardSubsystem.addValsbyClass(this.getName(), this.getClass());
 
         m_logSubsystem = new LogSubsystem(this.getName());
     }
