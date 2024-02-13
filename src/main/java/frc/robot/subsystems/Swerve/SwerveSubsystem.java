@@ -46,8 +46,8 @@ public class SwerveSubsystem extends SubsystemBase {
             DriveConstants.kRearRightTurningCanId,
             DriveConstants.kBackRightChassisAngularOffset);
     private SwerveModule[] modules;
-    private VisionPoseEstimator poseEstimation;
-    private SwerveDrivePoseEstimator m_visionPoseEstimator;
+    private VisionPoseEstimator visionPoseEstimation;
+    private SwerveDrivePoseEstimator m_swervePoseEstimator;
     private boolean isFieldRelative = false;
     // The gyro sensor
     private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
@@ -73,8 +73,8 @@ public class SwerveSubsystem extends SubsystemBase {
             } catch (Exception e) {
             }
         }).start();
-        poseEstimation = new VisionPoseEstimator();
-        m_visionPoseEstimator = new SwerveDrivePoseEstimator(DriveConstants.kDriveKinematics,
+        visionPoseEstimation = new VisionPoseEstimator();
+        m_swervePoseEstimator = new SwerveDrivePoseEstimator(DriveConstants.kDriveKinematics,
                 this.getRotation2d(), this.getPositions(), new Pose2d());
         modules = new SwerveModule[] { m_frontLeft, m_frontRight, m_rearLeft, m_rearRight };
 
@@ -110,11 +110,11 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     public void updatePoseEstimation() {
-        poseEstimation.getPhotonPoseEstimator().update().ifPresent(estimatedRobotPose -> {
-            m_visionPoseEstimator.addVisionMeasurement(estimatedRobotPose.estimatedPose.toPose2d(),
+        visionPoseEstimation.getPhotonPoseEstimator().update().ifPresent(estimatedRobotPose -> {
+            m_swervePoseEstimator.addVisionMeasurement(estimatedRobotPose.estimatedPose.toPose2d(),
                     estimatedRobotPose.timestampSeconds);
         });
-        m_visionPoseEstimator.update(this.getYaw(),
+        m_swervePoseEstimator.update(this.getYaw(),
                 this.getPositions());
     }
 
@@ -123,7 +123,7 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     public Pose2d getVisionPose() {
-        return m_visionPoseEstimator.getEstimatedPosition();
+        return m_swervePoseEstimator.getEstimatedPosition();
     }
 
     public Boolean shouldFlipPath() {
@@ -243,11 +243,6 @@ public class SwerveSubsystem extends SubsystemBase {
 
     public double getTurnRate() {
         return m_gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
-    }
-
-    public Rotation3d getGyro() {
-        return new Rotation3d(Math.toRadians(m_gyro.getRoll()), Math.toRadians(m_gyro.getPitch()),
-                Math.toRadians(m_gyro.getYaw()));
     }
 
     public Rotation2d getYaw() {
