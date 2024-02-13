@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -38,40 +39,40 @@ public final class AlignCommands extends Command {
 
   public static Command alignToAmp(SwerveSubsystem swerveSubsystem) {
     m_swerveSubsystem = swerveSubsystem;
-    Pose2d ampPose;
+    Pose2d ampPose1;
+    Pose2d ampPose2;
+    List<Translation2d> bezierPoints;
     if (m_swerveSubsystem.getVisionPose().getX() < FieldConstants.middleLineX) {
-      ampPose = FieldConstants.ampPoseBlue;
+      ampPose2 = FieldConstants.ampPoseBlue2;
+      ampPose1 = FieldConstants.ampPoseBlue1;
+
+      bezierPoints = PathPlannerPath.bezierFromPoses(ampPose1, ampPose2);
 
     } else {
-      ampPose = FieldConstants.ampPoseRed;
+      ampPose2 = FieldConstants.ampPoseRed2;
+      ampPose1 = FieldConstants.ampPoseRed1;
+      bezierPoints = PathPlannerPath.bezierFromPoses(ampPose1, ampPose2);
     }
-    List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(ampPose);
+
     PathPlannerPath path = new PathPlannerPath(
         bezierPoints,
         new PathConstraints(AlignConstants.kmaxVelocityMps, AlignConstants.kmaxAccelerationMpsSq,
             AlignConstants.kmaxAngularVelocityRps, AlignConstants.kmaxAngularAccelerationRpsSq),
-        new GoalEndState(0.0, ampPose.getRotation()));
+        new GoalEndState(0.0, ampPose1.getRotation()));
 
     return AutoBuilder.followPath(path);
   }
 
-  public static Command alignToSpeakerMiddle(SwerveSubsystem swerveSubsystem) {
+  public static Command alignToSpeaker(SwerveSubsystem swerveSubsystem) {
     m_swerveSubsystem = swerveSubsystem;
-    Pose2d middleSpeakerPose;
-    if (m_swerveSubsystem.getVisionPose().getX() < FieldConstants.middleLineX) {
-      middleSpeakerPose = FieldConstants.middleSpeakerBlue;
-    } else {
-      middleSpeakerPose = FieldConstants.middleSpeakerRed;
-    }
-    List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(middleSpeakerPose);
-    PathPlannerPath path = new PathPlannerPath(
-        bezierPoints,
-        new PathConstraints(AlignConstants.kmaxVelocityMps, AlignConstants.kmaxAccelerationMpsSq,
-            AlignConstants.kmaxAngularVelocityRps, AlignConstants.kmaxAngularAccelerationRpsSq),
-        new GoalEndState(0.0, Rotation2d.fromDegrees(180)));
 
-    return AutoBuilder.followPath(path);
+    return null;
 
+  }
+
+  public static Command alignToStage(SwerveSubsystem swerveSubsystem) {
+    m_swerveSubsystem = swerveSubsystem;
+    return null;
   }
 
   private AlignCommands() {
