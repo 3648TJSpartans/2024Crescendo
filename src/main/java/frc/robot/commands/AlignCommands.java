@@ -35,6 +35,7 @@ import frc.robot.subsystems.Swerve.SwerveSubsystem;
 
 public final class AlignCommands extends Command {
   private static VisionPoseEstimator m_visionPoseEstimator;
+  private static SwerveSubsystem m_swerveSubsystem;
 
   /** Example static factory for an autonomous command. */
 
@@ -64,8 +65,9 @@ public final class AlignCommands extends Command {
     return AutoBuilder.followPath(path);
   }
 
-  public static Command alignToSpeaker(VisionPoseEstimator visionPoseEstimator) {
+  public static Command alignToSpeaker(VisionPoseEstimator visionPoseEstimator, SwerveSubsystem swerveSubsystem) {
     m_visionPoseEstimator = visionPoseEstimator;
+    m_swerveSubsystem = swerveSubsystem;
 
     return null;
 

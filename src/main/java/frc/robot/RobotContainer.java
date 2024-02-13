@@ -49,7 +49,7 @@ import frc.robot.vision.VisionPoseEstimator;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final SendableChooser<Command> autoChooser;
+  private SendableChooser<Command> autoChooser;
   // The robot's subsystems and commands are defined here...
   private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
@@ -66,16 +66,9 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    NamedCommands.registerCommand("shoot", new ShooterCommandGroup(m_shooterSubsystem));
-    NamedCommands.registerCommand("ampShoot", new AmpCommandGroup(m_shooterSubsystem));
-    NamedCommands.registerCommand("startIntake",
-        new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(IntakeConstants.IntakeSpeed)));
-    NamedCommands.registerCommand("stopIntake", new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(0)));
     configAuto();
     m_visionPoseEstimator.updateVisionPose();
 
-    autoChooser = AutoBuilder.buildAutoChooser();
-    SmartDashboard.putData("Auto Chooser", autoChooser);
     configureSwerve();
     configureClimber();
     configureIntake();
@@ -129,9 +122,17 @@ public class RobotContainer {
   }
 
   public void configAuto() {
+    NamedCommands.registerCommand("shoot", new ShooterCommandGroup(m_shooterSubsystem));
+    NamedCommands.registerCommand("ampShoot", new AmpCommandGroup(m_shooterSubsystem));
+    NamedCommands.registerCommand("startIntake",
+        new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(IntakeConstants.IntakeSpeed)));
+    NamedCommands.registerCommand("stopIntake", new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(0)));
     AutoBuilder.configureHolonomic(m_visionPoseEstimator::getVisionPose, m_swerveSubsystem::resetOdometry,
         m_swerveSubsystem::getSpeeds, m_swerveSubsystem::driveRobotRelative,
         AutoConstants.pathFollowerConfig, this::shouldFlipPath, m_swerveSubsystem);
+    autoChooser = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("Auto Chooser", autoChooser);
+
   }
 
   public Boolean shouldFlipPath() {
