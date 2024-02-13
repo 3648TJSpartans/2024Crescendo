@@ -46,8 +46,6 @@ public class SwerveSubsystem extends SubsystemBase {
             DriveConstants.kRearRightTurningCanId,
             DriveConstants.kBackRightChassisAngularOffset);
     private SwerveModule[] modules;
-    private VisionPoseEstimator visionPoseEstimation;
-    private SwerveDrivePoseEstimator m_swervePoseEstimator;
     private boolean isFieldRelative = false;
     // The gyro sensor
     private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
@@ -73,17 +71,9 @@ public class SwerveSubsystem extends SubsystemBase {
             } catch (Exception e) {
             }
         }).start();
-        visionPoseEstimation = new VisionPoseEstimator();
-        m_swervePoseEstimator = new SwerveDrivePoseEstimator(DriveConstants.kDriveKinematics,
-                this.getRotation2d(), this.getPositions(), new Pose2d());
+
         modules = new SwerveModule[] { m_frontLeft, m_frontRight, m_rearLeft, m_rearRight };
 
-    }
-
-    public void configAuto() {
-        AutoBuilder.configureHolonomic(this::getVisionPose, this::resetOdometry,
-                this::getSpeeds, this::driveRobotRelative,
-                AutoConstants.pathFollowerConfig, this::shouldFlipPath, this);
     }
 
     @Override
@@ -97,42 +87,21 @@ public class SwerveSubsystem extends SubsystemBase {
                         m_rearLeft.getPosition(),
                         m_rearRight.getPosition()
                 });
-        updatePoseEstimation();
         SmartDashboard.putNumber("Gyro Pose X:", getPose().getX());
         SmartDashboard.putNumber("Gyro Pose Y:", getPose().getY());
-        SmartDashboard.putNumber("New Estimated Pose X", getVisionPose().getX());
-        SmartDashboard.putNumber("New Estimated Pose Y", getVisionPose().getY());
-        SmartDashboard.putNumber("New Estimated Pose X Graph", getVisionPose().getX());
-        SmartDashboard.putNumber("New Estimated Pose Y Graph", getVisionPose().getY());
-        Optional<Alliance> ally = DriverStation.getAlliance();
-        SmartDashboard.putString("Alliance Color", ally.toString());
+        // SmartDashboard.putNumber("New Estimated Pose X", getVisionPose().getX());
+        // SmartDashboard.putNumber("New Estimated Pose Y", getVisionPose().getY());
+        // SmartDashboard.putNumber("New Estimated Pose X Graph",
+        // getVisionPose().getX());
+        // SmartDashboard.putNumber("New Estimated Pose Y Graph",
+        // getVisionPose().getY());
+        // Optional<Alliance> ally = DriverStation.getAlliance();
+        // SmartDashboard.putString("Alliance Color", ally.toString());
 
-    }
-
-    public void updatePoseEstimation() {
-        visionPoseEstimation.getPhotonPoseEstimator().update().ifPresent(estimatedRobotPose -> {
-            m_swervePoseEstimator.addVisionMeasurement(estimatedRobotPose.estimatedPose.toPose2d(),
-                    estimatedRobotPose.timestampSeconds);
-        });
-        m_swervePoseEstimator.update(this.getYaw(),
-                this.getPositions());
     }
 
     public Pose2d getPose() {
         return m_odometry.getPoseMeters();
-    }
-
-    public Pose2d getVisionPose() {
-        return m_swervePoseEstimator.getEstimatedPosition();
-    }
-
-    public Boolean shouldFlipPath() {
-        var alliance = DriverStation.getAlliance();
-        if (alliance.isPresent()) {
-            return alliance.get() == DriverStation.Alliance.Red;
-        } else {
-            return false;
-        }
     }
 
     public void resetOdometry(Pose2d pose) {
@@ -239,10 +208,6 @@ public class SwerveSubsystem extends SubsystemBase {
         m_frontRight.stop();
         m_rearLeft.stop();
         m_rearRight.stop();
-    }
-
-    public double getTurnRate() {
-        return m_gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
     }
 
     public Rotation2d getYaw() {

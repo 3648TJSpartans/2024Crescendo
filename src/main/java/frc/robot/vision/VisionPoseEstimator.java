@@ -37,10 +37,15 @@ public class VisionPoseEstimator {
     private Transform3d m_robotOnCamera;
     private PoseStrategy m_poseStrategy = PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR;
     private PhotonPoseEstimator photonPoseEstimator;
+    private final SwerveSubsystem m_swerveSubsystem;
+    private final SwerveDrivePoseEstimator m_swervePoseEstimator;
 
     private final Pose2d[] aprilTagPoses = new Pose2d[16];
 
-    public VisionPoseEstimator() {
+    public VisionPoseEstimator(SwerveSubsystem swerveSubsystem) {
+        m_swerveSubsystem = swerveSubsystem;
+        m_swervePoseEstimator = new SwerveDrivePoseEstimator(DriveConstants.kDriveKinematics,
+                m_swerveSubsystem.getRotation2d(), m_swerveSubsystem.getPositions(), new Pose2d());
         m_robotOnCamera = new Transform3d(
                 new Translation3d(LimeLightConstants.xTranslation, LimeLightConstants.yTranslation,
                         LimeLightConstants.zTranslation),
@@ -60,7 +65,17 @@ public class VisionPoseEstimator {
 
     }
 
-    public PhotonPoseEstimator getPhotonPoseEstimator() {
-        return photonPoseEstimator;
+    public void updateVisionPose() {
+        photonPoseEstimator.update().ifPresent(estimatedRobotPose -> {
+            m_swervePoseEstimator.addVisionMeasurement(estimatedRobotPose.estimatedPose.toPose2d(),
+                    estimatedRobotPose.timestampSeconds);
+        });
+        m_swervePoseEstimator.update(m_swerveSubsystem.getYaw(),
+                m_swerveSubsystem.getPositions());
     }
+
+    public Pose2d getVisionPose() {
+        return m_swervePoseEstimator.getEstimatedPosition();
+    }
+
 }

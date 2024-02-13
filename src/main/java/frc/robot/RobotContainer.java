@@ -8,6 +8,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.MathUtil;
@@ -16,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.OIConstants;
@@ -34,6 +36,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.TrapSubsystem;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
+import frc.robot.vision.VisionPoseEstimator;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -48,12 +51,12 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final SendableChooser<Command> autoChooser;
   // The robot's subsystems and commands are defined here...
-
   private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   private final TrapSubsystem m_trapSubsystem = new TrapSubsystem();
+  private final VisionPoseEstimator m_visionPoseEstimator = new VisionPoseEstimator(m_swerveSubsystem);
   private final CommandXboxController m_driverController = new CommandXboxController(
       OIConstants.kDriverControllerPort);
   private final CommandXboxController m_copilotController = new CommandXboxController(
@@ -68,7 +71,9 @@ public class RobotContainer {
     NamedCommands.registerCommand("startIntake",
         new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(IntakeConstants.IntakeSpeed)));
     NamedCommands.registerCommand("stopIntake", new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(0)));
-    m_swerveSubsystem.configAuto();
+    configAuto();
+    m_visionPoseEstimator.updateVisionPose();
+
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
     configureSwerve();
@@ -87,9 +92,8 @@ public class RobotContainer {
             OIConstants.kDeadband));
     m_swerveSubsystem.setDefaultCommand(swerveJoystickCmd);
     m_driverController.a().onTrue(new InstantCommand(() -> m_swerveSubsystem.setFieldRelative()));
-    configureBindings();
     m_driverController.b().onTrue(new InstantCommand(() -> m_swerveSubsystem.zeroHeading()));
-    m_driverController.x().onTrue(AlignCommands.alignToAmp(m_swerveSubsystem));
+    m_driverController.x().onTrue(AlignCommands.alignToAmp(m_visionPoseEstimator));
 
   }
 
@@ -124,22 +128,19 @@ public class RobotContainer {
     m_copilotController.rightBumper().onTrue(new InstantCommand(() -> m_climberSubsystem.setClimberPosition(5)));
   }
 
-  /**
-   * Use this method to define your trigger->command mappings. Triggers can be
-   * created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with
-   * an arbitrary
-   * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for
-   * {@link
-   * CommandXboxController
-   * Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or
-   * {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
-   * joysticks}.
-   */
-  private void configureBindings() {
+  public void configAuto() {
+    AutoBuilder.configureHolonomic(m_visionPoseEstimator::getVisionPose, m_swerveSubsystem::resetOdometry,
+        m_swerveSubsystem::getSpeeds, m_swerveSubsystem::driveRobotRelative,
+        AutoConstants.pathFollowerConfig, this::shouldFlipPath, m_swerveSubsystem);
+  }
 
+  public Boolean shouldFlipPath() {
+    var alliance = DriverStation.getAlliance();
+    if (alliance.isPresent()) {
+      return alliance.get() == DriverStation.Alliance.Red;
+    } else {
+      return false;
+    }
   }
 
   /**

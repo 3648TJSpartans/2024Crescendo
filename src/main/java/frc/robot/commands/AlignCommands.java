@@ -23,6 +23,7 @@ import frc.robot.Constants.AlignConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.FieldConstants;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
+import frc.robot.vision.VisionPoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -33,16 +34,16 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
 
 public final class AlignCommands extends Command {
-  static SwerveSubsystem m_swerveSubsystem;
+  private static VisionPoseEstimator m_visionPoseEstimator;
 
   /** Example static factory for an autonomous command. */
 
-  public static Command alignToAmp(SwerveSubsystem swerveSubsystem) {
-    m_swerveSubsystem = swerveSubsystem;
+  public static Command alignToAmp(VisionPoseEstimator visionPoseEstimator) {
+    m_visionPoseEstimator = visionPoseEstimator;
     Pose2d ampPose1;
     Pose2d ampPose2;
     List<Translation2d> bezierPoints;
-    if (m_swerveSubsystem.getVisionPose().getX() < FieldConstants.middleLineX) {
+    if (m_visionPoseEstimator.getVisionPose().getX() < FieldConstants.middleLineX) {
       ampPose2 = FieldConstants.ampPoseBlue2;
       ampPose1 = FieldConstants.ampPoseBlue1;
 
@@ -63,15 +64,15 @@ public final class AlignCommands extends Command {
     return AutoBuilder.followPath(path);
   }
 
-  public static Command alignToSpeaker(SwerveSubsystem swerveSubsystem) {
-    m_swerveSubsystem = swerveSubsystem;
+  public static Command alignToSpeaker(VisionPoseEstimator visionPoseEstimator) {
+    m_visionPoseEstimator = visionPoseEstimator;
 
     return null;
 
   }
 
-  public static Command alignToStage(SwerveSubsystem swerveSubsystem) {
-    m_swerveSubsystem = swerveSubsystem;
+  public static Command alignToStage(VisionPoseEstimator visionPoseEstimator) {
+    m_visionPoseEstimator = visionPoseEstimator;
     return null;
   }
 
