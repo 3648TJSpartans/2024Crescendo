@@ -12,7 +12,6 @@ import frc.robot.Utils.ShuffleBoardSubsystem;
 public class ClimberSubsystem extends SubsystemBase {
     private final CANSparkMax m_climberMotor1;
     private final CANSparkMax m_climberMotor2;
-    private final CANSparkMax[] m_motors;
     private final SparkPIDController m_climberPIDController1;
     private final SparkPIDController m_climberPIDController2;
     private final RelativeEncoder m_climberEncoder1;
@@ -42,9 +41,8 @@ public class ClimberSubsystem extends SubsystemBase {
         m_climberPIDController2.setFF(ClimberConstants.kClimberFF);
         m_climberPIDController2.setOutputRange(ClimberConstants.kClimberMinOutput, ClimberConstants.kClimberMaxOutput);
 
-        m_motors = new CANSparkMax[] { m_climberMotor1, m_climberMotor2 };
         m_shuffleBoardSubsystem = new ShuffleBoardSubsystem(this.getName());
-        m_shuffleBoardSubsystem.addVals(this.getName(), m_motors);
+        m_shuffleBoardSubsystem.addValsbyClass(this.getName(), this.getClass());
 
         m_logSubsystem = new LogSubsystem(this.getName());
     }
@@ -64,5 +62,9 @@ public class ClimberSubsystem extends SubsystemBase {
         m_climberMotor1.set(speed);
         m_climberMotor2.set(-speed);
         m_logSubsystem.logValue(speed);
+    }
+
+    public void updateShuffleBoard() {
+
     }
 }

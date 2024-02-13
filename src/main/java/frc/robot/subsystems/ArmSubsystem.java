@@ -9,14 +9,12 @@ import frc.robot.Utils.ShuffleBoardSubsystem;
 
 public class ArmSubsystem extends SubsystemBase {
     private final CANSparkMax armMotor;
-    private final CANSparkMax[] m_motors;
     private final ShuffleBoardSubsystem m_shuffleBoardSubsystem;
 
     public ArmSubsystem() {
         armMotor = new CANSparkMax(ArmConstants.armMotorId, MotorType.kBrushless);
-        m_motors = new CANSparkMax[] { armMotor };
         m_shuffleBoardSubsystem = new ShuffleBoardSubsystem(this.getName());
-        m_shuffleBoardSubsystem.addVals(this.getName(), m_motors);
+        m_shuffleBoardSubsystem.addValsbyClass(this.getName(), this.getClass());
     }
 
     public void setAngle(double angle) {

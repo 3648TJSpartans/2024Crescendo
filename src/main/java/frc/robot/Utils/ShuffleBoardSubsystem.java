@@ -1,6 +1,7 @@
 package frc.robot.Utils;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
@@ -8,6 +9,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
+import java.lang.reflect.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Arrays;
@@ -40,13 +42,56 @@ public class ShuffleBoardSubsystem {
         m_tab = Shuffleboard.getTab(m_subsystemName);
     }
 
-    public void addVals(String tabName, CANSparkMax[] motors) {
+    // public void addVals(String tabName, CANSparkMax[] motors) {
+    // for (CANSparkMax motor : motors) {
+    // try {
+    // m_layout = Shuffleboard.getTab(tabName)
+    // .getLayout(motor.getClass().getDeclaredField(motor.toString()).getName(),
+    // BuiltInLayouts.kList)
+    // .withSize(2, 2);
+    // m_layout.add(motor.getClass().getDeclaredField(motor.toString()).getName() +
+    // " Spd",
+    // motor.getEncoder().getVelocity());
+    // m_layout.add(motor.getClass().getDeclaredField(motor.toString()).getName() +
+    // " Pos",
+    // motor.getEncoder().getPosition());
+    // } catch (NoSuchFieldException | SecurityException e) {
+    // e.printStackTrace();
+    // } finally {
+    // // m_layout =
+    // // Shuffleboard.getTab(tabName).getLayout(motorIDs.get(motor.getDeviceId()),
+    // // BuiltInLayouts.kList).withSize(2, 2);
+    // // m_layout.add(motorIDs.get(motor.getDeviceId()) + " Spd",
+    // // motor.getEncoder().getVelocity());
+    // // m_layout.add(motorIDs.get(motor.getDeviceId()) + " Pos",
+    // // motor.getEncoder().getPosition());
+    // }
 
-        for (CANSparkMax motor : motors) {
-            m_layout = Shuffleboard.getTab(tabName).getLayout(motorIDs.get(motor.getDeviceId()), BuiltInLayouts.kList)
-                    .withSize(2, 2);
-            m_layout.add(motorIDs.get(motor.getDeviceId()) + " Spd", motor.getEncoder().getVelocity());
-            m_layout.add(motorIDs.get(motor.getDeviceId()) + " Pos", motor.getEncoder().getPosition());
+    // }
+    // }
+
+    public void addValsbyClass(String tabName, Class<?> clz) {
+        try {
+            for (Field f : clz.getDeclaredFields()) {
+                f.setAccessible(true);
+                if (f.getType().getName() == "com.revrobotics.CANSparkMax") {
+                    m_layout = Shuffleboard.getTab(tabName).getLayout(f.getName(),
+                            BuiltInLayouts.kList).withSize(2, 2);
+                    m_layout.add(f.getName() + "_Spd", f.getEncoder().getVelocity());
+                    m_layout.add(f.getName() + "_Pos", f.getEncoder().getPosition());
+                }
+            }
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        } finally {
+            // m_layout =
+            // Shuffleboard.getTab(tabName).getLayout(motorIDs.get(motor.getDeviceId()),
+            // BuiltInLayouts.kList).withSize(2, 2);
+            // m_layout.add(motorIDs.get(motor.getDeviceId()) + " Spd",
+            // motor.getEncoder().getVelocity());
+            // m_layout.add(motorIDs.get(motor.getDeviceId()) + " Pos",
+            // motor.getEncoder().getPosition());
         }
+
     }
 }
