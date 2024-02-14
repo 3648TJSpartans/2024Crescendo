@@ -9,6 +9,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.MathUtil;
@@ -67,7 +68,6 @@ public class RobotContainer {
    */
   public RobotContainer() {
     configAuto();
-    m_visionPoseEstimator.updateVisionPose();
 
     configureSwerve();
     configureClimber();
@@ -151,5 +151,9 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return autoChooser.getSelected();
+  }
+
+  public void runPeriodic() {
+    m_visionPoseEstimator.updateVisionPose();
   }
 }
