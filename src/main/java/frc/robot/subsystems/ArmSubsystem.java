@@ -3,18 +3,16 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Utils.ShuffleBoardSubsystem;
 
-public class ArmSubsystem extends SubsystemBase {
+public class ArmSubsystem extends ShuffleBoardSubsystem {
     private final CANSparkMax armMotor;
-    private final ShuffleBoardSubsystem m_shuffleBoardSubsystem;
 
     public ArmSubsystem() {
+        super();
         armMotor = new CANSparkMax(ArmConstants.armMotorId, MotorType.kBrushless);
-        m_shuffleBoardSubsystem = new ShuffleBoardSubsystem(this.getName());
-        m_shuffleBoardSubsystem.addValsbyClass(this.getName(), this.getClass());
+        // m_shuffleBoardSubsystem = new ShuffleBoardSubsystem();
     }
 
     public void setAngle(double angle) {
