@@ -15,10 +15,10 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Utils.ShuffleBoardSubsystem;
+import java.util.Arrays;
 
 public class SwerveSubsystem extends ShuffleBoardSubsystem {
     private boolean isFieldRelative = false;
@@ -42,9 +42,11 @@ public class SwerveSubsystem extends ShuffleBoardSubsystem {
             DriveConstants.kRearRightTurningCanId,
             DriveConstants.kBackRightChassisAngularOffset);
     private SwerveModule[] modules;
+    private String[] moduleNames;
 
     // The gyro sensor
     private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
+
     // Slew rate filter variables for controlling acceleration
     private double m_prevTime = WPIUtilJNI.now() * 1e-6;
 
@@ -70,6 +72,9 @@ public class SwerveSubsystem extends ShuffleBoardSubsystem {
             }
         }).start();
         modules = new SwerveModule[] { m_frontLeft, m_frontRight, m_rearLeft, m_rearRight };
+        for (SwerveModule mod : modules) {
+            addSwerveMotorVals(mod, Arrays.asList(modules).indexOf(mod) + 1);
+        }
         AutoBuilder.configureHolonomic(this::getPose, this::resetOdometry,
                 this::getSpeeds, this::driveRobotRelative,
                 AutoConstants.pathFollowerConfig, this::shouldFlipPath, this);
