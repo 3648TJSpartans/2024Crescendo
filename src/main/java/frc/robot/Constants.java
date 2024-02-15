@@ -254,10 +254,10 @@ public final class Constants {
 
   public static final class AlignConstants {
 
-    public static final double kmaxVelocityMps = 0;
-    public static final double kmaxAccelerationMpsSq = 0;
-    public static final double kmaxAngularVelocityRps = 0;
-    public static final double kmaxAngularAccelerationRpsSq = 0;
+    public static final double kmaxVelocityMps = 1;
+    public static final double kmaxAccelerationMpsSq = 1;
+    public static final double kmaxAngularVelocityRps = 1;
+    public static final double kmaxAngularAccelerationRpsSq = 1;
 
   }
 
