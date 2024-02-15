@@ -40,6 +40,7 @@ public final class AlignCommands extends Command {
   /** Example static factory for an autonomous command. */
 
   public static Command alignToAmp(VisionPoseEstimator visionPoseEstimator) {
+    System.out.println("running align");
     m_visionPoseEstimator = visionPoseEstimator;
     Pose2d ampPose1;
     Pose2d ampPose2;
