@@ -1,6 +1,7 @@
 package frc.robot.Utils;
 
 import com.revrobotics.CANSparkMax;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
@@ -19,26 +20,30 @@ public class ShuffleBoardSubsystem extends SubsystemBase {
         m_tab = Shuffleboard.getTab(this.getName());
     }
 
-    public void addSwerveMotorVals(SwerveModule mod, int index) {
+    public void addSwerveMotorVals(SwerveModule mod, String s) {
         ShuffleboardLayout m_layout;
         // Loop through all the fields in the class
         // If the field is a CANSparkMax, add it to the shuffleboard
         try {
             Field[] fields = mod.getClass().getDeclaredFields();
+            Field[] subsystemFields = this.getClass().getDeclaredFields();
             for (Field field : fields) {
                 if (field.getType().isAssignableFrom(CANSparkMax.class)) {
                     // Get the CANSparkMax object from the field
                     field.setAccessible(true);
                     CANSparkMax sparkMax = (CANSparkMax) field.get(mod);
-                    m_layout = Shuffleboard.getTab("SwerveSubsystem").getLayout("module" + index,
+                    m_layout = Shuffleboard.getTab(this.getName()).getLayout(s,
                             BuiltInLayouts.kList).withSize(2, 3);
-                    if (field.getName() == "m_drivingSparkMax") {
-                        m_layout.add("module" + index + "Driving_Spd", sparkMax.getEncoder().getVelocity());
-                        m_layout.add("module" + index + "Driving_Pos", sparkMax.getEncoder().getPosition());
-                    } else if (field.getName() == "m_turningSparkMax") {
-                        m_layout.add("module" + index + "Turning_Spd", sparkMax.getEncoder().getVelocity());
-                        m_layout.add("module" + index + "Turning_Pos", sparkMax.getEncoder().getPosition());
-                    }
+                    m_layout.add(field.getName() + "_Spd", sparkMax.getEncoder().getVelocity());
+                    m_layout.add(field.getName() + "_Pos", sparkMax.getEncoder().getPosition());
+                }
+            }
+            for (Field field : subsystemFields) {
+                if (field.getType().isAssignableFrom(AHRS.class)) {
+                    // Get the AHRS object from the field
+                    field.setAccessible(true);
+                    AHRS m_gyro = (AHRS) field.get(this);
+                    Shuffleboard.getTab(this.getName()).add(field.getName(), m_gyro.getAngle()).withSize(1, 1);
                 }
             }
         } catch (Exception e) {

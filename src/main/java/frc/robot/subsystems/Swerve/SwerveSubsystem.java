@@ -19,6 +19,7 @@ import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Utils.ShuffleBoardSubsystem;
 import java.util.Arrays;
+import java.lang.reflect.*;
 
 public class SwerveSubsystem extends ShuffleBoardSubsystem {
     private boolean isFieldRelative = false;
@@ -72,8 +73,20 @@ public class SwerveSubsystem extends ShuffleBoardSubsystem {
             }
         }).start();
         modules = new SwerveModule[] { m_frontLeft, m_frontRight, m_rearLeft, m_rearRight };
-        for (SwerveModule mod : modules) {
-            addSwerveMotorVals(mod, Arrays.asList(modules).indexOf(mod) + 1);
+        try {
+            for (Field f : this.getClass().getDeclaredFields()) {
+                if (f.getType().isAssignableFrom(SwerveModule.class)) {
+                    f.setAccessible(true);
+                    SwerveModule swerveModule = (SwerveModule) f.get(this);
+                    addSwerveMotorVals(swerveModule, f.getName());
+                }
+            }
+        } catch (IllegalArgumentException | IllegalAccessException e) {
+            e.printStackTrace();
+        } finally {
+            for (SwerveModule mod : modules) {
+                addSwerveMotorVals(mod, "");
+            }
         }
         AutoBuilder.configureHolonomic(this::getPose, this::resetOdometry,
                 this::getSpeeds, this::driveRobotRelative,
