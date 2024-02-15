@@ -62,8 +62,8 @@ public class RobotContainer {
     configureSwerve();
     // configureClimber();
     configureIntake();
-    // configureShooter();
-    configureTrap();
+    configureShooter();
+    // configureTrap();
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
   }
@@ -79,29 +79,34 @@ public class RobotContainer {
     m_swerveSubsystem.setDefaultCommand(swerveJoystickCmd);
     m_driverController.a().onTrue(new InstantCommand(() -> m_swerveSubsystem.setFieldRelative()));
     configureBindings();
-    m_driverController.b().onTrue(new InstantCommand(() -> m_swerveSubsystem.zeroHeading()));
+    m_driverController.y().onTrue(new InstantCommand(() -> m_swerveSubsystem.zeroHeading()));
   }
 
   private void configureIntake() {
-    m_driverController.leftBumper()
-        .onTrue(new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(IntakeConstants.IntakeSpeed)));
-    m_driverController.leftBumper().onFalse(new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(0)));
-    m_driverController.rightBumper()
-        .onTrue(new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(-IntakeConstants.IntakeSpeed)));
-    m_driverController.rightBumper().onFalse(new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(0)));
-
+    // m_driverController.leftBumper()
+    // .onTrue(new InstantCommand(() ->
+    // m_intakeSubsystem.setIntakeSpeed(IntakeConstants.IntakeSpeed)));
+    // m_driverController.leftBumper().onFalse(new InstantCommand(() ->
+    // m_intakeSubsystem.setIntakeSpeed(0)));
+    // m_driverController.rightBumper()
+    // .onTrue(new InstantCommand(() ->
+    // m_intakeSubsystem.setIntakeSpeed(-IntakeConstants.IntakeSpeed)));
+    // m_driverController.rightBumper().onFalse(new InstantCommand(() ->
+    // m_intakeSubsystem.setIntakeSpeed(0)));
+    m_intakeSubsystem.setDefaultCommand(new IntakeButtonCmd(m_intakeSubsystem,
+        () -> m_driverController.leftBumper().getAsBoolean(), () -> m_driverController.rightBumper().getAsBoolean()));
   }
 
   private void configureShooter() {
-    m_copilotController.a().onTrue(new ShooterCommandGroup(m_shooterSubsystem));
+    // m_copilotController.a().onTrue(new ShooterCommandGroup(m_shooterSubsystem));
 
-    m_copilotController.b()
+    m_driverController.b()
         .onTrue(new InstantCommand(() -> m_shooterSubsystem.shuffleboardShooter()));
-    m_copilotController.x()
+    m_driverController.x()
         .onTrue(new InstantCommand(() -> m_shooterSubsystem.shuffleboardBelts()));
-    m_copilotController.b()
+    m_driverController.b()
         .onFalse(new InstantCommand(() -> m_shooterSubsystem.revShooter(0)));
-    m_copilotController.x()
+    m_driverController.x()
         .onFalse(new InstantCommand(() -> m_shooterSubsystem.moveShooterIntake(0)));
 
   }
