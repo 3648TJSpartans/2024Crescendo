@@ -71,7 +71,7 @@ public class RobotContainer {
 
     configureSwerve();
     configureClimber();
-    configureIntake();
+
     configureShooter();
   }
 
@@ -155,5 +155,8 @@ public class RobotContainer {
 
   public void runPeriodic() {
     m_visionPoseEstimator.updateVisionPose();
+    SmartDashboard.putNumber("PoseX", m_visionPoseEstimator.getVisionPose().getX());
+    SmartDashboard.putNumber("PoseY", m_visionPoseEstimator.getVisionPose().getY());
+
   }
 }
