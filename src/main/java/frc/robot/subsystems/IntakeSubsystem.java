@@ -3,22 +3,19 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Utils.LogSubsystem;
 import frc.robot.Utils.ShuffleBoardSubsystem;
 
-public class IntakeSubsystem extends SubsystemBase {
+public class IntakeSubsystem extends ShuffleBoardSubsystem {
     private final CANSparkMax intakeMotor1;
     private final CANSparkMax intakeMotor2;
-    private final ShuffleBoardSubsystem m_shuffleBoardSubsystem;
     private final LogSubsystem m_logSubsystem;
 
     public IntakeSubsystem() {
+        super();
         intakeMotor1 = new CANSparkMax(IntakeConstants.IntakeMotor1Id, MotorType.kBrushless);
         intakeMotor2 = new CANSparkMax(IntakeConstants.IntakeMotor2Id, MotorType.kBrushless);
-        m_shuffleBoardSubsystem = new ShuffleBoardSubsystem(this.getName());
-        m_shuffleBoardSubsystem.addValsbyClass(this.getName(), this.getClass());
 
         m_logSubsystem = new LogSubsystem(this.getName());
     }

@@ -4,22 +4,21 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Utils.LogSubsystem;
 import frc.robot.Utils.ShuffleBoardSubsystem;
 
-public class ClimberSubsystem extends SubsystemBase {
+public class ClimberSubsystem extends ShuffleBoardSubsystem {
     private final CANSparkMax m_climberMotor1;
     private final CANSparkMax m_climberMotor2;
     private final SparkPIDController m_climberPIDController1;
     private final SparkPIDController m_climberPIDController2;
     private final RelativeEncoder m_climberEncoder1;
     private final RelativeEncoder m_climberEncoder2;
-    private final ShuffleBoardSubsystem m_shuffleBoardSubsystem;
     private final LogSubsystem m_logSubsystem;
 
     public ClimberSubsystem() {
+        super();
         // Motor 1
         m_climberMotor1 = new CANSparkMax(ClimberConstants.climberMotor1ID, MotorType.kBrushless);
         m_climberEncoder1 = m_climberMotor1.getEncoder();
@@ -40,9 +39,6 @@ public class ClimberSubsystem extends SubsystemBase {
         m_climberPIDController2.setD(ClimberConstants.kClimberD);
         m_climberPIDController2.setFF(ClimberConstants.kClimberFF);
         m_climberPIDController2.setOutputRange(ClimberConstants.kClimberMinOutput, ClimberConstants.kClimberMaxOutput);
-
-        m_shuffleBoardSubsystem = new ShuffleBoardSubsystem(this.getName());
-        m_shuffleBoardSubsystem.addValsbyClass(this.getName(), this.getClass());
 
         m_logSubsystem = new LogSubsystem(this.getName());
     }

@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.TrapConstants;
 import frc.robot.Utils.LogSubsystem;
 import frc.robot.Utils.ShuffleBoardSubsystem;
@@ -12,19 +11,19 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
 import com.revrobotics.CANSparkMax;
 
-public class TrapSubsystem extends SubsystemBase {
+public class TrapSubsystem extends ShuffleBoardSubsystem {
     private final CANSparkMax m_trapMotorUpDown;
     private final CANSparkMax m_trapMotorInOut;
     private final CANSparkMax m_trapMotorTrack;
     private static AbsoluteEncoder m_trapEncoderAbsolute;
     private static RelativeEncoder m_trapEncoderRelative;
     private final SparkPIDController m_UpDownPIDController;
-    private final ShuffleBoardSubsystem m_shuffleBoardSubsystem;
     private static LogSubsystem m_logSubsystem;
 
     // "m_trapMotorInOut" based off ArmSubsystem.java
     // "m_trapMotorUpDown" based off ClimberSubsystem.java
     public TrapSubsystem() {
+        super();
         // Up & Down Motor
         m_trapMotorUpDown = new CANSparkMax(TrapConstants.kUpDownMotorId, MotorType.kBrushless);
         m_trapEncoderRelative = m_trapMotorUpDown.getEncoder();
@@ -42,9 +41,6 @@ public class TrapSubsystem extends SubsystemBase {
 
         // Track Motor
         m_trapMotorTrack = new CANSparkMax(TrapConstants.kTrackMotorId, MotorType.kBrushless);
-
-        m_shuffleBoardSubsystem = new ShuffleBoardSubsystem(this.getName());
-        m_shuffleBoardSubsystem.addValsbyClass(this.getName(), this.getClass());
 
         m_logSubsystem = new LogSubsystem(this.getName());
     }

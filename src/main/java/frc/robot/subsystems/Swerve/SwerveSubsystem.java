@@ -15,12 +15,13 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Utils.ShuffleBoardSubsystem;
+import java.util.Arrays;
+import java.lang.reflect.*;
 
-public class SwerveSubsystem extends SubsystemBase {
+public class SwerveSubsystem extends ShuffleBoardSubsystem {
     private boolean isFieldRelative = false;
     private final SwerveModule m_frontLeft = new SwerveModule(
             DriveConstants.kFrontLeftDrivingCanId,
@@ -42,11 +43,11 @@ public class SwerveSubsystem extends SubsystemBase {
             DriveConstants.kRearRightTurningCanId,
             DriveConstants.kBackRightChassisAngularOffset);
     private SwerveModule[] modules;
-
-    private final ShuffleBoardSubsystem m_shuffleBoardSubsystem;
+    private String[] moduleNames;
 
     // The gyro sensor
     private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
+
     // Slew rate filter variables for controlling acceleration
     private double m_prevTime = WPIUtilJNI.now() * 1e-6;
 
@@ -62,6 +63,8 @@ public class SwerveSubsystem extends SubsystemBase {
             });
 
     public SwerveSubsystem() {
+        // This is required to call the constructor of the ShuffleBoardSubsystem
+        super();
         new Thread(() -> {
             try {
                 Thread.sleep(1000);
@@ -70,15 +73,30 @@ public class SwerveSubsystem extends SubsystemBase {
             }
         }).start();
         modules = new SwerveModule[] { m_frontLeft, m_frontRight, m_rearLeft, m_rearRight };
+        try {
+            for (Field f : this.getClass().getDeclaredFields()) {
+                if (f.getType().isAssignableFrom(SwerveModule.class)) {
+                    f.setAccessible(true);
+                    SwerveModule swerveModule = (SwerveModule) f.get(this);
+                    addSwerveMotorVals(swerveModule, f.getName());
+                }
+            }
+        } catch (IllegalArgumentException | IllegalAccessException e) {
+            e.printStackTrace();
+        } finally {
+            for (SwerveModule mod : modules) {
+                addSwerveMotorVals(mod, "");
+            }
+        }
         AutoBuilder.configureHolonomic(this::getPose, this::resetOdometry,
                 this::getSpeeds, this::driveRobotRelative,
                 AutoConstants.pathFollowerConfig, this::shouldFlipPath, this);
-        m_shuffleBoardSubsystem = new ShuffleBoardSubsystem(this.getName());
-        m_shuffleBoardSubsystem.addValsbyClass(this.getName(), this.getClass());
     }
 
     @Override
     public void periodic() {
+        // This is required to call the periodic method of the ShuffleBoardSubsystem
+        super.periodic();
         // Update the odometry in the periodic block
         m_odometry.update(
                 Rotation2d.fromDegrees(m_gyro.getAngle()),
