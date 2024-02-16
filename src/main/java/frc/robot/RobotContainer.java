@@ -169,7 +169,7 @@ public class RobotContainer {
     // () -> -MathUtil.applyDeadband(m_copilotController.getRightY(),
     // OIConstants.kDeadband)));
     m_copilotController.a().toggleOnTrue(
-        Commands.startEnd(() -> m_trapSubsystem.setTrack(160), () -> m_trapSubsystem.setTrack(0), m_trapSubsystem));
+        Commands.startEnd(() -> m_trapSubsystem.moveTrack(160), () -> m_trapSubsystem.moveTrack(0), m_trapSubsystem));
 
   }
 

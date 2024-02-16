@@ -171,8 +171,8 @@ public final class Constants {
     public static final double kClimberFF = 0;
     public static final IdleMode kClimberIdleMode = IdleMode.kBrake;
     public static final double kClimberDown = 80;
-    public static final Double kClimberMinOutPut = -1.0;
-    public static final Double kTrapMaxOutput = 1.0;
+    public static final Double kClimberMinOutput = -1.0;
+    public static final Double kClimberMaxOutput = 1.0;
 
   }
 

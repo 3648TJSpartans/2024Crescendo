@@ -20,7 +20,7 @@ public class ClimberSubsystem extends ShuffleBoardSubsystem {
     public ClimberSubsystem() {
         super();
         // Motor 1
-        m_climberMotor1 = new CANSparkMax(ClimberConstants.climberMotor1ID, MotorType.kBrushless);
+        m_climberMotor1 = new CANSparkMax(ClimberConstants.climberLeftMotorID, MotorType.kBrushless);
         m_climberEncoder1 = m_climberMotor1.getEncoder();
         m_climberPIDController1 = m_climberMotor1.getPIDController();
         m_climberPIDController1.setFeedbackDevice(m_climberEncoder1);
@@ -30,7 +30,7 @@ public class ClimberSubsystem extends ShuffleBoardSubsystem {
         m_climberPIDController1.setFF(ClimberConstants.kClimberFF);
         m_climberPIDController1.setOutputRange(ClimberConstants.kClimberMinOutput, ClimberConstants.kClimberMaxOutput);
         // Motor 2
-        m_climberMotor2 = new CANSparkMax(ClimberConstants.climberMotor2ID, MotorType.kBrushless);
+        m_climberMotor2 = new CANSparkMax(ClimberConstants.climberRightMotorID, MotorType.kBrushless);
         m_climberEncoder2 = m_climberMotor2.getEncoder();
         m_climberPIDController2 = m_climberMotor2.getPIDController();
         m_climberPIDController2.setFeedbackDevice(m_climberEncoder2);
@@ -58,9 +58,5 @@ public class ClimberSubsystem extends ShuffleBoardSubsystem {
         m_climberMotor1.set(speed);
         m_climberMotor2.set(-speed);
         m_logSubsystem.logValue(speed);
-    }
-
-    public void updateShuffleBoard() {
-
     }
 }

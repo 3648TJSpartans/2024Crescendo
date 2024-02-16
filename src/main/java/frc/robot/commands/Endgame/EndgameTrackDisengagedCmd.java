@@ -22,7 +22,7 @@ public class EndgameTrackDisengagedCmd extends Command {
 
     @Override
     public void execute() {
-        m_trapSubsystem.setTrack(m_trackPos);
+        m_trapSubsystem.moveTrack(m_trackPos);
     }
 
     @Override

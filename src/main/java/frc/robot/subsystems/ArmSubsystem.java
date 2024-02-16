@@ -12,7 +12,6 @@ public class ArmSubsystem extends ShuffleBoardSubsystem {
     public ArmSubsystem() {
         super();
         armMotor = new CANSparkMax(ArmConstants.armMotorId, MotorType.kBrushless);
-        // m_shuffleBoardSubsystem = new ShuffleBoardSubsystem();
     }
 
     public void setAngle(double angle) {
