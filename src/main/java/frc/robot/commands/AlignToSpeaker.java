@@ -45,7 +45,7 @@ public class AlignToSpeaker extends Command {
                     .findFirst();
             if (target.isPresent()) {
                 lastTarget = target.get();
-                double distance = m_visionPoseEstimator.getDistanceToApirlTag(target.get(),
+                double distance = m_visionPoseEstimator.getDistanceToAprilTag(target.get(),
                         target.get().getFiducialId());
                 if (Math.abs(target.get().getYaw()) > FieldConstants.angleThreshold) {
                     // Turn
@@ -62,7 +62,7 @@ public class AlignToSpeaker extends Command {
         PhotonPipelineResult finalResult = m_visionPoseEstimator.getLatestResult();
         if (finalResult.hasTargets()) {
             PhotonTrackedTarget target = finalResult.getBestTarget();
-            double distance = m_visionPoseEstimator.getDistanceToApirlTag(target, target.getFiducialId());
+            double distance = m_visionPoseEstimator.getDistanceToAprilTag(target, target.getFiducialId());
             return Math.abs(target.getYaw()) < FieldConstants.angleThreshold
                     && distance <= FieldConstants.speakerTargetDistance;
         }

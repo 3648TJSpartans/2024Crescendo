@@ -79,7 +79,7 @@ public class VisionPoseEstimator {
 
     }
 
-    public double getDistanceToApirlTag(PhotonTrackedTarget target, int ID) {
+    public double getDistanceToAprilTag(PhotonTrackedTarget target, int ID) {
         Optional<Pose3d> tagPose = layout.getTagPose(ID);
         double distance = PhotonUtils.calculateDistanceToTargetMeters(
                 LimeLightConstants.zTranslation,
