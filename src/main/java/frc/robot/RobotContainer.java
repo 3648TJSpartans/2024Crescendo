@@ -90,7 +90,6 @@ public class RobotContainer {
     m_driverController.b().onTrue(new InstantCommand(() -> m_swerveSubsystem.zeroHeading()));
     m_driverController.x().onTrue(new InstantCommand(() -> AlignCommands.alignToAmp(m_visionPoseEstimator).schedule()));
 
-    configureBindings();
     m_driverController.y().onTrue(new InstantCommand(() -> m_swerveSubsystem.zeroHeading()));
   }
 
