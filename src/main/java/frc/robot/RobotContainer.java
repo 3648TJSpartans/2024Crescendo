@@ -26,6 +26,7 @@ import frc.robot.Constants.TrapConstants;
 import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.commands.TrapJoystickCmd;
 import frc.robot.commands.Endgame.EndgameCmdGroup;
+import frc.robot.commands.Endgame.EndgameUpDownCmd;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.commands.AlignCommands;
 import frc.robot.commands.ClimberJoystickCmd;
@@ -52,6 +53,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private SendableChooser<Command> autoChooser;
   // The robot's subsystems and commands are defined here...
+
   private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
@@ -88,26 +90,35 @@ public class RobotContainer {
     m_driverController.b().onTrue(new InstantCommand(() -> m_swerveSubsystem.zeroHeading()));
     m_driverController.x().onTrue(new InstantCommand(() -> AlignCommands.alignToAmp(m_visionPoseEstimator).schedule()));
 
+    configureBindings();
+    m_driverController.y().onTrue(new InstantCommand(() -> m_swerveSubsystem.zeroHeading()));
   }
 
   private void configureIntake() {
-    m_intakeSubsystem.setDefaultCommand(
-        new IntakeButtonCmd(m_intakeSubsystem,
-            () -> m_driverController.leftBumper().getAsBoolean(),
-            () -> m_driverController.rightBumper().getAsBoolean()));
-
+    // m_driverController.leftBumper()
+    // .onTrue(new InstantCommand(() ->
+    // m_intakeSubsystem.setIntakeSpeed(IntakeConstants.IntakeSpeed)));
+    // m_driverController.leftBumper().onFalse(new InstantCommand(() ->
+    // m_intakeSubsystem.setIntakeSpeed(0)));
+    // m_driverController.rightBumper()
+    // .onTrue(new InstantCommand(() ->
+    // m_intakeSubsystem.setIntakeSpeed(-IntakeConstants.IntakeSpeed)));
+    // m_driverController.rightBumper().onFalse(new InstantCommand(() ->
+    // m_intakeSubsystem.setIntakeSpeed(0)));
+    m_intakeSubsystem.setDefaultCommand(new IntakeButtonCmd(m_intakeSubsystem,
+        () -> m_driverController.leftBumper().getAsBoolean(), () -> m_driverController.rightBumper().getAsBoolean()));
   }
 
   private void configureShooter() {
-    m_copilotController.a().onTrue(new ShooterCommandGroup(m_shooterSubsystem));
+    // m_copilotController.a().onTrue(new ShooterCommandGroup(m_shooterSubsystem));
 
-    m_copilotController.b()
+    m_driverController.b()
         .onTrue(new InstantCommand(() -> m_shooterSubsystem.shuffleboardShooter()));
-    m_copilotController.x()
+    m_driverController.x()
         .onTrue(new InstantCommand(() -> m_shooterSubsystem.shuffleboardBelts()));
-    m_copilotController.b()
+    m_driverController.b()
         .onFalse(new InstantCommand(() -> m_shooterSubsystem.revShooter(0)));
-    m_copilotController.x()
+    m_driverController.x()
         .onFalse(new InstantCommand(() -> m_shooterSubsystem.moveShooterIntake(0)));
   }
 
@@ -132,6 +143,34 @@ public class RobotContainer {
         AutoConstants.pathFollowerConfig, this::shouldFlipPath, m_swerveSubsystem);
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
+    // m_copilotController.a().onTrue(new InstantCommand(() ->
+    // m_climberSubsystem.setClimberPosition(80)));
+    // m_climberSubsystem.setDefaultCommand(new
+    // ClimberJoystickCmd(m_climberSubsystem,
+    // () -> -MathUtil.applyDeadband(m_copilotController.getLeftY(),
+    // OIConstants.kDeadband)));
+  }
+
+  private void configureTrap() {
+
+    m_copilotController.b()
+        .onTrue(new EndgameCmdGroup(m_trapSubsystem, m_climberSubsystem));
+    m_copilotController.x()
+        .toggleOnTrue(Commands.startEnd(() -> m_trapSubsystem.setUpDownPosition(TrapConstants.kpositionUp),
+            () -> m_trapSubsystem.setUpDownPosition(0), m_trapSubsystem));
+    m_trapSubsystem.setDefaultCommand(new TrapJoystickCmd(m_trapSubsystem,
+        () -> -MathUtil.applyDeadband(m_copilotController.getRightY(),
+            OIConstants.kDeadband),
+        () -> -MathUtil.applyDeadband(m_copilotController.getRightX(),
+            OIConstants.kDeadband)));
+
+    // m_trapSubsystem.setDefaultCommand(new TrapJoystickCmd(m_trapSubsystem,
+    // () -> -MathUtil.applyDeadband(m_copilotController.getLeftY(),
+    // OIConstants.kDeadband),
+    // () -> -MathUtil.applyDeadband(m_copilotController.getRightY(),
+    // OIConstants.kDeadband)));
+    m_copilotController.a().toggleOnTrue(
+        Commands.startEnd(() -> m_trapSubsystem.setTrack(160), () -> m_trapSubsystem.setTrack(0), m_trapSubsystem));
 
   }
 

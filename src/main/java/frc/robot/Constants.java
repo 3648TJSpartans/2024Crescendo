@@ -60,30 +60,30 @@ public final class Constants {
 
     // SPARK MAX CAN IDs
     // Test Swerve Can:
-    // public static final int kFrontLeftDrivingCanId = 4;
-    // public static final int kFrontLeftTurningCanId = 3;
+    public static final int kFrontLeftDrivingCanId = 4;
+    public static final int kFrontLeftTurningCanId = 3;
 
-    // public static final int kRearLeftDrivingCanId = 2;
-    // public static final int kRearLeftTurningCanId = 1;
+    public static final int kRearLeftDrivingCanId = 2;
+    public static final int kRearLeftTurningCanId = 1;
 
-    // public static final int kFrontRightDrivingCanId = 8;
-    // public static final int kFrontRightTurningCanId = 7;
-
-    // public static final int kRearRightDrivingCanId = 6;
-    // public static final int kRearRightTurningCanId = 5;
-
-    // Final CAN
-    public static final int kFrontLeftDrivingCanId = 2;
-    public static final int kFrontLeftTurningCanId = 1;
-
-    public static final int kRearLeftDrivingCanId = 8;
-    public static final int kRearLeftTurningCanId = 7;
-
-    public static final int kFrontRightDrivingCanId = 4;
-    public static final int kFrontRightTurningCanId = 3;
+    public static final int kFrontRightDrivingCanId = 8;
+    public static final int kFrontRightTurningCanId = 7;
 
     public static final int kRearRightDrivingCanId = 6;
     public static final int kRearRightTurningCanId = 5;
+
+    // Final CAN
+    // public static final int kFrontLeftDrivingCanId = 2;
+    // public static final int kFrontLeftTurningCanId = 1;
+
+    // public static final int kRearLeftDrivingCanId = 8;
+    // public static final int kRearLeftTurningCanId = 7;
+
+    // public static final int kFrontRightDrivingCanId = 4;
+    // public static final int kFrontRightTurningCanId = 3;
+
+    // public static final int kRearRightDrivingCanId = 6;
+    // public static final int kRearRightTurningCanId = 5;
 
     public static final boolean kGyroReversed = false;
   }
@@ -200,7 +200,7 @@ public final class Constants {
     public static final double kTrapFF = 0;
     public static final double kTrapMinOutput = -1;
     public static final double kTrapMaxOutput = 1;
-    public static final double kpositionUp = -24;
+    public static final double kpositionUp = 24;
     public static final double kpositionInOut = 0;
     public static final double kTrapEngaged = 150;
     public static final double kTrapDisengaged = 0;

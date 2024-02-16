@@ -72,4 +72,5 @@ public class TrapSubsystem extends SubsystemBase {
     public void setTrack(double angle) {
         m_trapMotorTrack.set(angle);
     }
+
 }
