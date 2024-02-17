@@ -16,6 +16,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -85,7 +86,20 @@ public final class Constants {
     // public static final int kRearRightDrivingCanId = 6;
     // public static final int kRearRightTurningCanId = 5;
 
-    public static final boolean kGyroReversed = false;
+    // Final Backwards
+    // public static final int kFrontLeftDrivingCanId = 6;
+    // public static final int kFrontLeftTurningCanId = 5;
+
+    // public static final int kRearLeftDrivingCanId = 4;
+    // public static final int kRearLeftTurningCanId = 3;
+
+    // public static final int kFrontRightDrivingCanId = 8;
+    // public static final int kFrontRightTurningCanId = 7;
+
+    // public static final int kRearRightDrivingCanId = 2;
+    // public static final int kRearRightTurningCanId = 1;
+
+    // public static final boolean kGyroReversed = false;
   }
 
   public static final class ModuleConstants {
@@ -154,7 +168,7 @@ public final class Constants {
 
   public static final class IntakeConstants {
     public static final int IntakeMotor1Id = 9;
-    public static final int IntakeMotor2Id = 10;
+    //public static final int IntakeMotor2Id = 10;
     public static final double IntakeSpeed = .65;
   }
 
@@ -163,8 +177,8 @@ public final class Constants {
   }
 
   public static final class ClimberConstants {
-    public static final int climberLeftMotorID = 11;
-    public static final int climberRightMotorID = 12;
+    public static final int climberLeftMotorID = 10;
+    public static final int climberRightMotorID = 11;
     public static final double kClimberP = .01;
     public static final double kClimberI = 0;
     public static final double kClimberD = 0;
@@ -178,10 +192,10 @@ public final class Constants {
 
   public static final class ShooterConstants {
 
-    public static final int shooterMotor1Id = 14;
-    public static final int shooterMotor2Id = 15;
-    public static final int beltMotorId1 = 13;
-    public static final int beltMotorId2 = 16;
+    public static final int shooterMotor1Id = 12;
+    public static final int shooterMotor2Id = 13;
+    public static final int beltMotorId1 = 14;
+    public static final int beltMotorId2 = 15;
     public static final double shooterSpeakerSpeed = -1;
     public static final double beltSpeakerSpeed = 0.5;
     public static final double revSpeakerTime = .5;
@@ -205,7 +219,7 @@ public final class Constants {
     public static final double kTrapEngaged = 150;
     public static final double kTrapDisengaged = 0;
     public static final int kUpDownMotorId = 17;
-    public static final int kInOutMotorId = 18;
+    public static final int kInOutMotorId = 20;
     public static final int kTrackMotorId = 0; // Servo
 
   }
@@ -220,12 +234,13 @@ public final class Constants {
   }
 
   public static final class AutoConstants {
-    public static final double maxModuleSpeed = 5;
+    public static final double maxModuleSpeed = 2;
     public static final HolonomicPathFollowerConfig pathFollowerConfig = new HolonomicPathFollowerConfig(
-        new PIDConstants(0, 0, 0), new PIDConstants(0, 0, 0), 5, 0.565685, new ReplanningConfig()); // TODO: check
+        new PIDConstants(2, 0, 0), new PIDConstants(2, 0, 0), maxModuleSpeed, 0.508, new ReplanningConfig(true, true)); // TODO: check
                                                                                                     // driveBaseRadius
   }
 
+  // Fix Limelight Position Constant
   public static final class LimeLightConstants {
     public static final String cameraName = "camera";
     // distance limelight is from center of robot(m)

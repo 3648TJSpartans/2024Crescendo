@@ -73,7 +73,7 @@ public class RobotContainer {
 
     configureSwerve();
     configureClimber();
-
+    configureIntake();
     configureShooter();
   }
 
@@ -90,20 +90,10 @@ public class RobotContainer {
     m_driverController.b().onTrue(new InstantCommand(() -> m_swerveSubsystem.zeroHeading()));
     m_driverController.x().onTrue(new InstantCommand(() -> AlignCommands.alignToAmp(m_visionPoseEstimator).schedule()));
 
-    m_driverController.y().onTrue(new InstantCommand(() -> m_swerveSubsystem.zeroHeading()));
+
   }
 
   private void configureIntake() {
-    // m_driverController.leftBumper()
-    // .onTrue(new InstantCommand(() ->
-    // m_intakeSubsystem.setIntakeSpeed(IntakeConstants.IntakeSpeed)));
-    // m_driverController.leftBumper().onFalse(new InstantCommand(() ->
-    // m_intakeSubsystem.setIntakeSpeed(0)));
-    // m_driverController.rightBumper()
-    // .onTrue(new InstantCommand(() ->
-    // m_intakeSubsystem.setIntakeSpeed(-IntakeConstants.IntakeSpeed)));
-    // m_driverController.rightBumper().onFalse(new InstantCommand(() ->
-    // m_intakeSubsystem.setIntakeSpeed(0)));
     m_intakeSubsystem.setDefaultCommand(new IntakeButtonCmd(m_intakeSubsystem,
         () -> m_driverController.leftBumper().getAsBoolean(), () -> m_driverController.rightBumper().getAsBoolean()));
   }
@@ -111,24 +101,24 @@ public class RobotContainer {
   private void configureShooter() {
     // m_copilotController.a().onTrue(new ShooterCommandGroup(m_shooterSubsystem));
 
-    m_driverController.b()
+    m_copilotController.b()
         .onTrue(new InstantCommand(() -> m_shooterSubsystem.shuffleboardShooter()));
-    m_driverController.x()
+    m_copilotController.x()
         .onTrue(new InstantCommand(() -> m_shooterSubsystem.shuffleboardBelts()));
-    m_driverController.b()
+    m_copilotController.b()
         .onFalse(new InstantCommand(() -> m_shooterSubsystem.revShooter(0)));
-    m_driverController.x()
+    m_copilotController.x()
         .onFalse(new InstantCommand(() -> m_shooterSubsystem.moveShooterIntake(0)));
   }
 
   private void configureClimber() {
-    // m_climberSubsystem.setDefaultCommand(
-    // new ClimberJoystickCmd(m_climberSubsystem, () ->
-    // -MathUtil.applyDeadband(m_copilotController.getLeftX(),
-    // OIConstants.kDeadband)));
-    m_copilotController.leftBumper()
-        .onTrue(new InstantCommand(() -> m_climberSubsystem.setClimberPosition(ClimberConstants.kClimberDown)));
-    m_copilotController.rightBumper().onTrue(new InstantCommand(() -> m_climberSubsystem.setClimberPosition(5)));
+    m_climberSubsystem.setDefaultCommand(
+    new ClimberJoystickCmd(m_climberSubsystem, () ->
+    -MathUtil.applyDeadband(m_copilotController.getLeftY(),
+    OIConstants.kDeadband)));
+    // m_copilotController.leftBumper()
+    //     .onTrue(new InstantCommand(() -> m_climberSubsystem.setClimberPosition(ClimberConstants.kClimberDown)));
+    // m_copilotController.rightBumper().onTrue(new InstantCommand(() -> m_climberSubsystem.setClimberPosition(5)));
   }
 
   public void configAuto() {
