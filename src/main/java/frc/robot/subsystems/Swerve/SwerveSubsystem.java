@@ -177,6 +177,15 @@ public class SwerveSubsystem extends ShuffleBoardSubsystem {
         return states;
     }
 
+    public SwerveModulePosition[] getPositions() {
+        return new SwerveModulePosition[] {
+                m_frontLeft.getPosition(),
+                m_frontRight.getPosition(),
+                m_rearLeft.getPosition(),
+                m_rearRight.getPosition()
+        };
+    }
+
     /**
      * Returns the heading of the robot.
      *
@@ -211,6 +220,10 @@ public class SwerveSubsystem extends ShuffleBoardSubsystem {
         m_frontRight.stop();
         m_rearLeft.stop();
         m_rearRight.stop();
+    }
+
+    public Rotation2d getYaw() {
+        return Rotation2d.fromDegrees(-m_gyro.getYaw());
     }
 
     /**

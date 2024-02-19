@@ -47,9 +47,11 @@ public class VisionPoseEstimator {
         m_swervePoseEstimator = new SwerveDrivePoseEstimator(DriveConstants.kDriveKinematics,
                 m_swerveSubsystem.getRotation2d(), m_swerveSubsystem.getPositions(), new Pose2d());
         m_robotOnCamera = new Transform3d(
-                new Translation3d(LimeLightConstants.xTranslation, LimeLightConstants.yTranslation,
+                new Translation3d(LimeLightConstants.xTranslation,
+                        LimeLightConstants.yTranslation,
                         LimeLightConstants.zTranslation),
-                new Rotation3d(LimeLightConstants.rollRotation, LimeLightConstants.pitchRotation,
+                new Rotation3d(LimeLightConstants.rollRotation,
+                        LimeLightConstants.pitchRotation,
                         LimeLightConstants.yawRotation));
         try {
             layout = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2024Crescendo.m_resourceFile);
@@ -57,7 +59,8 @@ public class VisionPoseEstimator {
             e.printStackTrace();
         }
         photonCamera = new PhotonCamera(LimeLightConstants.cameraName);
-        m_photonPoseEstimator = new PhotonPoseEstimator(layout, m_poseStrategy, photonCamera, m_robotOnCamera);
+        m_photonPoseEstimator = new PhotonPoseEstimator(layout, m_poseStrategy,
+                photonCamera, m_robotOnCamera);
 
     }
 

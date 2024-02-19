@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 import frc.robot.subsystems.Swerve.SwerveModule;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 
 import java.lang.reflect.*;
 
@@ -43,7 +44,15 @@ public class ShuffleBoardSubsystem extends SubsystemBase {
                     // Get the AHRS object from the field
                     field.setAccessible(true);
                     AHRS m_gyro = (AHRS) field.get(this);
-                    Shuffleboard.getTab(this.getName()).add(field.getName(), m_gyro.getAngle()).withSize(1, 1);
+                    Shuffleboard.getTab(this.getName()).add(field.getName(), m_gyro.getAngle()).withSize(1, 1)
+                            .withPosition(0, 3);
+                } else if (field.getType().isAssignableFrom(SwerveDriveOdometry.class)) {
+                    field.setAccessible(true);
+                    SwerveDriveOdometry m_odometry = (SwerveDriveOdometry) field.get(this);
+                    ShuffleboardLayout m_Layout = Shuffleboard.getTab(this.getName())
+                            .getLayout(field.getName(), BuiltInLayouts.kList).withSize(2, 2);
+                    m_Layout.add(field.getName() + "_PoseX", m_odometry.getPoseMeters().getX());
+                    m_Layout.add(field.getName() + "_PoseY", m_odometry.getPoseMeters().getY());
                 }
             }
         } catch (Exception e) {
