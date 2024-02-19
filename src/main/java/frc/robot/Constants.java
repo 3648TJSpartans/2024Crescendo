@@ -168,7 +168,7 @@ public final class Constants {
 
   public static final class IntakeConstants {
     public static final int IntakeMotor1Id = 9;
-    //public static final int IntakeMotor2Id = 10;
+    // public static final int IntakeMotor2Id = 10;
     public static final double IntakeSpeed = .65;
   }
 
@@ -236,8 +236,9 @@ public final class Constants {
   public static final class AutoConstants {
     public static final double maxModuleSpeed = 2;
     public static final HolonomicPathFollowerConfig pathFollowerConfig = new HolonomicPathFollowerConfig(
-        new PIDConstants(2, 0, 0), new PIDConstants(2, 0, 0), maxModuleSpeed, 0.508, new ReplanningConfig(true, true)); // TODO: check
-                                                                                                    // driveBaseRadius
+        new PIDConstants(2, 0, 0), new PIDConstants(2, 0, 0), maxModuleSpeed, 0.508, new ReplanningConfig(true, true)); // TODO:
+                                                                                                                        // check
+    // driveBaseRadius
   }
 
   // Fix Limelight Position Constant
@@ -274,6 +275,26 @@ public final class Constants {
     public static final double kmaxAngularVelocityRps = 1;
     public static final double kmaxAngularAccelerationRpsSq = 1;
 
+  }
+
+  public static final class LedConstants {
+    public static final int ledLength = 6;
+    public static final int ledPWMID = 9;
+    public static final int startValue = 0;
+    public static final int endValue = 6;
+
+    public static final int NoNoteRed = 252;
+    public static final int NoNoteGreen = 190;
+    public static final int NoNoteBlue = 3;
+
+    public static final int YesNoteRed = 15;
+    public static final int YesNoteGreen = 252;
+    public static final int YesNoteBlue = 3;
+
+  }
+
+  public static final class IRConstants {
+    public static final int IRPDWID = 2;
   }
 
 }

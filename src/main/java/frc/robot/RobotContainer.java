@@ -8,6 +8,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -20,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.ClimberConstants;
+import frc.robot.Constants.IRConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.TrapConstants;
@@ -35,6 +37,7 @@ import frc.robot.commands.ShooterCommands.AmpCommandGroup;
 import frc.robot.commands.ShooterCommands.RevMotorCommand;
 import frc.robot.commands.ShooterCommands.ShooterCommandGroup;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LedsSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.TrapSubsystem;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
@@ -59,6 +62,8 @@ public class RobotContainer {
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   private final TrapSubsystem m_trapSubsystem = new TrapSubsystem();
+  private final LedsSubsystem m_ledsSubsystem = new LedsSubsystem();
+  private final DigitalInput m_IRSenor = new DigitalInput(IRConstants.IRPDWID);
   private final VisionPoseEstimator m_visionPoseEstimator = new VisionPoseEstimator(m_swerveSubsystem);
   private final CommandXboxController m_driverController = new CommandXboxController(
       OIConstants.kDriverControllerPort);
@@ -90,7 +95,6 @@ public class RobotContainer {
     m_driverController.b().onTrue(new InstantCommand(() -> m_swerveSubsystem.zeroHeading()));
     m_driverController.x().onTrue(new InstantCommand(() -> AlignCommands.alignToAmp(m_visionPoseEstimator).schedule()));
 
-
   }
 
   private void configureIntake() {
@@ -113,12 +117,13 @@ public class RobotContainer {
 
   private void configureClimber() {
     m_climberSubsystem.setDefaultCommand(
-    new ClimberJoystickCmd(m_climberSubsystem, () ->
-    -MathUtil.applyDeadband(m_copilotController.getLeftY(),
-    OIConstants.kDeadband)));
+        new ClimberJoystickCmd(m_climberSubsystem, () -> -MathUtil.applyDeadband(m_copilotController.getLeftY(),
+            OIConstants.kDeadband)));
     // m_copilotController.leftBumper()
-    //     .onTrue(new InstantCommand(() -> m_climberSubsystem.setClimberPosition(ClimberConstants.kClimberDown)));
-    // m_copilotController.rightBumper().onTrue(new InstantCommand(() -> m_climberSubsystem.setClimberPosition(5)));
+    // .onTrue(new InstantCommand(() ->
+    // m_climberSubsystem.setClimberPosition(ClimberConstants.kClimberDown)));
+    // m_copilotController.rightBumper().onTrue(new InstantCommand(() ->
+    // m_climberSubsystem.setClimberPosition(5)));
   }
 
   public void configAuto() {
@@ -182,6 +187,7 @@ public class RobotContainer {
   }
 
   public void runPeriodic() {
+    m_ledsSubsystem.intakeColor(m_IRSenor);
     m_visionPoseEstimator.updateVisionPose();
     SmartDashboard.putNumber("PoseX", m_visionPoseEstimator.getVisionPose().getX());
     SmartDashboard.putNumber("PoseY", m_visionPoseEstimator.getVisionPose().getY());
