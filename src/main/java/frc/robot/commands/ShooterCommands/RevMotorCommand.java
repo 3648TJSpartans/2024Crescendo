@@ -22,9 +22,12 @@ public class RevMotorCommand extends Command {
     @Override
     public void execute() {
         m_shooterSubsystem.revShooter(m_shootSpeed);
+
     }
 
     @Override
     public void end(boolean interrupted) {
+
     }
+
 }

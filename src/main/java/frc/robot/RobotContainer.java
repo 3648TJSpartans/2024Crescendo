@@ -32,6 +32,7 @@ import frc.robot.commands.Endgame.EndgameUpDownCmd;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.commands.AlignCommands;
 import frc.robot.commands.ClimberJoystickCmd;
+import frc.robot.commands.IRIntakeCommand;
 import frc.robot.commands.IntakeButtonCmd;
 import frc.robot.commands.ShooterCommands.AmpCommandGroup;
 import frc.robot.commands.ShooterCommands.RevMotorCommand;
@@ -98,8 +99,10 @@ public class RobotContainer {
   }
 
   private void configureIntake() {
-    m_intakeSubsystem.setDefaultCommand(new IntakeButtonCmd(m_intakeSubsystem,
-        () -> m_driverController.leftBumper().getAsBoolean(), () -> m_driverController.rightBumper().getAsBoolean()));
+    // m_intakeSubsystem.setDefaultCommand(new IntakeButtonCmd(m_intakeSubsystem,
+    // () -> m_driverController.leftBumper().getAsBoolean(), () ->
+    // m_driverController.rightBumper().getAsBoolean()));
+    m_driverController.leftBumper().onTrue(new IRIntakeCommand(m_intakeSubsystem, m_IRSenor));
   }
 
   private void configureShooter() {

@@ -170,6 +170,7 @@ public final class Constants {
     public static final int IntakeMotor1Id = 9;
     // public static final int IntakeMotor2Id = 10;
     public static final double IntakeSpeed = .65;
+    public static final double DefaultSpeed = 0;
   }
 
   public static final class ArmConstants {
@@ -297,4 +298,7 @@ public final class Constants {
     public static final int IRPDWID = 2;
   }
 
+  public static final class IRSensorConstants {
+    public static final int IRSensorID = 4;
+  }
 }
