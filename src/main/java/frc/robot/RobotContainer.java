@@ -63,8 +63,8 @@ public class RobotContainer {
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   private final TrapSubsystem m_trapSubsystem = new TrapSubsystem();
-  private final LedsSubsystem m_ledsSubsystem = new LedsSubsystem();
-  private final DigitalInput m_IRSenor = new DigitalInput(IRConstants.IRPDWID);
+ // private final LedsSubsystem m_ledsSubsystem = new LedsSubsystem();
+  //private final DigitalInput m_IRSenor = new DigitalInput(IRConstants.IRPDWID);
   private final VisionPoseEstimator m_visionPoseEstimator = new VisionPoseEstimator(m_swerveSubsystem);
   private final CommandXboxController m_driverController = new CommandXboxController(
       OIConstants.kDriverControllerPort);
@@ -94,7 +94,7 @@ public class RobotContainer {
     m_swerveSubsystem.setDefaultCommand(swerveJoystickCmd);
     m_driverController.a().onTrue(new InstantCommand(() -> m_swerveSubsystem.setFieldRelative()));
     m_driverController.b().onTrue(new InstantCommand(() -> m_swerveSubsystem.zeroHeading()));
-    m_driverController.x().onTrue(new InstantCommand(() -> AlignCommands.alignToAmp(m_visionPoseEstimator).schedule()));
+    // m_driverController.x().onTrue(new InstantCommand(() -> AlignCommands.alignToAmp(m_visionPoseEstimator).schedule()));
 
   }
 
@@ -196,7 +196,7 @@ public class RobotContainer {
   }
 
   public void runPeriodic() {
-    m_ledsSubsystem.intakeColor(m_IRSenor);
+   // m_ledsSubsystem.intakeColor(m_IRSenor);
     m_visionPoseEstimator.updateVisionPose();
     SmartDashboard.putNumber("PoseX", m_visionPoseEstimator.getVisionPose().getX());
     SmartDashboard.putNumber("PoseY", m_visionPoseEstimator.getVisionPose().getY());
