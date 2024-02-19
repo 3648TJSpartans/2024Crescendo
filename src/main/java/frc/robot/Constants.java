@@ -60,46 +60,19 @@ public final class Constants {
     public static final double kBackRightChassisAngularOffset = Math.PI / 2;
 
     // SPARK MAX CAN IDs
-    // Test Swerve Can:
-    public static final int kFrontLeftDrivingCanId = 4;
-    public static final int kFrontLeftTurningCanId = 3;
+    public static final int kFrontLeftDrivingCanId = 2;
+    public static final int kFrontLeftTurningCanId = 1;
 
-    public static final int kRearLeftDrivingCanId = 2;
-    public static final int kRearLeftTurningCanId = 1;
+    public static final int kRearLeftDrivingCanId = 6;
+    public static final int kRearLeftTurningCanId = 5;
 
-    public static final int kFrontRightDrivingCanId = 8;
-    public static final int kFrontRightTurningCanId = 7;
+    public static final int kFrontRightDrivingCanId = 4;
+    public static final int kFrontRightTurningCanId = 3;
 
-    public static final int kRearRightDrivingCanId = 6;
-    public static final int kRearRightTurningCanId = 5;
+    public static final int kRearRightDrivingCanId = 8;
+    public static final int kRearRightTurningCanId = 7;
 
-    // Final CAN
-    // public static final int kFrontLeftDrivingCanId = 2;
-    // public static final int kFrontLeftTurningCanId = 1;
-
-    // public static final int kRearLeftDrivingCanId = 8;
-    // public static final int kRearLeftTurningCanId = 7;
-
-    // public static final int kFrontRightDrivingCanId = 4;
-    // public static final int kFrontRightTurningCanId = 3;
-
-    // public static final int kRearRightDrivingCanId = 6;
-    // public static final int kRearRightTurningCanId = 5;
-
-    // Final Backwards
-    // public static final int kFrontLeftDrivingCanId = 6;
-    // public static final int kFrontLeftTurningCanId = 5;
-
-    // public static final int kRearLeftDrivingCanId = 4;
-    // public static final int kRearLeftTurningCanId = 3;
-
-    // public static final int kFrontRightDrivingCanId = 8;
-    // public static final int kFrontRightTurningCanId = 7;
-
-    // public static final int kRearRightDrivingCanId = 2;
-    // public static final int kRearRightTurningCanId = 1;
-
-    // public static final boolean kGyroReversed = false;
+    public static final boolean kGyroReversed = false;
   }
 
   public static final class ModuleConstants {
@@ -193,10 +166,9 @@ public final class Constants {
 
   public static final class ShooterConstants {
 
-    public static final int shooterMotor1Id = 12;
-    public static final int shooterMotor2Id = 13;
-    public static final int beltMotorId1 = 14;
-    public static final int beltMotorId2 = 15;
+    public static final int shooterMotor1Id = 13;
+    public static final int shooterMotor2Id = 14;
+    public static final int beltMotorId1 = 15;
     public static final double shooterSpeakerSpeed = -1;
     public static final double beltSpeakerSpeed = 0.5;
     public static final double revSpeakerTime = .5;
@@ -219,7 +191,7 @@ public final class Constants {
     public static final double kpositionInOut = 0;
     public static final double kTrapEngaged = 150;
     public static final double kTrapDisengaged = 0;
-    public static final int kUpDownMotorId = 17;
+    public static final int kUpDownMotorId = 12;
     public static final int kInOutMotorId = 20;
     public static final int kTrackMotorId = 0; // Servo
 

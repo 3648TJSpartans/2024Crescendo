@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -15,14 +16,15 @@ public class ShooterSubsystem extends SubsystemBase {
     private final CANSparkMax m_shooterMotor1;
     private final CANSparkMax m_shooterMotor2;
     private final CANSparkMax m_beltMotor1;
-    private final CANSparkMax m_beltMotor2;
 
     public ShooterSubsystem() {
         m_shooterMotor1 = new CANSparkMax(ShooterConstants.shooterMotor1Id, MotorType.kBrushless);
         m_shooterMotor2 = new CANSparkMax(ShooterConstants.shooterMotor2Id, MotorType.kBrushless);
         m_beltMotor1 = new CANSparkMax(ShooterConstants.beltMotorId1, MotorType.kBrushless);
-        m_beltMotor2 = new CANSparkMax(ShooterConstants.beltMotorId2, MotorType.kBrushless);
+        m_shooterMotor1.setIdleMode(IdleMode.kBrake);
+        m_shooterMotor2.setIdleMode(IdleMode.kBrake);
         SmartDashboard.putNumber("Belt Speed", 0);
+        SmartDashboard.putNumber("Shooter Speed", 0);
     }
 
     public void revShooter(double speed) {
@@ -38,13 +40,11 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void shuffleboardBelts() {
-        m_beltMotor1.set(-SmartDashboard.getNumber("Belt Speed", 0));
-        m_beltMotor2.set(SmartDashboard.getNumber("Belt Speed", 0));
+        m_beltMotor1.set(SmartDashboard.getNumber("Belt Speed", 0));
     }
 
     public void moveShooterIntake(double speed) {
         m_beltMotor1.set(speed);
-        m_beltMotor2.set(speed);
     }
 
 }
