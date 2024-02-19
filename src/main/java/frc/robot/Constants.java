@@ -59,31 +59,31 @@ public final class Constants {
     public static final double kBackRightChassisAngularOffset = Math.PI / 2;
 
     // SPARK MAX CAN IDs
-    // Test Swerve Can:
-    public static final int kFrontLeftDrivingCanId = 4;
-    public static final int kFrontLeftTurningCanId = 3;
+    // Final Chassis Can:
+    // public static final int kFrontLeftDrivingCanId = 4;
+    // public static final int kFrontLeftTurningCanId = 3;
 
-    public static final int kRearLeftDrivingCanId = 2;
-    public static final int kRearLeftTurningCanId = 1;
+    // public static final int kRearLeftDrivingCanId = 2;
+    // public static final int kRearLeftTurningCanId = 1;
 
-    public static final int kFrontRightDrivingCanId = 8;
-    public static final int kFrontRightTurningCanId = 7;
-
-    public static final int kRearRightDrivingCanId = 6;
-    public static final int kRearRightTurningCanId = 5;
-
-    // Final CAN
-    // public static final int kFrontLeftDrivingCanId = 2;
-    // public static final int kFrontLeftTurningCanId = 1;
-
-    // public static final int kRearLeftDrivingCanId = 8;
-    // public static final int kRearLeftTurningCanId = 7;
-
-    // public static final int kFrontRightDrivingCanId = 4;
-    // public static final int kFrontRightTurningCanId = 3;
+    // public static final int kFrontRightDrivingCanId = 8;
+    // public static final int kFrontRightTurningCanId = 7;
 
     // public static final int kRearRightDrivingCanId = 6;
     // public static final int kRearRightTurningCanId = 5;
+
+    // Prototype Robot CAN:
+    public static final int kFrontLeftDrivingCanId = 2;
+    public static final int kFrontLeftTurningCanId = 1;
+
+    public static final int kRearLeftDrivingCanId = 8;
+    public static final int kRearLeftTurningCanId = 7;
+
+    public static final int kFrontRightDrivingCanId = 4;
+    public static final int kFrontRightTurningCanId = 3;
+
+    public static final int kRearRightDrivingCanId = 6;
+    public static final int kRearRightTurningCanId = 5;
 
     public static final boolean kGyroReversed = false;
   }
@@ -222,8 +222,10 @@ public final class Constants {
   public static final class AutoConstants {
     public static final double maxModuleSpeed = 5;
     public static final HolonomicPathFollowerConfig pathFollowerConfig = new HolonomicPathFollowerConfig(
-        new PIDConstants(0, 0, 0), new PIDConstants(0, 0, 0), 5, 0.565685, new ReplanningConfig()); // TODO: check
-                                                                                                    // driveBaseRadius
+        new PIDConstants(5, 0, 0), new PIDConstants(5, 0, 0), maxModuleSpeed, 0.565685,
+        new ReplanningConfig(true, true)); // TODO:
+    // check
+    // driveBaseRadius
   }
 
   public static final class LimeLightConstants {
@@ -258,6 +260,18 @@ public final class Constants {
     public static final double kmaxAccelerationMpsSq = 1;
     public static final double kmaxAngularVelocityRps = 1;
     public static final double kmaxAngularAccelerationRpsSq = 1;
+    public static final double kXControllerP = 3;
+    public static final double kXControllerI = 0;
+    public static final double kXControllerD = 0;
+    public static final double kYControllerP = 3;
+    public static final double kYControllerI = 0;
+    public static final double kYControllerD = 0;
+    public static final double kOmegaControllerP = 2;
+    public static final double kOmegaControllerI = 0;
+    public static final double kOmegaControllerD = 0;
+    public static final double xControllerTolerance = .2;
+    public static final double yControllerTolerance = .2;
+    public static final double omegaControllerTolerance = 3; // Degrees
 
   }
 

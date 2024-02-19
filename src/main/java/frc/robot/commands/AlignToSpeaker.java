@@ -1,13 +1,30 @@
 package frc.robot.commands;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.opencv.photo.Photo;
 import org.photonvision.PhotonUtils;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
+
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.AlignConstants;
 import frc.robot.Constants.FieldConstants;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
 import frc.robot.vision.VisionPoseEstimator;
@@ -16,57 +33,52 @@ public class AlignToSpeaker extends Command {
     private final SwerveSubsystem m_swerveSubsystem;
     private final VisionPoseEstimator m_visionPoseEstimator;
     private int trackedID;
-    private PhotonTrackedTarget lastTarget;
+    private Pose3d tagPose;
 
     public AlignToSpeaker(SwerveSubsystem swerveSubsystem, VisionPoseEstimator visionPoseEstimator) {
         m_visionPoseEstimator = visionPoseEstimator;
         m_swerveSubsystem = swerveSubsystem;
-
-        addRequirements(swerveSubsystem);
+        addRequirements(m_swerveSubsystem);
     }
 
     @Override
     public void initialize() {
-        lastTarget = null;
         trackedID = DriverStation.getAlliance().get() == DriverStation.Alliance.Red
                 ? FieldConstants.blueSpeakerAprilID
                 : FieldConstants.redSpeakerAprilID;
+        tagPose = m_visionPoseEstimator.getAprilTagPose3d(trackedID);
+
     }
 
     @Override
     public void execute() {
-
         PhotonPipelineResult result = m_visionPoseEstimator.getLatestResult();
+
         if (result.hasTargets()) {
-            // PhotonTrackedTarget target = result.getBestTarget();
-            var target = result.getTargets().stream()
+            // Find the tag we want to chase
+            Optional<PhotonTrackedTarget> target = result.getTargets().stream()
                     .filter(t -> t.getFiducialId() == trackedID)
-                    .filter(t -> !t.equals(lastTarget) && t.getPoseAmbiguity() <= .2 && t.getPoseAmbiguity() != -1)
                     .findFirst();
             if (target.isPresent()) {
-                lastTarget = target.get();
-                double distance = m_visionPoseEstimator.getDistanceToAprilTag(target.get(),
-                        target.get().getFiducialId());
-                if (Math.abs(target.get().getYaw()) > FieldConstants.angleThreshold) {
-                    // Turn
-                }
-                if (distance > FieldConstants.speakerTargetDistance) {
-                    // Drive
-                }
+                PhotonTrackedTarget info = target.get();
+                double xTranslation = tagPose.getX() - 3.5 * Math.cos(Math.toRadians(info.getYaw()));
+                double yTranslation = tagPose.getY() - 3.5 * Math.sin(Math.toRadians(info.getYaw()));
+                Translation2d robotTransform = new Translation2d(xTranslation, yTranslation);
+                Pose2d newPose = new Pose2d(robotTransform, Rotation2d.fromDegrees(info.getYaw()));
+
+                List<Translation2d> bezierPoints = PathPlannerPath
+                        .bezierFromPoses(m_visionPoseEstimator.getVisionPose(), newPose);
+                PathPlannerPath path = new PathPlannerPath(bezierPoints,
+                        new PathConstraints(AlignConstants.kmaxVelocityMps, AlignConstants.kmaxAccelerationMpsSq,
+                                AlignConstants.kmaxAngularVelocityRps, AlignConstants.kmaxAngularAccelerationRpsSq),
+                        new GoalEndState(0, Rotation2d.fromDegrees(info.getYaw())));
+                AutoBuilder.followPath(path).schedule();
             }
         }
     }
 
-    @Override
-    public boolean isFinished() {
-        PhotonPipelineResult finalResult = m_visionPoseEstimator.getLatestResult();
-        if (finalResult.hasTargets()) {
-            PhotonTrackedTarget target = finalResult.getBestTarget();
-            double distance = m_visionPoseEstimator.getDistanceToAprilTag(target, target.getFiducialId());
-            return Math.abs(target.getYaw()) < FieldConstants.angleThreshold
-                    && distance <= FieldConstants.speakerTargetDistance;
-        }
-        return false;
-    }
+    // @Override
+    // public boolean isFinished() {
+    // }
 
 }
