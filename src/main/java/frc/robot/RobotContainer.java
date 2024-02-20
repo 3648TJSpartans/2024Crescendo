@@ -107,9 +107,9 @@ public class RobotContainer {
     m_driverController.leftBumper()
         .onFalse(new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(Constants.IntakeConstants.DefaultSpeed)));
     m_driverController.rightBumper()
-        .onTrue(new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(Constants.IntakeConstants.IntakeSpeed)));
+        .onTrue(new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(-Constants.IntakeConstants.IntakeSpeed)));
     m_driverController.rightBumper()
-        .onFalse(new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(Constants.IntakeConstants.DefaultSpeed)));
+        .onFalse(new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(-Constants.IntakeConstants.DefaultSpeed)));
   }
 
   private void configureShooter() {
