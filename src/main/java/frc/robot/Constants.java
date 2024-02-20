@@ -169,13 +169,19 @@ public final class Constants {
     public static final int shooterMotor1Id = 13;
     public static final int shooterMotor2Id = 14;
     public static final int beltMotorId1 = 15;
-    public static final double shooterSpeakerSpeed = -1;
-    public static final double beltSpeakerSpeed = 0.5;
+
+    public static final double kshooterP = 0;
+    public static final double kshooterI = 0;
+    public static final double kshooterD = 0;
+
+    public static final double shooterSpeakerSpeed = -.5;
+    public static final double beltSpeakerSpeed = -1;
     public static final double revSpeakerTime = .5;
     public static final double shootSpeakerTime = 2;
-    public static final double shooterAmpSpeed = .5;// TODO test all amp variables
-    public static final double beltAmpSpeed = .5;
-    public static final double revAmpTime = .5;
+    public static final double shooterAmpTopSpeed = 0;
+    public static final double shooterAmpBottomSpeed = .2;// TODO test all amp variables
+    public static final double beltAmpSpeed = -1;
+    public static final double revAmpTime = 2;
     public static final double shootAmpTime = .5;
 
   }
@@ -251,10 +257,10 @@ public final class Constants {
   }
 
   public static final class LedConstants {
-    public static final int ledLength = 6;
-    public static final int ledPWMID = 9;
+    public static final int ledLength = 44;
+    public static final int ledPWMID = 1;
     public static final int startValue = 0;
-    public static final int endValue = 6;
+    public static final int endValue = 44;
 
     public static final int NoNoteRed = 252;
     public static final int NoNoteGreen = 190;
@@ -266,11 +272,8 @@ public final class Constants {
 
   }
 
-  public static final class IRConstants {
-    public static final int IRPDWID = 2;
-  }
-
   public static final class IRSensorConstants {
-    public static final int IRSensorID = 4;
+    public static final int IRSensorID = 8;
+
   }
 }

@@ -8,13 +8,16 @@ import frc.robot.RobotContainer;
 import frc.robot.Constants.LedConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LedsSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
 public class IRIntakeCommand extends Command {
     private final IntakeSubsystem m_IntakeSubsystem;
     private final DigitalInput m_IRSensor;
+    private final ShooterSubsystem m_shooterSubsystem;
 
-    public IRIntakeCommand(IntakeSubsystem intakeSubsystem, DigitalInput irSensor) {
+    public IRIntakeCommand(IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem, DigitalInput irSensor) {
         m_IntakeSubsystem = intakeSubsystem;
+        m_shooterSubsystem = shooterSubsystem;
         m_IRSensor = irSensor;
         addRequirements(m_IntakeSubsystem);
         SmartDashboard.putNumber("Intake Speed", Constants.IntakeConstants.DefaultSpeed);
@@ -27,14 +30,17 @@ public class IRIntakeCommand extends Command {
 
     @Override
     public void execute() {
+        System.out.println("hello world");
+        m_shooterSubsystem.shuffleboardBelts();
         m_IntakeSubsystem
                 .setIntakeSpeed(SmartDashboard.getNumber("Intake Speed", Constants.IntakeConstants.DefaultSpeed));
 
     }
 
     public boolean isFinished() {
-        if (m_IRSensor.get()) {
+        if (!m_IRSensor.get()) {
             m_IntakeSubsystem.setIntakeSpeed(Constants.IntakeConstants.DefaultSpeed);
+            m_shooterSubsystem.moveShooterIntake(0);
             return true;
         } else {
             return false;

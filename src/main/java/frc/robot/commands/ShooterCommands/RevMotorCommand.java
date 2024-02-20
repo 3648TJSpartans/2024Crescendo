@@ -6,11 +6,13 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 public class RevMotorCommand extends Command {
     private final ShooterSubsystem m_shooterSubsystem;
-    private final double m_shootSpeed;
+    private final double m_shootSpeed1;
+    private final double m_shootSpeed2;
 
-    public RevMotorCommand(ShooterSubsystem shooterSubsystem, double shootSpeed) {
+    public RevMotorCommand(ShooterSubsystem shooterSubsystem, double shootSpeed1, double shootSpeed2) {
         m_shooterSubsystem = shooterSubsystem;
-        m_shootSpeed = shootSpeed;
+        m_shootSpeed1 = shootSpeed1;
+        m_shootSpeed2 = shootSpeed2;
         addRequirements(m_shooterSubsystem);
     }
 
@@ -21,7 +23,7 @@ public class RevMotorCommand extends Command {
 
     @Override
     public void execute() {
-        m_shooterSubsystem.revShooter(m_shootSpeed);
+        m_shooterSubsystem.revShooter(m_shootSpeed1,m_shootSpeed2);
 
     }
 
