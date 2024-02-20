@@ -12,10 +12,10 @@ public class ShooterCommandGroup extends SequentialCommandGroup {
         m_shooterSubsystem = shooterSubsystem;
 
         addCommands(
-                new RevMotorCommand(m_shooterSubsystem, ShooterConstants.shooterSpeakerSpeed)
+                new RevMotorCommand(m_shooterSubsystem, ShooterConstants.shooterSpeakerSpeed,ShooterConstants.shooterSpeakerSpeed)
                         .withTimeout(ShooterConstants.revSpeakerTime),
                 // new WaitCommand(ShooterConstants.revSpeakerTime),
-                new ShootCommand(m_shooterSubsystem, ShooterConstants.shooterSpeakerSpeed,
+                new ShootCommand(m_shooterSubsystem, ShooterConstants.shooterSpeakerSpeed, ShooterConstants.shooterSpeakerSpeed,
                         ShooterConstants.beltSpeakerSpeed).withTimeout(ShooterConstants.shootSpeakerTime));
     }
 

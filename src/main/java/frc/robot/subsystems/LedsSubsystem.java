@@ -19,6 +19,9 @@ public class LedsSubsystem extends SubsystemBase {
     public LedsSubsystem() {
         m_ledBuffer = new AddressableLEDBuffer(LedConstants.ledLength);
         m_led = new AddressableLED(LedConstants.ledPWMID);
+        m_led.setLength(m_ledBuffer.getLength());
+        m_led.setData(m_ledBuffer);
+        m_led.start();
 
     }
 
@@ -32,9 +35,10 @@ public class LedsSubsystem extends SubsystemBase {
 
     public void intakeColor(DigitalInput IRsenor) {
         if (!IRsenor.get()) {
-            setColor(LedConstants.NoNoteRed, LedConstants.NoNoteGreen, LedConstants.NoNoteBlue);
+              setColor(LedConstants.YesNoteRed, LedConstants.YesNoteGreen, LedConstants.YesNoteBlue);
         } else {
-            setColor(LedConstants.YesNoteRed, LedConstants.YesNoteGreen, LedConstants.YesNoteBlue);
+
+             setColor(LedConstants.NoNoteRed, LedConstants.NoNoteGreen, LedConstants.NoNoteBlue);
 
         }
 

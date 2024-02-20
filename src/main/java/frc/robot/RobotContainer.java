@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.ClimberConstants;
-import frc.robot.Constants.IRConstants;
+import frc.robot.Constants.IRSensorConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.TrapConstants;
@@ -63,8 +63,8 @@ public class RobotContainer {
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   private final TrapSubsystem m_trapSubsystem = new TrapSubsystem();
- // private final LedsSubsystem m_ledsSubsystem = new LedsSubsystem();
-  //private final DigitalInput m_IRSenor = new DigitalInput(IRConstants.IRPDWID);
+ private final LedsSubsystem m_ledsSubsystem = new LedsSubsystem();
+  private final DigitalInput m_IRSenor = new DigitalInput(IRSensorConstants.IRSensorID);
   private final VisionPoseEstimator m_visionPoseEstimator = new VisionPoseEstimator(m_swerveSubsystem);
   private final CommandXboxController m_driverController = new CommandXboxController(
       OIConstants.kDriverControllerPort);
@@ -102,9 +102,12 @@ public class RobotContainer {
     // m_intakeSubsystem.setDefaultCommand(new IntakeButtonCmd(m_intakeSubsystem,
     // () -> m_driverController.leftBumper().getAsBoolean(), () ->
     // m_driverController.rightBumper().getAsBoolean()));
-    m_driverController.leftBumper().onTrue(new IRIntakeCommand(m_intakeSubsystem, m_IRSenor));
+    m_driverController.leftBumper().onTrue(new IRIntakeCommand(m_intakeSubsystem,m_shooterSubsystem, m_IRSenor));
     m_driverController.leftBumper()
         .onFalse(new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(Constants.IntakeConstants.DefaultSpeed)));
+     m_driverController.leftBumper()
+        .onFalse(new InstantCommand(() -> m_shooterSubsystem.moveShooterIntake(Constants.IntakeConstants.DefaultSpeed)));
+
     m_driverController.rightBumper()
         .onTrue(new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(Constants.IntakeConstants.IntakeSpeed)));
     m_driverController.rightBumper()
@@ -119,7 +122,7 @@ public class RobotContainer {
     m_copilotController.x()
         .onTrue(new InstantCommand(() -> m_shooterSubsystem.shuffleboardBelts()));
     m_copilotController.b()
-        .onFalse(new InstantCommand(() -> m_shooterSubsystem.revShooter(0)));
+        .onFalse(new InstantCommand(() -> m_shooterSubsystem.revShooter(0, 0)));
     m_copilotController.x()
         .onFalse(new InstantCommand(() -> m_shooterSubsystem.moveShooterIntake(0)));
   }
@@ -196,7 +199,7 @@ public class RobotContainer {
   }
 
   public void runPeriodic() {
-   // m_ledsSubsystem.intakeColor(m_IRSenor);
+   m_ledsSubsystem.intakeColor(m_IRSenor);
     m_visionPoseEstimator.updateVisionPose();
     SmartDashboard.putNumber("PoseX", m_visionPoseEstimator.getVisionPose().getX());
     SmartDashboard.putNumber("PoseY", m_visionPoseEstimator.getVisionPose().getY());
