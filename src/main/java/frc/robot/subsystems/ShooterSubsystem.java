@@ -41,29 +41,25 @@ public class ShooterSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Shooter Speed Top", 0);
         SmartDashboard.putNumber("Shooter Speed Bottom", 0);
 
-
     }
 
     @Override
     public void periodic() {
-         SmartDashboard.putNumber("Shooter Top Velocity",m_shooterMotor1.getEncoder().getVelocity());
-          SmartDashboard.putNumber("Shooter Bottom Velocity",m_shooterMotor2.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Shooter Top Velocity", m_shooterMotor1.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Shooter Bottom Velocity", m_shooterMotor2.getEncoder().getVelocity());
     }
 
-
     public void revShooter(double speed1, double speed2) {
-        // m_shooterMotor1.set(-speed1);
-        // m_shooterMotor2.set(speed2);
         m_shooterMotor1Controller.setReference(speed1, CANSparkMax.ControlType.kVelocity);
-        m_shooterMotor2Controller.setReference(speed2,  CANSparkMax.ControlType.kVelocity);
-
+        m_shooterMotor2Controller.setReference(speed2, CANSparkMax.ControlType.kVelocity);
 
     }
 
     public void shuffleboardShooter() {
-        m_shooterMotor1Controller.setReference(-SmartDashboard.getNumber("Shooter Speed Top", 0),CANSparkMax.ControlType.kVelocity);
-        m_shooterMotor2Controller.setReference(SmartDashboard.getNumber("Shooter Speed Bottom", 0),CANSparkMax.ControlType.kVelocity);
-
+        m_shooterMotor1Controller.setReference(-SmartDashboard.getNumber("Shooter Speed Top", 0),
+                CANSparkMax.ControlType.kVelocity);
+        m_shooterMotor2Controller.setReference(SmartDashboard.getNumber("Shooter Speed Bottom", 0),
+                CANSparkMax.ControlType.kVelocity);
 
     }
 

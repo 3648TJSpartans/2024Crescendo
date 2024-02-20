@@ -174,8 +174,8 @@ public final class Constants {
     public static final double kshooterI = 0;
     public static final double kshooterD = 0;
 
-    public static final double shooterSpeakerSpeed = -1;
-    public static final double beltSpeakerSpeed = 0.5;
+    public static final double shooterSpeakerSpeed = -.5;
+    public static final double beltSpeakerSpeed = -1;
     public static final double revSpeakerTime = .5;
     public static final double shootSpeakerTime = 2;
     public static final double shooterAmpTopSpeed = 0;
@@ -271,7 +271,6 @@ public final class Constants {
     public static final int YesNoteBlue = 3;
 
   }
-
 
   public static final class IRSensorConstants {
     public static final int IRSensorID = 8;
