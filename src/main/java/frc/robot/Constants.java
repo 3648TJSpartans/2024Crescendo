@@ -260,19 +260,7 @@ public final class Constants {
     public static final double kmaxAccelerationMpsSq = 1;
     public static final double kmaxAngularVelocityRps = 1;
     public static final double kmaxAngularAccelerationRpsSq = 1;
-    public static final double kXControllerP = 3;
-    public static final double kXControllerI = 0;
-    public static final double kXControllerD = 0;
-    public static final double kYControllerP = 3;
-    public static final double kYControllerI = 0;
-    public static final double kYControllerD = 0;
-    public static final double kOmegaControllerP = 2;
-    public static final double kOmegaControllerI = 0;
-    public static final double kOmegaControllerD = 0;
-    public static final double xControllerTolerance = .2;
-    public static final double yControllerTolerance = .2;
-    public static final double omegaControllerTolerance = 3; // Degrees
-
+    public static final double targetDistance = 3.5; // meters
   }
 
 }

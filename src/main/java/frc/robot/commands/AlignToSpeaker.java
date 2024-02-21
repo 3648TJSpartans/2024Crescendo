@@ -61,8 +61,10 @@ public class AlignToSpeaker extends Command {
                     .findFirst();
             if (target.isPresent()) {
                 PhotonTrackedTarget info = target.get();
-                double xTranslation = tagPose.getX() - 3.5 * Math.cos(Math.toRadians(info.getYaw()));
-                double yTranslation = tagPose.getY() - 3.5 * Math.sin(Math.toRadians(info.getYaw()));
+                double xTranslation = tagPose.getX()
+                        - AlignConstants.targetDistance * Math.cos(Math.toRadians(info.getYaw()));
+                double yTranslation = tagPose.getY()
+                        - AlignConstants.targetDistance * Math.sin(Math.toRadians(info.getYaw()));
                 Translation2d robotTransform = new Translation2d(xTranslation, yTranslation);
                 Pose2d newPose = new Pose2d(robotTransform, Rotation2d.fromDegrees(info.getYaw()));
 
