@@ -183,6 +183,9 @@ public final class Constants {
     public static final double beltAmpSpeed = -1;
     public static final double revAmpTime = 2;
     public static final double shootAmpTime = .5;
+    public static final double SourceShooterSpeed = .3;
+    public static final double SourceBeltSpeed = .5;
+    public static final double DefaultSpeed = 0;
 
   }
 
