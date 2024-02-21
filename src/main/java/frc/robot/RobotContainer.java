@@ -104,20 +104,18 @@ public class RobotContainer {
     // () -> m_driverController.leftBumper().getAsBoolean(), () ->
     // m_driverController.rightBumper().getAsBoolean()));
     m_driverController.leftBumper().onTrue(new IRIntakeCommand(m_intakeSubsystem, m_shooterSubsystem, m_IRSenor));
-    m_driverController.leftBumper()
-        .onFalse(new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(Constants.IntakeConstants.DefaultSpeed)));
-    m_driverController.leftBumper()
-        .onFalse(
-            new InstantCommand(() -> m_shooterSubsystem.moveShooterIntake(Constants.IntakeConstants.DefaultSpeed)));
-
-    m_driverController.rightBumper()
-        .onTrue(new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(-Constants.IntakeConstants.IntakeSpeed)));
-    m_driverController.rightBumper()
-        .onFalse(new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(-Constants.IntakeConstants.DefaultSpeed)));
+    // m_driverController.leftBumper()
+    // .onFalse(new InstantCommand(() ->
+    // m_intakeSubsystem.setIntakeSpeed(Constants.IntakeConstants.DefaultSpeed)));
+    // m_driverController.leftBumper()
+    // .onFalse(
+    // new InstantCommand(() ->
+    // m_shooterSubsystem.moveShooterIntake(Constants.IntakeConstants.DefaultSpeed)));
   }
 
   private void configureShooter() {
     // m_copilotController.a().onTrue(new ShooterCommandGroup(m_shooterSubsystem));
+    // m_copilotController.y().onTrue(new AmpCommandGroup(m_shooterSubsystem));
 
     m_copilotController.b()
         .onTrue(new InstantCommand(() -> m_shooterSubsystem.shuffleboardShooter()));

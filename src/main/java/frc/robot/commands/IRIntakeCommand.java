@@ -30,7 +30,6 @@ public class IRIntakeCommand extends Command {
 
     @Override
     public void execute() {
-        System.out.println("hello world");
         m_shooterSubsystem.shuffleboardBelts();
         m_IntakeSubsystem
                 .setIntakeSpeed(SmartDashboard.getNumber("Intake Speed", Constants.IntakeConstants.DefaultSpeed));
