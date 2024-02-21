@@ -34,24 +34,18 @@
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "startIntake"
-                }
-              },
-              {
                 "type": "path",
                 "data": {
                   "pathName": "AmpToLeftNote"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake"
+                }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "stopIntake"
           }
         },
         {

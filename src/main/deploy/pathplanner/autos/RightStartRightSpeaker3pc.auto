@@ -48,16 +48,10 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "startIntake"
+                  "name": "Intake"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "stopIntake"
           }
         },
         {
@@ -103,16 +97,10 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "startIntake"
+                  "name": "Intake"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "stopIntake"
           }
         },
         {

@@ -143,8 +143,9 @@ public class RobotContainer {
   public void configAuto() {
     NamedCommands.registerCommand("shoot", new ShooterCommandGroup(m_shooterSubsystem));
     NamedCommands.registerCommand("ampShoot", new AmpCommandGroup(m_shooterSubsystem));
-    NamedCommands.registerCommand("startIntake", new IRIntakeCommand(m_intakeSubsystem, m_shooterSubsystem, m_IRSenor));
-    NamedCommands.registerCommand("stopIntake", new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(0)));
+    NamedCommands.registerCommand("Intake", new IRIntakeCommand(m_intakeSubsystem, m_shooterSubsystem, m_IRSenor));
+    // NamedCommands.registerCommand("stopIntake", new InstantCommand(() ->
+    // m_intakeSubsystem.setIntakeSpeed(0)));
     AutoBuilder.configureHolonomic(m_visionPoseEstimator::getVisionPose, m_swerveSubsystem::resetOdometry,
         m_swerveSubsystem::getSpeeds, m_swerveSubsystem::driveRobotRelative,
         AutoConstants.pathFollowerConfig, this::shouldFlipPath, m_swerveSubsystem);
