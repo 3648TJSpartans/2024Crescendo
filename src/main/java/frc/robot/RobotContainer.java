@@ -33,6 +33,8 @@ import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.commands.AlignCommands;
 import frc.robot.commands.ClimberJoystickCmd;
 import frc.robot.commands.IRIntakeCommand;
+import frc.robot.commands.IRSourceIntakeCmd;
+import frc.robot.commands.IRSourceIntakeCmd;
 import frc.robot.commands.IntakeButtonCmd;
 import frc.robot.commands.ShooterCommands.AmpCommandGroup;
 import frc.robot.commands.ShooterCommands.RevMotorCommand;
@@ -100,17 +102,8 @@ public class RobotContainer {
   }
 
   private void configureIntake() {
-    // m_intakeSubsystem.setDefaultCommand(new IntakeButtonCmd(m_intakeSubsystem,
-    // () -> m_driverController.leftBumper().getAsBoolean(), () ->
-    // m_driverController.rightBumper().getAsBoolean()));
     m_driverController.leftBumper().onTrue(new IRIntakeCommand(m_intakeSubsystem, m_shooterSubsystem, m_IRSenor));
-    // m_driverController.leftBumper()
-    // .onFalse(new InstantCommand(() ->
-    // m_intakeSubsystem.setIntakeSpeed(Constants.IntakeConstants.DefaultSpeed)));
-    // m_driverController.leftBumper()
-    // .onFalse(
-    // new InstantCommand(() ->
-    // m_shooterSubsystem.moveShooterIntake(Constants.IntakeConstants.DefaultSpeed)));
+    m_driverController.rightBumper().onTrue(new IRSourceIntakeCmd(m_shooterSubsystem, m_IRSenor));
   }
 
   private void configureShooter() {
@@ -149,12 +142,6 @@ public class RobotContainer {
         AutoConstants.pathFollowerConfig, this::shouldFlipPath, m_swerveSubsystem);
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
-    // m_copilotController.a().onTrue(new InstantCommand(() ->
-    // m_climberSubsystem.setClimberPosition(80)));
-    // m_climberSubsystem.setDefaultCommand(new
-    // ClimberJoystickCmd(m_climberSubsystem,
-    // () -> -MathUtil.applyDeadband(m_copilotController.getLeftY(),
-    // OIConstants.kDeadband)));
   }
 
   private void configureTrap() {
