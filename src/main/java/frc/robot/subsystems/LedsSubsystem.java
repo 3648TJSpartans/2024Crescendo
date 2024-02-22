@@ -4,11 +4,7 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LedConstants;
-
-import org.ejml.interfaces.decomposition.LUSparseDecomposition;
-
 import edu.wpi.first.wpilibj.AddressableLED;
-import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 
 public class LedsSubsystem extends SubsystemBase {
 
@@ -35,10 +31,10 @@ public class LedsSubsystem extends SubsystemBase {
 
     public void intakeColor(DigitalInput IRsenor) {
         if (!IRsenor.get()) {
-              setColor(LedConstants.YesNoteRed, LedConstants.YesNoteGreen, LedConstants.YesNoteBlue);
+            setColor(LedConstants.YesNoteRed, LedConstants.YesNoteGreen, LedConstants.YesNoteBlue);
         } else {
 
-             setColor(LedConstants.NoNoteRed, LedConstants.NoNoteGreen, LedConstants.NoNoteBlue);
+            setColor(LedConstants.NoNoteRed, LedConstants.NoNoteGreen, LedConstants.NoNoteBlue);
 
         }
 

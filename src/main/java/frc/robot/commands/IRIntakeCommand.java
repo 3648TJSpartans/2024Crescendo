@@ -4,11 +4,8 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
-import frc.robot.Constants.LedConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.LedsSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class IRIntakeCommand extends Command {

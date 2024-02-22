@@ -1,7 +1,6 @@
 package frc.robot.commands.Endgame;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.ClimberConstants;
 import frc.robot.subsystems.ClimberSubsystem;
 
 public class EndgameClimberCmd extends Command {
@@ -29,10 +28,10 @@ public class EndgameClimberCmd extends Command {
 
     // @Override
     // public boolean isFinished() {
-    //     if (ClimberSubsystem.getClimberPosition() >= ClimberConstants.kClimberDown) {
-    //         return true;
-    //     }
-    //     return false;
+    // if (ClimberSubsystem.getClimberPosition() >= ClimberConstants.kClimberDown) {
+    // return true;
+    // }
+    // return false;
     // }
 
 }
