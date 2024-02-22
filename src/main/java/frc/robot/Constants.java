@@ -170,9 +170,10 @@ public final class Constants {
     public static final int shooterMotor2Id = 14;
     public static final int beltMotorId1 = 15;
 
-    public static final double kshooterP = 0;
+    public static final double kshooterP = 0.0002;
     public static final double kshooterI = 0;
-    public static final double kshooterD = 0;
+    public static final double kshooterD = 0.001;
+    public static final double kshooterFF = 0.00019;
 
     public static final double shooterSpeakerSpeed = -.5;
     public static final double beltSpeakerSpeed = -1;

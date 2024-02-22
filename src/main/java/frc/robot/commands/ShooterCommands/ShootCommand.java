@@ -15,7 +15,8 @@ public class ShootCommand extends Command {
     private final double m_shooterSpeed2;
     private final double m_beltSpeed;
 
-    public ShootCommand(ShooterSubsystem shooterSubsystem, double shooterSpeed1, double shooterSpeed2, double beltSpeed) {
+    public ShootCommand(ShooterSubsystem shooterSubsystem, double shooterSpeed1, double shooterSpeed2,
+            double beltSpeed) {
         m_beltSpeed = beltSpeed;
         m_shooterSpeed1 = shooterSpeed1;
         m_shooterSpeed2 = shooterSpeed2;
@@ -30,14 +31,14 @@ public class ShootCommand extends Command {
 
     @Override
     public void execute() {
-        m_shooterSubsystem.revShooter(m_shooterSpeed1,m_shooterSpeed2);
-        m_shooterSubsystem.moveShooterIntake(m_beltSpeed);
+        m_shooterSubsystem.setShooterVelocity(m_shooterSpeed1, m_shooterSpeed2);
+        m_shooterSubsystem.setBeltSpeed(m_beltSpeed);
 
     }
 
     @Override
     public void end(boolean interrupted) {
-        m_shooterSubsystem.revShooter(0,0);
-        m_shooterSubsystem.moveShooterIntake(0);
+        m_shooterSubsystem.setShooterVelocity(0, 0);
+        m_shooterSubsystem.setBeltSpeed(0);
     }
 }

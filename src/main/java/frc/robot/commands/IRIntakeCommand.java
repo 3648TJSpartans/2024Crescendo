@@ -39,7 +39,7 @@ public class IRIntakeCommand extends Command {
     public boolean isFinished() {
         if (!m_IRSensor.get()) {
             m_IntakeSubsystem.setIntakeSpeed(Constants.IntakeConstants.DefaultSpeed);
-            m_shooterSubsystem.moveShooterIntake(0);
+            m_shooterSubsystem.setBeltSpeed(0);
             return true;
         } else {
             return false;

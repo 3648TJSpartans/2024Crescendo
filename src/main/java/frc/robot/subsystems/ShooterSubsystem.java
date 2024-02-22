@@ -28,17 +28,21 @@ public class ShooterSubsystem extends SubsystemBase {
         m_beltMotor1 = new CANSparkMax(ShooterConstants.beltMotorId1, MotorType.kBrushless);
         m_shooterMotor1Controller = m_shooterMotor1.getPIDController();
         m_shooterMotor2Controller = m_shooterMotor2.getPIDController();
+        m_shooterMotor1Controller.setFeedbackDevice(m_shooterMotor1.getEncoder());
+        m_shooterMotor2Controller.setFeedbackDevice(m_shooterMotor2.getEncoder());
         m_shooterMotor1Controller.setP(ShooterConstants.kshooterP);
         m_shooterMotor2Controller.setP(ShooterConstants.kshooterP);
         m_shooterMotor1Controller.setI(ShooterConstants.kshooterI);
         m_shooterMotor2Controller.setI(ShooterConstants.kshooterI);
         m_shooterMotor1Controller.setD(ShooterConstants.kshooterD);
         m_shooterMotor2Controller.setD(ShooterConstants.kshooterD);
-        m_shooterMotor1Controller.setFeedbackDevice(m_shooterMotor1.getEncoder());
-        m_shooterMotor2Controller.setFeedbackDevice(m_shooterMotor2.getEncoder());
-
+        m_shooterMotor1Controller.setFF(ShooterConstants.kshooterFF);
+        m_shooterMotor2Controller.setFF(ShooterConstants.kshooterFF);
         m_shooterMotor1.setIdleMode(IdleMode.kCoast);
         m_shooterMotor2.setIdleMode(IdleMode.kCoast);
+        m_beltMotor1.setIdleMode(IdleMode.kBrake);
+        m_shooterMotor1.burnFlash();
+        m_shooterMotor2.burnFlash();
         SmartDashboard.putNumber("Belt Speed", 0);
         SmartDashboard.putNumber("Shooter Speed Top", 0);
         SmartDashboard.putNumber("Shooter Speed Bottom", 0);
@@ -51,10 +55,14 @@ public class ShooterSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Shooter Bottom Velocity", m_shooterMotor2.getEncoder().getVelocity());
     }
 
-    public void revShooter(double speed1, double speed2) {
+    public void setShooterVelocity(double speed1, double speed2) {
         m_shooterMotor1Controller.setReference(speed1, CANSparkMax.ControlType.kVelocity);
         m_shooterMotor2Controller.setReference(speed2, CANSparkMax.ControlType.kVelocity);
 
+    }
+
+    public void setBeltSpeed(double speed) {
+        m_beltMotor1.set(speed);
     }
 
     public void shuffleboardShooter() {
@@ -62,15 +70,13 @@ public class ShooterSubsystem extends SubsystemBase {
                 CANSparkMax.ControlType.kVelocity);
         m_shooterMotor2Controller.setReference(SmartDashboard.getNumber("Shooter Speed Bottom", 0),
                 CANSparkMax.ControlType.kVelocity);
+        // m_shooterMotor1.set(-SmartDashboard.getNumber("Shooter Speed Top", 0));
+        // m_shooterMotor2.set(SmartDashboard.getNumber("Shooter Speed Bottom", 0));
 
     }
 
     public void shuffleboardBelts() {
         m_beltMotor1.set(SmartDashboard.getNumber("Belt Speed", 0));
-    }
-
-    public void moveShooterIntake(double speed) {
-        m_beltMotor1.set(speed);
     }
 
 }

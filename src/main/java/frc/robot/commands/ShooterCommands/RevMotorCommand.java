@@ -23,7 +23,7 @@ public class RevMotorCommand extends Command {
 
     @Override
     public void execute() {
-        m_shooterSubsystem.revShooter(m_shootSpeed1,m_shootSpeed2);
+        m_shooterSubsystem.setShooterVelocity(m_shootSpeed1, m_shootSpeed2);
 
     }
 

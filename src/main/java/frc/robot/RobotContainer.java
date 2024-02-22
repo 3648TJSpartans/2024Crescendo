@@ -115,9 +115,9 @@ public class RobotContainer {
     m_copilotController.x()
         .onTrue(new InstantCommand(() -> m_shooterSubsystem.shuffleboardBelts()));
     m_copilotController.b()
-        .onFalse(new InstantCommand(() -> m_shooterSubsystem.revShooter(0, 0)));
+        .onFalse(new InstantCommand(() -> m_shooterSubsystem.setShooterVelocity(0, 0)));
     m_copilotController.x()
-        .onFalse(new InstantCommand(() -> m_shooterSubsystem.moveShooterIntake(0)));
+        .onFalse(new InstantCommand(() -> m_shooterSubsystem.setBeltSpeed(0)));
   }
 
   private void configureClimber() {
@@ -135,8 +135,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("shoot", new ShooterCommandGroup(m_shooterSubsystem));
     NamedCommands.registerCommand("ampShoot", new AmpCommandGroup(m_shooterSubsystem));
     NamedCommands.registerCommand("Intake", new IRIntakeCommand(m_intakeSubsystem, m_shooterSubsystem, m_IRSenor));
-    // NamedCommands.registerCommand("stopIntake", new InstantCommand(() ->
-    // m_intakeSubsystem.setIntakeSpeed(0)));
+
     AutoBuilder.configureHolonomic(m_visionPoseEstimator::getVisionPose, m_swerveSubsystem::resetOdometry,
         m_swerveSubsystem::getSpeeds, m_swerveSubsystem::driveRobotRelative,
         AutoConstants.pathFollowerConfig, this::shouldFlipPath, m_swerveSubsystem);

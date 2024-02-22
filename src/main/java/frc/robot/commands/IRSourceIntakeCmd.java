@@ -30,15 +30,16 @@ public class IRSourceIntakeCmd extends Command {
 
     @Override
     public void execute() {
-        m_shooterSubsystem.revShooter(-ShooterConstants.SourceShooterSpeed, -ShooterConstants.SourceShooterSpeed);
-        m_shooterSubsystem.moveShooterIntake(ShooterConstants.SourceBeltSpeed);
+        m_shooterSubsystem.setShooterVelocity(-ShooterConstants.SourceShooterSpeed,
+                -ShooterConstants.SourceShooterSpeed);
+        m_shooterSubsystem.setBeltSpeed(ShooterConstants.SourceBeltSpeed);
 
     }
 
     public boolean isFinished() {
         if (!m_IRSensor.get()) {
-            m_shooterSubsystem.revShooter(ShooterConstants.DefaultSpeed, ShooterConstants.DefaultSpeed);
-            m_shooterSubsystem.moveShooterIntake(ShooterConstants.DefaultSpeed);
+            m_shooterSubsystem.setShooterVelocity(ShooterConstants.DefaultSpeed, ShooterConstants.DefaultSpeed);
+            m_shooterSubsystem.setBeltSpeed(ShooterConstants.DefaultSpeed);
             return true;
         } else {
             return false;
