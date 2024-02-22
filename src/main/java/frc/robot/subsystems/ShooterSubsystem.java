@@ -34,6 +34,8 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterMotor2Controller.setI(ShooterConstants.kshooterI);
         m_shooterMotor1Controller.setD(ShooterConstants.kshooterD);
         m_shooterMotor2Controller.setD(ShooterConstants.kshooterD);
+        m_shooterMotor1Controller.setFeedbackDevice(m_shooterMotor1.getEncoder());
+        m_shooterMotor2Controller.setFeedbackDevice(m_shooterMotor2.getEncoder());
 
         m_shooterMotor1.setIdleMode(IdleMode.kCoast);
         m_shooterMotor2.setIdleMode(IdleMode.kCoast);
