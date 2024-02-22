@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.LedConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LedsSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -39,7 +40,8 @@ public class IRIntakeCommand extends Command {
     public boolean isFinished() {
         if (!m_IRSensor.get()) {
             m_IntakeSubsystem.setIntakeSpeed(Constants.IntakeConstants.DefaultSpeed);
-            m_shooterSubsystem.setBeltSpeed(0);
+            m_shooterSubsystem.setBeltSpeed(ShooterConstants.DefaultSpeed);
+            m_shooterSubsystem.setShooterVelocity(ShooterConstants.DefaultSpeed, ShooterConstants.DefaultSpeed);
             return true;
         } else {
             return false;
