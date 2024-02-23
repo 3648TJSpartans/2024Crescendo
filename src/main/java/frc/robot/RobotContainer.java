@@ -92,12 +92,12 @@ public class RobotContainer {
   }
 
   private void configureIntake() {
-    m_driverController.leftBumper().onTrue(new IRIntakeCommand(m_intakeSubsystem, m_shooterSubsystem, m_IRSenor));
-    m_driverController.rightBumper().onTrue(new IRSourceIntakeCmd(m_shooterSubsystem, m_IRSenor));
+    m_driverController.rightBumper().onTrue(new IRIntakeCommand(m_intakeSubsystem, m_shooterSubsystem, m_IRSenor));
+    m_driverController.leftBumper().onTrue(new IRSourceIntakeCmd(m_shooterSubsystem, m_IRSenor));
   }
 
   private void configureShooter() {
-    // m_copilotController.a().onTrue(new ShooterCommandGroup(m_shooterSubsystem));
+    m_copilotController.a().onTrue(new ShooterCommandGroup(m_shooterSubsystem));
     m_copilotController.y().onTrue(new AmpCommandGroup(m_shooterSubsystem));
 
     m_copilotController.b()

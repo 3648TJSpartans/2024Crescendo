@@ -171,17 +171,16 @@ public final class Constants {
     public static final double kshooterD = 0.001;
     public static final double kshooterFF = 0.00019;
 
-    public static final double shooterSpeakerSpeed = -.5;
+    public static final double shooterSpeakerSpeed = 3500;
     public static final double beltSpeakerSpeed = -1;
-    public static final double revSpeakerTime = .5;
-    public static final double shootSpeakerTime = 2;
-    // Top 200
-    // Bottom 1200
+    public static final double revSpeakerTime = 1;
+    public static final double shootSpeakerTime = .5;
+
     public static final double shooterAmpTopSpeed = 200;
     public static final double shooterAmpBottomSpeed = 1200;
     public static final double beltAmpSpeed = -1;
-    public static final double revAmpTime = .8;
-    public static final double shootAmpTime = 1;
+    public static final double revAmpTime = .5;
+    public static final double shootAmpTime = .8;
 
     public static final double SourceShooterSpeed = .3;
     public static final double SourceBeltSpeed = .5;
