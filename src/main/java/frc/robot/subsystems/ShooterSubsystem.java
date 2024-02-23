@@ -59,7 +59,8 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void shuffleboardShooter() {
-        m_shooterMotor1Controller.setReference(-SmartDashboard.getNumber("Shooter Speed Top", 0),
+        m_shooterMotor1.setInverted(true);
+        m_shooterMotor1Controller.setReference(SmartDashboard.getNumber("Shooter Speed Top", 0),
                 CANSparkMax.ControlType.kVelocity);
         m_shooterMotor2Controller.setReference(SmartDashboard.getNumber("Shooter Speed Bottom", 0),
                 CANSparkMax.ControlType.kVelocity);

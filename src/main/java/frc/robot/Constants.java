@@ -175,13 +175,16 @@ public final class Constants {
     public static final double beltSpeakerSpeed = -1;
     public static final double revSpeakerTime = .5;
     public static final double shootSpeakerTime = 2;
-    public static final double shooterAmpTopSpeed = 0;
-    public static final double shooterAmpBottomSpeed = .2;// TODO test all amp variables
+
+    public static final double shooterAmpTopSpeed = 300;
+    public static final double shooterAmpBottomSpeed = 1500;
     public static final double beltAmpSpeed = -1;
     public static final double revAmpTime = 2;
-    public static final double shootAmpTime = .5;
+    public static final double shootAmpTime = 2;
+
     public static final double SourceShooterSpeed = .3;
     public static final double SourceBeltSpeed = .5;
+
     public static final double DefaultSpeed = 0;
 
   }

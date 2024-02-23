@@ -97,7 +97,7 @@ public class RobotContainer {
 
   private void configureShooter() {
     // m_copilotController.a().onTrue(new ShooterCommandGroup(m_shooterSubsystem));
-    // m_copilotController.y().onTrue(new AmpCommandGroup(m_shooterSubsystem));
+    m_copilotController.y().onTrue(new AmpCommandGroup(m_shooterSubsystem));
 
     m_copilotController.b()
         .onTrue(new InstantCommand(() -> m_shooterSubsystem.shuffleboardShooter()));
