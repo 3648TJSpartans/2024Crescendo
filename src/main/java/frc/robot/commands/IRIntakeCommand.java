@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -18,7 +19,8 @@ public class IRIntakeCommand extends Command {
         m_shooterSubsystem = shooterSubsystem;
         m_IRSensor = irSensor;
         addRequirements(m_IntakeSubsystem);
-        SmartDashboard.putNumber("Intake Speed", Constants.IntakeConstants.DefaultSpeed);
+        // SmartDashboard.putNumber("Intake Speed",
+        // Constants.IntakeConstants.DefaultSpeed);
     }
 
     @Override
@@ -28,9 +30,9 @@ public class IRIntakeCommand extends Command {
 
     @Override
     public void execute() {
-        m_shooterSubsystem.shuffleboardBelts();
+        m_shooterSubsystem.setBeltSpeed(ShooterConstants.beltAmpSpeed);
         m_IntakeSubsystem
-                .setIntakeSpeed(SmartDashboard.getNumber("Intake Speed", Constants.IntakeConstants.DefaultSpeed));
+                .setIntakeSpeed(IntakeConstants.IntakeSpeed);
 
     }
 

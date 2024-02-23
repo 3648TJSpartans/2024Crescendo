@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.IRSensorConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.TrapConstants;
 import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.commands.TrapJoystickCmd;
@@ -102,7 +103,7 @@ public class RobotContainer {
     m_copilotController.b()
         .onTrue(new InstantCommand(() -> m_shooterSubsystem.shuffleboardShooter()));
     m_copilotController.x()
-        .onTrue(new InstantCommand(() -> m_shooterSubsystem.shuffleboardBelts()));
+        .onTrue(new InstantCommand(() -> m_shooterSubsystem.setBeltSpeed(ShooterConstants.beltAmpSpeed)));
     m_copilotController.b()
         .onFalse(new InstantCommand(() -> m_shooterSubsystem.setShooterVelocity(0, 0)));
     m_copilotController.x()

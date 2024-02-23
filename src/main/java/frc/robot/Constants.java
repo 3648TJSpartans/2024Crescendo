@@ -138,7 +138,7 @@ public final class Constants {
   public static final class IntakeConstants {
     public static final int IntakeMotor1Id = 9;
     // public static final int IntakeMotor2Id = 10;
-    public static final double IntakeSpeed = .65;
+    public static final double IntakeSpeed = .43;
     public static final double DefaultSpeed = 0;
   }
 
@@ -175,12 +175,13 @@ public final class Constants {
     public static final double beltSpeakerSpeed = -1;
     public static final double revSpeakerTime = .5;
     public static final double shootSpeakerTime = 2;
-
-    public static final double shooterAmpTopSpeed = 300;
-    public static final double shooterAmpBottomSpeed = 1500;
+    // Top 200
+    // Bottom 1200
+    public static final double shooterAmpTopSpeed = 200;
+    public static final double shooterAmpBottomSpeed = 1200;
     public static final double beltAmpSpeed = -1;
-    public static final double revAmpTime = 2;
-    public static final double shootAmpTime = 2;
+    public static final double revAmpTime = .8;
+    public static final double shootAmpTime = 1;
 
     public static final double SourceShooterSpeed = .3;
     public static final double SourceBeltSpeed = .5;
