@@ -262,8 +262,12 @@ public final class Constants {
   public static final class LedConstants {
     public static final int ledLength = 44;
     public static final int ledPWMID = 1;
-    public static final int startValue = 0;
-    public static final int endValue = 44;
+
+    public static final int shooterLedStart = 0;
+    public static final int shooterLedEnd = 30;
+
+    public static final int topBarLedStart = 31;
+    public static final int topBarLedStop = 64;
 
     public static final int NoNoteRed = 252;
     public static final int NoNoteGreen = 190;

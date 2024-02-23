@@ -4,6 +4,9 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LedConstants;
+
+import org.ejml.interfaces.decomposition.LUSparseDecomposition;
+
 import edu.wpi.first.wpilibj.AddressableLED;
 
 public class LedsSubsystem extends SubsystemBase {
@@ -21,9 +24,9 @@ public class LedsSubsystem extends SubsystemBase {
 
     }
 
-    public void setColor(int r, int g, int b) {
+    public void setColor(int r, int g, int b, int startValue, int endValue) {
 
-        for (int i = LedConstants.startValue; i < LedConstants.endValue; i++) {
+        for (int i = startValue; i < endValue; i++) {
             m_ledBuffer.setRGB(i, r, g, b);
         }
         m_led.setData(m_ledBuffer);
@@ -31,10 +34,12 @@ public class LedsSubsystem extends SubsystemBase {
 
     public void intakeColor(DigitalInput IRsenor) {
         if (!IRsenor.get()) {
-            setColor(LedConstants.YesNoteRed, LedConstants.YesNoteGreen, LedConstants.YesNoteBlue);
+            setColor(LedConstants.YesNoteRed, LedConstants.YesNoteGreen, LedConstants.YesNoteBlue,
+                    LedConstants.topBarLedStart, LedConstants.topBarLedStop);
         } else {
 
-            setColor(LedConstants.NoNoteRed, LedConstants.NoNoteGreen, LedConstants.NoNoteBlue);
+            setColor(LedConstants.NoNoteRed, LedConstants.NoNoteGreen, LedConstants.NoNoteBlue,
+                    LedConstants.topBarLedStart, LedConstants.topBarLedStop);
 
         }
 

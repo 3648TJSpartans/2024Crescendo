@@ -15,10 +15,26 @@ public class ShooterCommandGroup extends SequentialCommandGroup {
                                                 ShooterConstants.shooterSpeakerSpeed)
                                                 .withTimeout(ShooterConstants.revSpeakerTime),
                                 // new WaitCommand(ShooterConstants.revSpeakerTime),
-                                new ShootCommand(m_shooterSubsystem, ShooterConstants.shooterSpeakerSpeed,
-                                                ShooterConstants.shooterSpeakerSpeed,
-                                                ShooterConstants.beltSpeakerSpeed)
-                                                .withTimeout(ShooterConstants.shootSpeakerTime));
+                                new SequentialCommandGroup(
+                                                new ShootCommand(m_shooterSubsystem,
+                                                                ShooterConstants.shooterSpeakerSpeed,
+                                                                ShooterConstants.shooterSpeakerSpeed,
+                                                                ShooterConstants.beltSpeakerSpeed)
+                                                                .withTimeout(ShooterConstants.shootSpeakerTime)));// Add
+                                                                                                                  // Shooter
+                                                                                                                  // Led's
+                                                                                                                  // here
+                                                                                                                  // in
+                                                                                                                  // the
+                                                                                                                  // sequential
+                                                                                                                  // Command
+                                                                                                                  // Group
+                                                                                                                  // with
+                                                                                                                  // the
+                                                                                                                  // same
+                                                                                                                  // timeout
+                                                                                                                  // as
+                                                                                                                  // shooterSpeakerTime
         }
 
 }
