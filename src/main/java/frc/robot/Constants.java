@@ -260,7 +260,7 @@ public final class Constants {
   }
 
   public static final class LedConstants {
-    public static final int ledLength = 44;
+    public static final int ledLength = 176;
     public static final int ledPWMID = 1;
 
     public static final int shooterLedStart = 0;
