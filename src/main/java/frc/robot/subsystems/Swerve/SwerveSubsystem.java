@@ -36,7 +36,7 @@ public class SwerveSubsystem extends SubsystemBase {
             DriveConstants.kRearRightTurningCanId,
             DriveConstants.kBackRightChassisAngularOffset);
     private SwerveModule[] modules;
-    private boolean isFieldRelative = false;
+    private boolean isFieldRelative = true;
     // The gyro sensor
     private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
     // Slew rate filter variables for controlling acceleration

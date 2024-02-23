@@ -100,14 +100,16 @@ public class RobotContainer {
     m_copilotController.a().onTrue(new ShooterCommandGroup(m_shooterSubsystem));
     m_copilotController.y().onTrue(new AmpCommandGroup(m_shooterSubsystem));
 
-    m_copilotController.b()
-        .onTrue(new InstantCommand(() -> m_shooterSubsystem.shuffleboardShooter()));
-    m_copilotController.x()
-        .onTrue(new InstantCommand(() -> m_shooterSubsystem.setBeltSpeed(ShooterConstants.beltAmpSpeed)));
-    m_copilotController.b()
-        .onFalse(new InstantCommand(() -> m_shooterSubsystem.setShooterVelocity(0, 0)));
-    m_copilotController.x()
-        .onFalse(new InstantCommand(() -> m_shooterSubsystem.setBeltSpeed(0)));
+    // m_copilotController.b()
+    // .onTrue(new InstantCommand(() -> m_shooterSubsystem.shuffleboardShooter()));
+    // m_copilotController.x()
+    // .onTrue(new InstantCommand(() ->
+    // m_shooterSubsystem.setBeltSpeed(ShooterConstants.beltAmpSpeed)));
+    // m_copilotController.b()
+    // .onFalse(new InstantCommand(() -> m_shooterSubsystem.setShooterVelocity(0,
+    // 0)));
+    // m_copilotController.x()
+    // .onFalse(new InstantCommand(() -> m_shooterSubsystem.setBeltSpeed(0)));
   }
 
   private void configureClimber() {
