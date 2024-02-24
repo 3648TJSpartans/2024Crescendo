@@ -1,5 +1,13 @@
 {
   "HALProvider": {
+    "Addressable LEDs": {
+      "0": {
+        "start": 3
+      },
+      "window": {
+        "visible": true
+      }
+    },
     "Other Devices": {
       "SPARK MAX [3]": {
         "header": {
@@ -19,6 +27,13 @@
       "/SmartDashboard/Auto Chooser": "String Chooser",
       "/SmartDashboard/Example Auto": "Command",
       "/SmartDashboard/Square Auto": "Command"
+    }
+  },
+  "NetworkTables": {
+    "transitory": {
+      "SmartDashboard": {
+        "open": true
+      }
     }
   },
   "NetworkTables Info": {

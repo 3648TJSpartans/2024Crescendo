@@ -29,6 +29,7 @@ import frc.robot.commands.IRIntakeCommand;
 import frc.robot.commands.IRSourceIntakeCmd;
 import frc.robot.commands.ShooterCommands.AmpCommandGroup;
 import frc.robot.commands.ShooterCommands.ShooterCommandGroup;
+import frc.robot.commands.ShooterCommands.*;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LedsSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -98,6 +99,7 @@ public class RobotContainer {
 
   private void configureShooter() {
     m_driverController.y().onTrue(new ShooterCommandGroup(m_shooterSubsystem));
+    m_driverController.y().whileTrue(new ShootLedCommand(m_ledsSubsystem));
     m_driverController.x().onTrue(new AmpCommandGroup(m_shooterSubsystem));
 
     // m_copilotController.b()
