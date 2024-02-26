@@ -2,18 +2,11 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.IdleMode;
-
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.CAN;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.Constants;
-import frc.robot.Constants.IRSensorConstants;
 
 public class ShooterSubsystem extends SubsystemBase {
     private final CANSparkMax m_shooterMotor1;
@@ -43,7 +36,7 @@ public class ShooterSubsystem extends SubsystemBase {
         m_beltMotor1.setIdleMode(IdleMode.kBrake);
         m_shooterMotor1.burnFlash();
         m_shooterMotor2.burnFlash();
-        SmartDashboard.putNumber("Belt Speed", 0);
+        // SmartDashboard.putNumber("Belt Speed", 0);
         SmartDashboard.putNumber("Shooter Speed Top", 0);
         SmartDashboard.putNumber("Shooter Speed Bottom", 0);
 
@@ -55,9 +48,9 @@ public class ShooterSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Shooter Bottom Velocity", m_shooterMotor2.getEncoder().getVelocity());
     }
 
-    public void setShooterVelocity(double speed1, double speed2) {
-        m_shooterMotor1Controller.setReference(speed1, CANSparkMax.ControlType.kVelocity);
-        m_shooterMotor2Controller.setReference(speed2, CANSparkMax.ControlType.kVelocity);
+    public void setShooterVelocity(double topSpeed, double bottomSpeed) {
+        m_shooterMotor1Controller.setReference(topSpeed, CANSparkMax.ControlType.kVelocity);
+        m_shooterMotor2Controller.setReference(bottomSpeed, CANSparkMax.ControlType.kVelocity);
 
     }
 
@@ -66,7 +59,8 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void shuffleboardShooter() {
-        m_shooterMotor1Controller.setReference(-SmartDashboard.getNumber("Shooter Speed Top", 0),
+        m_shooterMotor1.setInverted(true);
+        m_shooterMotor1Controller.setReference(SmartDashboard.getNumber("Shooter Speed Top", 0),
                 CANSparkMax.ControlType.kVelocity);
         m_shooterMotor2Controller.setReference(SmartDashboard.getNumber("Shooter Speed Bottom", 0),
                 CANSparkMax.ControlType.kVelocity);
@@ -75,8 +69,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
     }
 
-    public void shuffleboardBelts() {
-        m_beltMotor1.set(SmartDashboard.getNumber("Belt Speed", 0));
-    }
+    // public void shuffleboardBelts() {
+    // m_beltMotor1.set(SmartDashboard.getNumber("Belt Speed", 0));
+    // }
 
 }

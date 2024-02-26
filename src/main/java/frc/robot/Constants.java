@@ -8,15 +8,11 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 import com.revrobotics.CANSparkBase.IdleMode;
-
-import edu.wpi.first.math.controller.HolonomicDriveController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -180,7 +176,7 @@ public final class Constants {
   public static final class IntakeConstants {
     public static final int IntakeMotor1Id = 9;
     // public static final int IntakeMotor2Id = 10;
-    public static final double IntakeSpeed = .65;
+    public static final double IntakeSpeed = .43;
     public static final double DefaultSpeed = 0;
   }
 
@@ -213,17 +209,20 @@ public final class Constants {
     public static final double kshooterD = 0.001;
     public static final double kshooterFF = 0.00019;
 
-    public static final double shooterSpeakerSpeed = -.5;
+    public static final double shooterSpeakerSpeed = 3500;
     public static final double beltSpeakerSpeed = -1;
-    public static final double revSpeakerTime = .5;
-    public static final double shootSpeakerTime = 2;
-    public static final double shooterAmpTopSpeed = 0;
-    public static final double shooterAmpBottomSpeed = .2;// TODO test all amp variables
+    public static final double revSpeakerTime = 1;
+    public static final double shootSpeakerTime = .5;
+
+    public static final double shooterAmpTopSpeed = 200;
+    public static final double shooterAmpBottomSpeed = 1200;
     public static final double beltAmpSpeed = -1;
-    public static final double revAmpTime = 2;
-    public static final double shootAmpTime = .5;
+    public static final double revAmpTime = .5;
+    public static final double shootAmpTime = .8;
+
     public static final double SourceShooterSpeed = .3;
     public static final double SourceBeltSpeed = .5;
+
     public static final double DefaultSpeed = 0;
 
   }
@@ -299,18 +298,19 @@ public final class Constants {
   }
 
   public static final class LedConstants {
-    public static final int ledLength = 44;
+    public static final int ledLength = 176;
     public static final int ledPWMID = 1;
-    public static final int startValue = 0;
-    public static final int endValue = 44;
 
-    public static final int NoNoteRed = 252;
-    public static final int NoNoteGreen = 190;
-    public static final int NoNoteBlue = 3;
+    public static final int shooterLedStart = 0;
+    public static final int shooterLedEnd = 30;
 
-    public static final int YesNoteRed = 15;
-    public static final int YesNoteGreen = 252;
-    public static final int YesNoteBlue = 3;
+    public static final int topBarLedStart = 31;
+    public static final int topBarLedStop = 64;
+
+    public static final int[] noNoteRGB = { 219, 31, 31 };
+    public static final int[] yesNoteRGB = { 31, 219, 81 };
+    public static final int[] intakeRunningRGB = { 219, 31, 191 };
+    public static final int[] sourceRunningRGB = { 31, 40, 219 };
 
   }
 

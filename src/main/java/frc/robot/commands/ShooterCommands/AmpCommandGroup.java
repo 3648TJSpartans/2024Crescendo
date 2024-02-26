@@ -9,9 +9,12 @@ public class AmpCommandGroup extends SequentialCommandGroup {
 
     public AmpCommandGroup(ShooterSubsystem shooterSubsystem) {
         m_shooterSubsystem = shooterSubsystem;
-        addCommands(new RevMotorCommand(m_shooterSubsystem, ShooterConstants.shooterAmpBottomSpeed,ShooterConstants.shooterAmpTopSpeed)
-                .withTimeout(ShooterConstants.revAmpTime),
-                new ShootCommand(m_shooterSubsystem, ShooterConstants.shooterAmpBottomSpeed,ShooterConstants.shooterAmpTopSpeed, ShooterConstants.beltAmpSpeed)
+        addCommands(
+                new RevMotorCommand(m_shooterSubsystem, ShooterConstants.shooterAmpTopSpeed,
+                        ShooterConstants.shooterAmpBottomSpeed)
+                        .withTimeout(ShooterConstants.revAmpTime),
+                new ShootCommand(m_shooterSubsystem, ShooterConstants.shooterAmpTopSpeed,
+                        ShooterConstants.shooterAmpBottomSpeed, ShooterConstants.beltAmpSpeed)
                         .withTimeout(ShooterConstants.shootAmpTime));
 
     }

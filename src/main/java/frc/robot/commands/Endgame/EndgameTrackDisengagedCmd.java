@@ -1,7 +1,6 @@
 package frc.robot.commands.Endgame;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.TrapConstants;
 import frc.robot.subsystems.TrapSubsystem;
 
 public class EndgameTrackDisengagedCmd extends Command {
