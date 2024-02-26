@@ -9,33 +9,34 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 
 public class ShooterSubsystem extends SubsystemBase {
-    private final CANSparkMax m_shooterMotor1;
-    private final CANSparkMax m_shooterMotor2;
+    private final CANSparkMax m_shooterMotorTop;
+    private final CANSparkMax m_shooterMotorBottom;
     private final CANSparkMax m_beltMotor1;
-    private final SparkPIDController m_shooterMotor1Controller;
-    private final SparkPIDController m_shooterMotor2Controller;
+    private final SparkPIDController m_shooterMotorTopController;
+    private final SparkPIDController m_shooterMotorBottomController;
 
     public ShooterSubsystem() {
-        m_shooterMotor1 = new CANSparkMax(ShooterConstants.shooterMotor1Id, MotorType.kBrushless);
-        m_shooterMotor2 = new CANSparkMax(ShooterConstants.shooterMotor2Id, MotorType.kBrushless);
+        m_shooterMotorTop = new CANSparkMax(ShooterConstants.shooterMotorTopId, MotorType.kBrushless);
+        m_shooterMotorBottom = new CANSparkMax(ShooterConstants.shooterMotorBottomId, MotorType.kBrushless);
         m_beltMotor1 = new CANSparkMax(ShooterConstants.beltMotorId1, MotorType.kBrushless);
-        m_shooterMotor1Controller = m_shooterMotor1.getPIDController();
-        m_shooterMotor2Controller = m_shooterMotor2.getPIDController();
-        m_shooterMotor1Controller.setFeedbackDevice(m_shooterMotor1.getEncoder());
-        m_shooterMotor2Controller.setFeedbackDevice(m_shooterMotor2.getEncoder());
-        m_shooterMotor1Controller.setP(ShooterConstants.kshooterP);
-        m_shooterMotor2Controller.setP(ShooterConstants.kshooterP);
-        m_shooterMotor1Controller.setI(ShooterConstants.kshooterI);
-        m_shooterMotor2Controller.setI(ShooterConstants.kshooterI);
-        m_shooterMotor1Controller.setD(ShooterConstants.kshooterD);
-        m_shooterMotor2Controller.setD(ShooterConstants.kshooterD);
-        m_shooterMotor1Controller.setFF(ShooterConstants.kshooterFF);
-        m_shooterMotor2Controller.setFF(ShooterConstants.kshooterFF);
-        m_shooterMotor1.setIdleMode(IdleMode.kCoast);
-        m_shooterMotor2.setIdleMode(IdleMode.kCoast);
+        m_shooterMotorTopController = m_shooterMotorTop.getPIDController();
+        m_shooterMotorBottomController = m_shooterMotorBottom.getPIDController();
+        m_shooterMotorTopController.setFeedbackDevice(m_shooterMotorTop.getEncoder());
+        m_shooterMotorBottomController.setFeedbackDevice(m_shooterMotorBottom.getEncoder());
+        m_shooterMotorTopController.setP(ShooterConstants.kshooterP);
+        m_shooterMotorBottomController.setP(ShooterConstants.kshooterP);
+        m_shooterMotorTopController.setI(ShooterConstants.kshooterI);
+        m_shooterMotorBottomController.setI(ShooterConstants.kshooterI);
+        m_shooterMotorTopController.setD(ShooterConstants.kshooterD);
+        m_shooterMotorBottomController.setD(ShooterConstants.kshooterD);
+        m_shooterMotorTopController.setFF(ShooterConstants.kshooterFF);
+        m_shooterMotorBottomController.setFF(ShooterConstants.kshooterFF);
+        m_shooterMotorTop.setIdleMode(IdleMode.kCoast);
+        m_shooterMotorBottom.setIdleMode(IdleMode.kCoast);
         m_beltMotor1.setIdleMode(IdleMode.kBrake);
-        m_shooterMotor1.burnFlash();
-        m_shooterMotor2.burnFlash();
+        m_shooterMotorTop.burnFlash();
+        m_shooterMotorBottom.burnFlash();
+
         // SmartDashboard.putNumber("Belt Speed", 0);
         SmartDashboard.putNumber("Shooter Speed Top", 0);
         SmartDashboard.putNumber("Shooter Speed Bottom", 0);
@@ -44,33 +45,43 @@ public class ShooterSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Shooter Top Velocity", m_shooterMotor1.getEncoder().getVelocity());
-        SmartDashboard.putNumber("Shooter Bottom Velocity", m_shooterMotor2.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Shooter Top Velocity", m_shooterMotorTop.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Shooter Bottom Velocity", m_shooterMotorBottom.getEncoder().getVelocity());
     }
 
     public void setShooterVelocity(double topSpeed, double bottomSpeed) {
-        m_shooterMotor1Controller.setReference(topSpeed, CANSparkMax.ControlType.kVelocity);
-        m_shooterMotor2Controller.setReference(bottomSpeed, CANSparkMax.ControlType.kVelocity);
+        m_shooterMotorTop.setInverted(true);
+        m_shooterMotorBottom.setInverted(false);
+        m_shooterMotorTopController.setReference(topSpeed, CANSparkMax.ControlType.kVelocity);
+        m_shooterMotorBottomController.setReference(bottomSpeed, CANSparkMax.ControlType.kVelocity);
+        System.out.println("top Inverted: " + m_shooterMotorTop.getInverted());
+        System.out.println("bottom Inverted: " + m_shooterMotorBottom.getInverted());
 
+    }
+
+    public void setInvertedShooterVelocity(double topSpeed, double bottomSpeed) {
+        m_shooterMotorTop.setInverted(false);
+        m_shooterMotorBottom.setInverted(true);
+        m_shooterMotorTopController.setReference(topSpeed, CANSparkMax.ControlType.kVelocity);
+        m_shooterMotorBottomController.setReference(bottomSpeed, CANSparkMax.ControlType.kVelocity);
     }
 
     public void setBeltSpeed(double speed) {
         m_beltMotor1.set(speed);
     }
 
-    public void shuffleboardShooter() {
-        m_shooterMotor1.setInverted(true);
-        m_shooterMotor1Controller.setReference(SmartDashboard.getNumber("Shooter Speed Top", 0),
-                CANSparkMax.ControlType.kVelocity);
-        m_shooterMotor2Controller.setReference(SmartDashboard.getNumber("Shooter Speed Bottom", 0),
-                CANSparkMax.ControlType.kVelocity);
-        // m_shooterMotor1.set(-SmartDashboard.getNumber("Shooter Speed Top", 0));
-        // m_shooterMotor2.set(SmartDashboard.getNumber("Shooter Speed Bottom", 0));
-
+    public double getBeltPos() {
+        return m_beltMotor1.getEncoder().getPosition();
     }
 
-    // public void shuffleboardBelts() {
-    // m_beltMotor1.set(SmartDashboard.getNumber("Belt Speed", 0));
+    // public void shuffleboardShooter() {
+    // m_shooterMotor1Controller.setReference(SmartDashboard.getNumber("Shooter
+    // Speed Top", 0),
+    // CANSparkMax.ControlType.kVelocity);
+    // m_shooterMotor2Controller.setReference(SmartDashboard.getNumber("Shooter
+    // Speed Bottom", 0),
+    // CANSparkMax.ControlType.kVelocity);
+
     // }
 
 }

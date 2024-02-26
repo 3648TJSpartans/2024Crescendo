@@ -162,8 +162,8 @@ public final class Constants {
 
   public static final class ShooterConstants {
 
-    public static final int shooterMotor1Id = 13;
-    public static final int shooterMotor2Id = 14;
+    public static final int shooterMotorTopId = 13;// TOP
+    public static final int shooterMotorBottomId = 14; // BOT
     public static final int beltMotorId1 = 15;
 
     public static final double kshooterP = 0.0002;
@@ -182,10 +182,11 @@ public final class Constants {
     public static final double revAmpTime = .5;
     public static final double shootAmpTime = .8;
 
-    public static final double SourceShooterSpeed = .3;
-    public static final double SourceBeltSpeed = .5;
+    public static final double SourceShooterSpeed = 1000;
+    public static final double SourceBeltSpeed = -1;
 
     public static final double DefaultSpeed = 0;
+    public static final double intakeSourceWait = .25;
 
   }
 
@@ -269,8 +270,8 @@ public final class Constants {
     public static final int topBarLedStart = 31;
     public static final int topBarLedStop = 64;
 
-    public static final int[] noNoteRGB = { 219, 31, 31 };
-    public static final int[] yesNoteRGB = { 31, 219, 81 };
+    public static final int[] noNoteRGB = { 255, 0, 0 };
+    public static final int[] yesNoteRGB = { 0, 255, 0 };
     public static final int[] intakeRunningRGB = { 219, 31, 191 };
     public static final int[] sourceRunningRGB = { 31, 40, 219 };
 

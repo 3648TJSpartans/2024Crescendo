@@ -10,25 +10,31 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.LedConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LedsSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class IRIntakeCommand extends Command {
     private final IntakeSubsystem m_intakeSubsystem;
     private final DigitalInput m_IRSensor;
     private final ShooterSubsystem m_shooterSubsystem;
+    private final LedsSubsystem m_ledsSubsystem;
 
-    public IRIntakeCommand(IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem, DigitalInput irSensor) {
+    public IRIntakeCommand(IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem, DigitalInput irSensor,
+            LedsSubsystem ledsSubsystem) {
         m_intakeSubsystem = intakeSubsystem;
         m_shooterSubsystem = shooterSubsystem;
+        m_ledsSubsystem = ledsSubsystem;
         m_IRSensor = irSensor;
         addRequirements(m_intakeSubsystem);
         addRequirements(m_shooterSubsystem);
+        addRequirements(m_ledsSubsystem);
 
     }
 
     @Override
     public void initialize() {
-
+        m_ledsSubsystem.setColor(LedConstants.intakeRunningRGB, LedConstants.topBarLedStart,
+                LedConstants.topBarLedStop);
     }
 
     @Override
@@ -41,7 +47,8 @@ public class IRIntakeCommand extends Command {
 
     public boolean isFinished() {
         if (!m_IRSensor.get()) {
-
+            m_ledsSubsystem.setColor(LedConstants.yesNoteRGB, LedConstants.topBarLedStart, LedConstants.topBarLedStop);
+            m_ledsSubsystem.setIntakeColor(m_IRSensor);
             m_intakeSubsystem.setIntakeSpeed(Constants.IntakeConstants.DefaultSpeed);
             m_shooterSubsystem.setBeltSpeed(ShooterConstants.DefaultSpeed);
             m_shooterSubsystem.setShooterVelocity(ShooterConstants.DefaultSpeed, ShooterConstants.DefaultSpeed);

@@ -56,9 +56,10 @@ public class RobotContainer {
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   private final TrapSubsystem m_trapSubsystem = new TrapSubsystem();
   private final LedsSubsystem m_ledsSubsystem = new LedsSubsystem();
-  private final DigitalInput m_IRSenor = new DigitalInput(IRSensorConstants.IRSensorID);
-  private Command m_irIntakeCmd = new IRIntakeCommand(m_intakeSubsystem, m_shooterSubsystem, m_IRSenor);
-  private Command m_sourceIntakeCmd = new IRSourceIntakeCmd(m_shooterSubsystem, m_IRSenor);
+  private final DigitalInput m_IRSensor = new DigitalInput(IRSensorConstants.IRSensorID);
+  private Command m_irIntakeCmd = new IRIntakeCommand(m_intakeSubsystem, m_shooterSubsystem, m_IRSensor,
+      m_ledsSubsystem);
+  private Command m_sourceIntakeCmd = new IRSourceIntakeCmd(m_shooterSubsystem, m_ledsSubsystem, m_IRSensor);
   private final VisionPoseEstimator m_visionPoseEstimator = new VisionPoseEstimator(m_swerveSubsystem);
   private final CommandXboxController m_driverController = new CommandXboxController(
       OIConstants.kDriverControllerPort);
@@ -69,6 +70,7 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    m_ledsSubsystem.setIntakeColor(m_IRSensor);
     configAuto();
     configureSwerve();
     configureClimber();
@@ -100,8 +102,8 @@ public class RobotContainer {
   }
 
   private void configureShooter() {
-    m_driverController.y().onTrue(new ShooterCommandGroup(m_shooterSubsystem));
-    m_driverController.x().onTrue(new AmpCommandGroup(m_shooterSubsystem));
+    m_driverController.y().onTrue(new ShooterCommandGroup(m_shooterSubsystem, m_ledsSubsystem, m_IRSensor));
+    m_driverController.x().onTrue(new AmpCommandGroup(m_shooterSubsystem, m_ledsSubsystem, m_IRSensor));
   }
 
   private void configureClimber() {
@@ -116,8 +118,8 @@ public class RobotContainer {
   }
 
   public void configAuto() {
-    NamedCommands.registerCommand("shoot", new ShooterCommandGroup(m_shooterSubsystem));
-    NamedCommands.registerCommand("ampShoot", new AmpCommandGroup(m_shooterSubsystem));
+    NamedCommands.registerCommand("shoot", new ShooterCommandGroup(m_shooterSubsystem, m_ledsSubsystem, m_IRSensor));
+    NamedCommands.registerCommand("ampShoot", new AmpCommandGroup(m_shooterSubsystem, m_ledsSubsystem, m_IRSensor));
     NamedCommands.registerCommand("Intake", m_irIntakeCmd);
     AutoBuilder.configureHolonomic(m_visionPoseEstimator::getVisionPose, m_swerveSubsystem::resetOdometry,
         m_swerveSubsystem::getSpeeds, m_swerveSubsystem::driveRobotRelative,
@@ -168,7 +170,6 @@ public class RobotContainer {
   }
 
   public void runPeriodic() {
-    m_ledsSubsystem.setIntakeColor(m_irIntakeCmd);
     m_visionPoseEstimator.updateVisionPose();
     SmartDashboard.putNumber("PoseX", m_visionPoseEstimator.getVisionPose().getX());
     SmartDashboard.putNumber("PoseY", m_visionPoseEstimator.getVisionPose().getY());

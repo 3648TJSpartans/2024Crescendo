@@ -33,11 +33,9 @@ public class LedsSubsystem extends SubsystemBase {
         m_led.setData(m_ledBuffer);
     }
 
-    public void setIntakeColor(Command intakeCmd) {
-        if (intakeCmd.isFinished()) {
+    public void setIntakeColor(DigitalInput irSensor) {
+        if (!irSensor.get()) {
             setColor(LedConstants.yesNoteRGB, LedConstants.topBarLedStart, LedConstants.topBarLedStop);
-        } else if (intakeCmd.isScheduled()) {
-            setColor(LedConstants.intakeRunningRGB, LedConstants.topBarLedStart, LedConstants.topBarLedStop);
         } else {
             setColor(LedConstants.noNoteRGB, LedConstants.topBarLedStart, LedConstants.topBarLedStop);
         }
