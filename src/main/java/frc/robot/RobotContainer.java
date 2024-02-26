@@ -99,7 +99,7 @@ public class RobotContainer {
 
   private void configureShooter() {
     m_driverController.y().onTrue(new ShooterCommandGroup(m_shooterSubsystem));
-    m_driverController.y().whileTrue(new ShootLedCommand(m_ledsSubsystem));
+    m_driverController.y().onTrue(new ShootLedCommand(m_ledsSubsystem));
     m_driverController.x().onTrue(new AmpCommandGroup(m_shooterSubsystem));
 
     // m_copilotController.b()

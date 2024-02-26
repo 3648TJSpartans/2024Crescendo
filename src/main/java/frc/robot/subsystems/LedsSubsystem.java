@@ -24,21 +24,27 @@ public class LedsSubsystem extends SubsystemBase {
 
     }
 
-    public void setColor(int r, int g, int b, int startValue, int endValue) {
-
+    public void setColorRGB(int r, int g, int b, int startValue, int endValue) {
         for (int i = startValue; i < endValue; i++) {
             m_ledBuffer.setRGB(i, r, g, b);
         }
         m_led.setData(m_ledBuffer);
     }
 
+    public void setColorHSV(int h, int s, int v, int startValue, int endValue) {
+        for (int i = startValue; i < endValue; i++) {
+            m_ledBuffer.setHSV(i, h, s, v);
+        }
+        m_led.setData(m_ledBuffer);
+    }
+
     public void intakeColor(DigitalInput IRsenor) {
         if (!IRsenor.get()) {
-            setColor(LedConstants.YesNoteRed, LedConstants.YesNoteGreen, LedConstants.YesNoteBlue,
+            setColorRGB(LedConstants.YesNoteRed, LedConstants.YesNoteGreen, LedConstants.YesNoteBlue,
                     LedConstants.topBarLedStart, LedConstants.topBarLedStop);
         } else {
 
-            setColor(LedConstants.NoNoteRed, LedConstants.NoNoteGreen, LedConstants.NoNoteBlue,
+            setColorRGB(LedConstants.NoNoteRed, LedConstants.NoNoteGreen, LedConstants.NoNoteBlue,
                     LedConstants.topBarLedStart, LedConstants.topBarLedStop);
 
         }
