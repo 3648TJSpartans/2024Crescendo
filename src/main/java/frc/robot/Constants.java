@@ -269,13 +269,10 @@ public final class Constants {
     public static final int topBarLedStart = 31;
     public static final int topBarLedStop = 64;
 
-    public static final int NoNoteRed = 252;
-    public static final int NoNoteGreen = 190;
-    public static final int NoNoteBlue = 3;
-
-    public static final int YesNoteRed = 15;
-    public static final int YesNoteGreen = 252;
-    public static final int YesNoteBlue = 3;
+    public static final int[] noNoteRGB = { 219, 31, 31 };
+    public static final int[] yesNoteRGB = { 31, 219, 81 };
+    public static final int[] intakeRunningRGB = { 219, 31, 191 };
+    public static final int[] sourceRunningRGB = { 31, 40, 219 };
 
   }
 

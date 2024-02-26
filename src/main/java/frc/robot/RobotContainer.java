@@ -57,6 +57,8 @@ public class RobotContainer {
   private final TrapSubsystem m_trapSubsystem = new TrapSubsystem();
   private final LedsSubsystem m_ledsSubsystem = new LedsSubsystem();
   private final DigitalInput m_IRSenor = new DigitalInput(IRSensorConstants.IRSensorID);
+  private Command m_irIntakeCmd = new IRIntakeCommand(m_intakeSubsystem, m_shooterSubsystem, m_IRSenor);
+  private Command m_sourceIntakeCmd = new IRSourceIntakeCmd(m_shooterSubsystem, m_IRSenor);
   private final VisionPoseEstimator m_visionPoseEstimator = new VisionPoseEstimator(m_swerveSubsystem);
   private final CommandXboxController m_driverController = new CommandXboxController(
       OIConstants.kDriverControllerPort);
@@ -68,7 +70,6 @@ public class RobotContainer {
    */
   public RobotContainer() {
     configAuto();
-
     configureSwerve();
     configureClimber();
     configureIntake();
@@ -92,24 +93,15 @@ public class RobotContainer {
   }
 
   private void configureIntake() {
-    m_driverController.rightBumper().onTrue(new IRIntakeCommand(m_intakeSubsystem, m_shooterSubsystem, m_IRSenor));
-    m_driverController.leftBumper().onTrue(new IRSourceIntakeCmd(m_shooterSubsystem, m_IRSenor));
+    m_driverController.rightBumper()
+        .onTrue(m_irIntakeCmd);
+
+    m_driverController.leftBumper().onTrue(m_sourceIntakeCmd);
   }
 
   private void configureShooter() {
     m_driverController.y().onTrue(new ShooterCommandGroup(m_shooterSubsystem));
     m_driverController.x().onTrue(new AmpCommandGroup(m_shooterSubsystem));
-
-    // m_copilotController.b()
-    // .onTrue(new InstantCommand(() -> m_shooterSubsystem.shuffleboardShooter()));
-    // m_copilotController.x()
-    // .onTrue(new InstantCommand(() ->
-    // m_shooterSubsystem.setBeltSpeed(ShooterConstants.beltAmpSpeed)));
-    // m_copilotController.b()
-    // .onFalse(new InstantCommand(() -> m_shooterSubsystem.setShooterVelocity(0,
-    // 0)));
-    // m_copilotController.x()
-    // .onFalse(new InstantCommand(() -> m_shooterSubsystem.setBeltSpeed(0)));
   }
 
   private void configureClimber() {
@@ -126,7 +118,7 @@ public class RobotContainer {
   public void configAuto() {
     NamedCommands.registerCommand("shoot", new ShooterCommandGroup(m_shooterSubsystem));
     NamedCommands.registerCommand("ampShoot", new AmpCommandGroup(m_shooterSubsystem));
-    NamedCommands.registerCommand("Intake", new IRIntakeCommand(m_intakeSubsystem, m_shooterSubsystem, m_IRSenor));
+    NamedCommands.registerCommand("Intake", m_irIntakeCmd);
     AutoBuilder.configureHolonomic(m_visionPoseEstimator::getVisionPose, m_swerveSubsystem::resetOdometry,
         m_swerveSubsystem::getSpeeds, m_swerveSubsystem::driveRobotRelative,
         AutoConstants.pathFollowerConfig, this::shouldFlipPath, m_swerveSubsystem);
@@ -176,7 +168,7 @@ public class RobotContainer {
   }
 
   public void runPeriodic() {
-    m_ledsSubsystem.intakeColor(m_IRSenor);
+    m_ledsSubsystem.setIntakeColor(m_irIntakeCmd);
     m_visionPoseEstimator.updateVisionPose();
     SmartDashboard.putNumber("PoseX", m_visionPoseEstimator.getVisionPose().getX());
     SmartDashboard.putNumber("PoseY", m_visionPoseEstimator.getVisionPose().getY());

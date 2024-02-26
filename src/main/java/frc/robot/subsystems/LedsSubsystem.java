@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LedConstants;
 
@@ -24,24 +25,21 @@ public class LedsSubsystem extends SubsystemBase {
 
     }
 
-    public void setColor(int r, int g, int b, int startValue, int endValue) {
+    public void setColor(int rgb[], int startValue, int endValue) {
 
         for (int i = startValue; i < endValue; i++) {
-            m_ledBuffer.setRGB(i, r, g, b);
+            m_ledBuffer.setRGB(i, rgb[0], rgb[1], rgb[2]);
         }
         m_led.setData(m_ledBuffer);
     }
 
-    public void intakeColor(DigitalInput IRsenor) {
-        if (!IRsenor.get()) {
-            setColor(LedConstants.YesNoteRed, LedConstants.YesNoteGreen, LedConstants.YesNoteBlue,
-                    LedConstants.topBarLedStart, LedConstants.topBarLedStop);
+    public void setIntakeColor(Command intakeCmd) {
+        if (intakeCmd.isFinished()) {
+            setColor(LedConstants.yesNoteRGB, LedConstants.topBarLedStart, LedConstants.topBarLedStop);
+        } else if (intakeCmd.isScheduled()) {
+            setColor(LedConstants.intakeRunningRGB, LedConstants.topBarLedStart, LedConstants.topBarLedStop);
         } else {
-
-            setColor(LedConstants.NoNoteRed, LedConstants.NoNoteGreen, LedConstants.NoNoteBlue,
-                    LedConstants.topBarLedStart, LedConstants.topBarLedStop);
-
+            setColor(LedConstants.noNoteRGB, LedConstants.topBarLedStart, LedConstants.topBarLedStop);
         }
-
     }
 }
