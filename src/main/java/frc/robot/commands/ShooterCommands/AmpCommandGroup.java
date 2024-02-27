@@ -21,15 +21,21 @@ public class AmpCommandGroup extends SequentialCommandGroup {
                                 new SequentialCommandGroup(
                                                 new RevMotorCommand(m_shooterSubsystem,
                                                                 ShooterConstants.shooterAmpTopSpeed,
-                                                                ShooterConstants.shooterAmpBottomSpeed)
-                                                                .withTimeout(ShooterConstants.revAmpTime),
+                                                                ShooterConstants.shooterAmpBottomSpeed),
                                                 new InstantCommand(() -> m_ledsSubsystem.setColor(LedConstants.revRGB,
                                                                 LedConstants.topBarLedStart,
-                                                                LedConstants.topBarLedStop))),
-                                new ShootCommand(m_shooterSubsystem, ShooterConstants.shooterAmpTopSpeed,
-                                                ShooterConstants.shooterAmpBottomSpeed, ShooterConstants.beltAmpSpeed)
+                                                                LedConstants.topBarLedStop)))
+                                                .withTimeout(ShooterConstants.revAmpTime),
+                                new SequentialCommandGroup(
+                                                new ShootCommand(m_shooterSubsystem,
+                                                                ShooterConstants.shooterAmpTopSpeed,
+                                                                ShooterConstants.shooterAmpBottomSpeed,
+                                                                ShooterConstants.beltAmpSpeed),
+                                                new InstantCommand(() -> m_ledsSubsystem.setColor(LedConstants.shootRGB,
+                                                                LedConstants.topBarLedStart,
+                                                                LedConstants.topBarLedStop)))
                                                 .withTimeout(ShooterConstants.shootAmpTime),
-                                new InstantCommand(() -> m_ledsSubsystem.setIntakeColor(irSensor)));
+                                new InstantCommand(() -> m_ledsSubsystem.setIntakeColor(m_irSensor)));
 
         }
 }
