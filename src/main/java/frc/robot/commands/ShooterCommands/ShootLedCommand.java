@@ -27,52 +27,27 @@ public class ShootLedCommand extends Command {
 
     @Override
     public void execute() {
-        // m_ledTimer.start();
-        // m_ledsSubsystem.setColor(0, 127, 124, 0, lShoot);
-        // if (ramp > 0.001) {
-        // if (m_ledTimer.get() > ramp) {
-        // lShoot += 1;
-        // m_ledTimer.reset();
-        // m_ledTimer.start();
-        // if (lShoot > LedConstants.shooterLedEnd) {
-        // lShoot = 0;
-        // ramp /= 2;
-        // m_ledsSubsystem.setColor(0, 0, 0, 0, LedConstants.shooterLedEnd);
-        // }
-        // }
-        // } else {
-        // if ((m_ledTimer.get() > 5) || (m_ledTimer.get() == 0)) {
-        // m_ledsSubsystem.setColor(0, 0, 0, 0, LedConstants.shooterLedEnd);
-        // m_ledTimer.stop();
-        // m_ledTimer.reset();
-        // ramp = 0.05;
-        // } else {
-        // m_ledsSubsystem.setColor(0, 127, 124, 0, LedConstants.shooterLedEnd);
-        // }
-        // lShoot = 0;
-        // }
         if (m_ledTimer.get() < ramp) {
-            m_ledsSubsystem.setColorRGB(0, 127, 174, LedConstants.shooterLedStart,
-                    (int) (Math.round(
-                            m_ledTimer.get() * ((LedConstants.shooterLedMiddleDiv - 1) - LedConstants.shooterLedStart)
-                                    / ramp)));
-            m_ledsSubsystem.setColorRGB(0, 127, 174, LedConstants.shooterLedEnd
-                    - (int) (Math.round(m_ledTimer.get()
-                            * (LedConstants.shooterLedEnd - (LedConstants.shooterLedMiddleDiv - 1)) / ramp)),
-                    LedConstants.shooterLedEnd);
+            m_ledsSubsystem.pewPewWave(m_ledTimer.get() / ramp, 255, LedConstants.shooterLedStart,
+                    LedConstants.shooterLedMiddleDiv, false);
+            m_ledsSubsystem.pewPewWave(m_ledTimer.get() / ramp, 255, LedConstants.shooterLedMiddleDiv,
+                    LedConstants.shooterLedEnd, true);
         } else if (ramp > 0.001) {
             ramp /= 1.5;
-            m_ledsSubsystem.setColorRGB(0, 0, 0, LedConstants.shooterLedStart, LedConstants.shooterLedEnd);
+            m_ledsSubsystem.pewPewWave(0, 255, LedConstants.shooterLedStart, LedConstants.shooterLedEnd, false);
             m_ledTimer.reset();
         } else {
             if (m_ledTimer.get() < 2) {
-                m_ledsSubsystem.setColorRGB(0, 127 - ((int) Math.round(m_ledTimer.get() * 127 / 2)),
-                        174 - ((int) Math.round(m_ledTimer.get() * 174 / 2)), LedConstants.shooterLedStart,
-                        LedConstants.shooterLedEnd);
+                m_ledsSubsystem.pewPewWave(0, (int) Math.round(255 * m_ledTimer.get() / 2), LedConstants.shooterLedStart, LedConstants.shooterLedEnd, false);
             } else {
-                m_ledsSubsystem.setColorRGB(0, 0, 0, LedConstants.shooterLedStart, LedConstants.shooterLedEnd);
+                m_ledsSubsystem.pewPewWave(0, 255, LedConstants.shooterLedStart, LedConstants.shooterLedEnd, false);
             }
         }
+        // m_ledsSubsystem.pewPewWave(m_ledTimer.get() / 2,
+        // LedConstants.shooterLedStart,
+        // LedConstants.shooterLedMiddleDiv, false);
+        // m_ledsSubsystem.pewPewWave(m_ledTimer.get() / 2,
+        // LedConstants.shooterLedMiddleDiv, LedConstants.shooterLedEnd, true);
         SmartDashboard.putNumber("_Ramp", ramp);
         SmartDashboard.putNumber("_Time", m_ledTimer.get());
     }
