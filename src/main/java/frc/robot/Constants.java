@@ -264,6 +264,7 @@ public final class Constants {
     public static final int ledPWMID = 1;
 
     public static final int shooterLedStart = 0;
+    public static final int shooterLedMiddleDiv = 20;
     public static final int shooterLedEnd = 29;
 
     public static final int topBarLedStart = 31;

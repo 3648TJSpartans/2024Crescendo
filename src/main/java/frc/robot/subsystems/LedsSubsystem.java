@@ -38,6 +38,16 @@ public class LedsSubsystem extends SubsystemBase {
         m_led.setData(m_ledBuffer);
     }
 
+    // public void pewPewWave(double shift, int startValue, int endValue) {
+    // // For best results, set shift to follow 0 < val < 1
+    // for (int i = startValue; i < endValue; i++) {
+    // m_ledBuffer.setRGB(i, 255, 127 * Math.sin(Math.PI * (i - startValue) /
+    // (endValue - startValue))
+    // * Math.sin(Math.PI * (i - startValue) / (endValue - startValue)));
+    // }
+    // m_led.setData(m_ledBuffer);
+    // }
+
     public void intakeColor(DigitalInput IRsenor) {
         if (!IRsenor.get()) {
             setColorRGB(LedConstants.YesNoteRed, LedConstants.YesNoteGreen, LedConstants.YesNoteBlue,

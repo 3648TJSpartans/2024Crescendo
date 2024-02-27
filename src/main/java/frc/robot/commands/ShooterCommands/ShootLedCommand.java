@@ -53,15 +53,21 @@ public class ShootLedCommand extends Command {
         // }
         if (m_ledTimer.get() < ramp) {
             m_ledsSubsystem.setColorRGB(0, 127, 174, LedConstants.shooterLedStart,
-                    (int) (Math.round(m_ledTimer.get() * LedConstants.shooterLedEnd / ramp)));
+                    (int) (Math.round(
+                            m_ledTimer.get() * ((LedConstants.shooterLedMiddleDiv - 1) - LedConstants.shooterLedStart)
+                                    / ramp)));
+            m_ledsSubsystem.setColorRGB(0, 127, 174, LedConstants.shooterLedEnd
+                    - (int) (Math.round(m_ledTimer.get()
+                            * (LedConstants.shooterLedEnd - (LedConstants.shooterLedMiddleDiv - 1)) / ramp)),
+                    LedConstants.shooterLedEnd);
         } else if (ramp > 0.001) {
             ramp /= 1.5;
             m_ledsSubsystem.setColorRGB(0, 0, 0, LedConstants.shooterLedStart, LedConstants.shooterLedEnd);
             m_ledTimer.reset();
         } else {
-            if (m_ledTimer.get() < 3) {
-                m_ledsSubsystem.setColorRGB(0, 127 - ((int) Math.round(m_ledTimer.get() * 127 / 3)),
-                        174 - ((int) Math.round(m_ledTimer.get() * 174 / 3)), LedConstants.shooterLedStart,
+            if (m_ledTimer.get() < 2) {
+                m_ledsSubsystem.setColorRGB(0, 127 - ((int) Math.round(m_ledTimer.get() * 127 / 2)),
+                        174 - ((int) Math.round(m_ledTimer.get() * 174 / 2)), LedConstants.shooterLedStart,
                         LedConstants.shooterLedEnd);
             } else {
                 m_ledsSubsystem.setColorRGB(0, 0, 0, LedConstants.shooterLedStart, LedConstants.shooterLedEnd);
@@ -73,7 +79,7 @@ public class ShootLedCommand extends Command {
 
     @Override
     public boolean isFinished() {
-        if (m_ledTimer.get() > 3 + 0.02) {
+        if (m_ledTimer.get() > 2 + 0.02) {
             m_ledTimer.stop();
             m_ledTimer.reset();
             ramp = 1;
