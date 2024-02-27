@@ -17,6 +17,8 @@ public class ShootLedCommand extends Command {
         m_ledsSubsystem = ledsSubsystem;
         m_ledTimer = new Timer();
         addRequirements(m_ledsSubsystem);
+        m_ledsSubsystem.pewPewWave(0, 255, LedConstants.shooterLedStart, LedConstants.shooterLedMiddleDiv, false);
+        m_ledsSubsystem.pewPewWave(0, 255, LedConstants.shooterLedMiddleDiv, LedConstants.shooterLedEnd, true);
         // m_ledTimer.start();
     }
 
@@ -34,22 +36,21 @@ public class ShootLedCommand extends Command {
                     LedConstants.shooterLedEnd, true);
         } else if (ramp > 0.001) {
             ramp /= 1.5;
-            m_ledsSubsystem.pewPewWave(0, 255, LedConstants.shooterLedStart, LedConstants.shooterLedEnd, false);
+            m_ledsSubsystem.pewPewWave(0, 255, LedConstants.shooterLedStart, LedConstants.shooterLedMiddleDiv, false);
+            m_ledsSubsystem.pewPewWave(0, 255, LedConstants.shooterLedMiddleDiv, LedConstants.shooterLedEnd, true);
             m_ledTimer.reset();
         } else {
             if (m_ledTimer.get() < 2) {
-                m_ledsSubsystem.pewPewWave(0, (int) Math.round(255 * m_ledTimer.get() / 2), LedConstants.shooterLedStart, LedConstants.shooterLedEnd, false);
+                m_ledsSubsystem.pewPewWave(0, (int) Math.round(255 * m_ledTimer.get() / 2),
+                        LedConstants.shooterLedStart, LedConstants.shooterLedMiddleDiv, false);
+                m_ledsSubsystem.pewPewWave(0, (int) Math.round(255 * m_ledTimer.get() / 2),
+                        LedConstants.shooterLedMiddleDiv, LedConstants.shooterLedEnd, true);
             } else {
-                m_ledsSubsystem.pewPewWave(0, 255, LedConstants.shooterLedStart, LedConstants.shooterLedEnd, false);
+                m_ledsSubsystem.pewPewWave(0, 255, LedConstants.shooterLedStart, LedConstants.shooterLedMiddleDiv,
+                        false);
+                m_ledsSubsystem.pewPewWave(0, 255, LedConstants.shooterLedMiddleDiv, LedConstants.shooterLedEnd, true);
             }
         }
-        // m_ledsSubsystem.pewPewWave(m_ledTimer.get() / 2,
-        // LedConstants.shooterLedStart,
-        // LedConstants.shooterLedMiddleDiv, false);
-        // m_ledsSubsystem.pewPewWave(m_ledTimer.get() / 2,
-        // LedConstants.shooterLedMiddleDiv, LedConstants.shooterLedEnd, true);
-        SmartDashboard.putNumber("_Ramp", ramp);
-        SmartDashboard.putNumber("_Time", m_ledTimer.get());
     }
 
     @Override
