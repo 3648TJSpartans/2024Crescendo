@@ -54,7 +54,7 @@ public class RobotContainer {
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
-  private final TrapSubsystem m_trapSubsystem = new TrapSubsystem();
+  // private final TrapSubsystem m_trapSubsystem = new TrapSubsystem();
   private final LedsSubsystem m_ledsSubsystem = new LedsSubsystem();
   private final DigitalInput m_IRSensor = new DigitalInput(IRSensorConstants.IRSensorID);
   private Command m_irIntakeCmd = new IRIntakeCommand(m_intakeSubsystem, m_shooterSubsystem, m_IRSensor,
@@ -128,28 +128,30 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Chooser", autoChooser);
   }
 
-  private void configureTrap() {
+  // private void configureTrap() {
 
-    m_copilotController.b()
-        .onTrue(new EndgameCmdGroup(m_trapSubsystem, m_climberSubsystem));
-    m_copilotController.x()
-        .toggleOnTrue(Commands.startEnd(() -> m_trapSubsystem.setUpDownPosition(TrapConstants.kpositionUp),
-            () -> m_trapSubsystem.setUpDownPosition(0), m_trapSubsystem));
-    m_trapSubsystem.setDefaultCommand(new TrapJoystickCmd(m_trapSubsystem,
-        () -> -MathUtil.applyDeadband(m_copilotController.getRightY(),
-            OIConstants.kDeadband),
-        () -> -MathUtil.applyDeadband(m_copilotController.getRightX(),
-            OIConstants.kDeadband)));
+  // m_copilotController.b()
+  // .onTrue(new EndgameCmdGroup(m_trapSubsystem, m_climberSubsystem));
+  // m_copilotController.x()
+  // .toggleOnTrue(Commands.startEnd(() ->
+  // m_trapSubsystem.setUpDownPosition(TrapConstants.kpositionUp),
+  // () -> m_trapSubsystem.setUpDownPosition(0), m_trapSubsystem));
+  // m_trapSubsystem.setDefaultCommand(new TrapJoystickCmd(m_trapSubsystem,
+  // () -> -MathUtil.applyDeadband(m_copilotController.getRightY(),
+  // OIConstants.kDeadband),
+  // () -> -MathUtil.applyDeadband(m_copilotController.getRightX(),
+  // OIConstants.kDeadband)));
 
-    // m_trapSubsystem.setDefaultCommand(new TrapJoystickCmd(m_trapSubsystem,
-    // () -> -MathUtil.applyDeadband(m_copilotController.getLeftY(),
-    // OIConstants.kDeadband),
-    // () -> -MathUtil.applyDeadband(m_copilotController.getRightY(),
-    // OIConstants.kDeadband)));
-    m_copilotController.a().toggleOnTrue(
-        Commands.startEnd(() -> m_trapSubsystem.setTrack(160), () -> m_trapSubsystem.setTrack(0), m_trapSubsystem));
+  // // m_trapSubsystem.setDefaultCommand(new TrapJoystickCmd(m_trapSubsystem,
+  // // () -> -MathUtil.applyDeadband(m_copilotController.getLeftY(),
+  // // OIConstants.kDeadband),
+  // // () -> -MathUtil.applyDeadband(m_copilotController.getRightY(),
+  // // OIConstants.kDeadband)));
+  // m_copilotController.a().toggleOnTrue(
+  // Commands.startEnd(() -> m_trapSubsystem.setTrack(160), () ->
+  // m_trapSubsystem.setTrack(0), m_trapSubsystem));
 
-  }
+  // }
 
   public Boolean shouldFlipPath() {
     var alliance = DriverStation.getAlliance();

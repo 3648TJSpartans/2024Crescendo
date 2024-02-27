@@ -3,6 +3,7 @@ package frc.robot.commands.ShooterCommands;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants.LedConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.LedsSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -17,9 +18,14 @@ public class AmpCommandGroup extends SequentialCommandGroup {
                 m_ledsSubsystem = ledsSubsystem;
                 m_irSensor = irSensor;
                 addCommands(
-                                new RevMotorCommand(m_shooterSubsystem, ShooterConstants.shooterAmpTopSpeed,
-                                                ShooterConstants.shooterAmpBottomSpeed)
-                                                .withTimeout(ShooterConstants.revAmpTime),
+                                new SequentialCommandGroup(
+                                                new RevMotorCommand(m_shooterSubsystem,
+                                                                ShooterConstants.shooterAmpTopSpeed,
+                                                                ShooterConstants.shooterAmpBottomSpeed)
+                                                                .withTimeout(ShooterConstants.revAmpTime),
+                                                new InstantCommand(() -> m_ledsSubsystem.setColor(LedConstants.revRGB,
+                                                                LedConstants.topBarLedStart,
+                                                                LedConstants.topBarLedStop))),
                                 new ShootCommand(m_shooterSubsystem, ShooterConstants.shooterAmpTopSpeed,
                                                 ShooterConstants.shooterAmpBottomSpeed, ShooterConstants.beltAmpSpeed)
                                                 .withTimeout(ShooterConstants.shootAmpTime),

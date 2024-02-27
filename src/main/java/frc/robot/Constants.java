@@ -219,7 +219,7 @@ public final class Constants {
   public static final class AutoConstants {
     public static final double maxModuleSpeed = 2;
     public static final HolonomicPathFollowerConfig pathFollowerConfig = new HolonomicPathFollowerConfig(
-        new PIDConstants(2, 0, 0), new PIDConstants(2, 0, 0), maxModuleSpeed, 0.508, new ReplanningConfig(true, true)); // TODO:
+        new PIDConstants(1, 0, 0), new PIDConstants(1, 0, 0), maxModuleSpeed, 0.508, new ReplanningConfig(true, true)); // TODO:
                                                                                                                         // check
     // driveBaseRadius
   }
@@ -228,9 +228,9 @@ public final class Constants {
   public static final class LimeLightConstants {
     public static final String cameraName = "camera";
     // distance limelight is from center of robot(m)
-    public static final double xTranslation = 0.1016;
+    public static final double xTranslation = .3016; // .1016
     public static final double yTranslation = 0;
-    public static final double zTranslation = 0.7874;
+    public static final double zTranslation = -.7874; // .7874
     // Rotation of the limelight in Radians
     public static final double rollRotation = 0; // side to side
     public static final double pitchRotation = Math.toRadians(15); // up and down
@@ -274,6 +274,8 @@ public final class Constants {
     public static final int[] yesNoteRGB = { 0, 255, 0 };
     public static final int[] intakeRunningRGB = { 219, 31, 191 };
     public static final int[] sourceRunningRGB = { 31, 40, 219 };
+    public static final int[] revRGB = { 255, 255, 0 };
+    public static final int[] shootRGB = { 255, 149, 0 };
 
   }
 

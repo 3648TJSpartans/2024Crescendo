@@ -13,7 +13,6 @@ public class IRSourceIntakeCmd extends Command {
     private final DigitalInput m_IRSensor;
     private final ShooterSubsystem m_shooterSubsystem;
     private final LedsSubsystem m_ledSubsystem;
-    private final Timer m_timer;
 
     public IRSourceIntakeCmd(ShooterSubsystem shooterSubsystem, LedsSubsystem ledsSubsystem,
             DigitalInput irSensor) {
@@ -21,13 +20,10 @@ public class IRSourceIntakeCmd extends Command {
         m_IRSensor = irSensor;
         m_ledSubsystem = ledsSubsystem;
         addRequirements(shooterSubsystem);
-        m_timer = new Timer();
-
     }
 
     @Override
     public void initialize() {
-        m_timer.start();
         m_ledSubsystem.setColor(LedConstants.sourceRunningRGB, LedConstants.topBarLedStart, LedConstants.topBarLedStop);
 
     }
