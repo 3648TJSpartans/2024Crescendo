@@ -10,6 +10,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -43,7 +44,8 @@ public class SwerveSubsystem extends SubsystemBase {
     private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
     // Slew rate filter variables for controlling acceleration
     private double m_prevTime = WPIUtilJNI.now() * 1e-6;
-    private final StructArrayPublisher<SwerveModuleState> publisher;
+    private final StructArrayPublisher<SwerveModuleState> loggedStates;
+    private final StructPublisher<Rotation2d> loggedHeading;
 
     // Odometry class for tracking robot pose
     SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
@@ -66,8 +68,10 @@ public class SwerveSubsystem extends SubsystemBase {
         }).start();
 
         modules = new SwerveModule[] { m_frontLeft, m_frontRight, m_rearLeft, m_rearRight };
-        publisher = NetworkTableInstance.getDefault()
+        loggedStates = NetworkTableInstance.getDefault()
                 .getStructArrayTopic("SwerveStates", SwerveModuleState.struct).publish();
+        loggedHeading = NetworkTableInstance.getDefault().getStructTopic("Heading", Rotation2d.struct).publish();
+
     }
 
     @Override
@@ -81,7 +85,8 @@ public class SwerveSubsystem extends SubsystemBase {
                         m_rearLeft.getPosition(),
                         m_rearRight.getPosition()
                 });
-        publisher.set(getModuleStates());
+        loggedStates.set(getModuleStates());
+        loggedHeading.set(getRotation2d());
         SmartDashboard.putNumber("Gyro Pose X:", getPose().getX());
         SmartDashboard.putNumber("Gyro Pose Y:", getPose().getY());
 
