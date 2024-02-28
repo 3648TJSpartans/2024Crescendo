@@ -138,7 +138,7 @@ public final class Constants {
   public static final class IntakeConstants {
     public static final int IntakeMotor1Id = 9;
     // public static final int IntakeMotor2Id = 10;
-    public static final double IntakeSpeed = .65;
+    public static final double IntakeSpeed = .43;
     public static final double DefaultSpeed = 0;
   }
 
@@ -162,8 +162,8 @@ public final class Constants {
 
   public static final class ShooterConstants {
 
-    public static final int shooterMotor1Id = 13;
-    public static final int shooterMotor2Id = 14;
+    public static final int shooterMotorTopId = 13;// TOP
+    public static final int shooterMotorBottomId = 14; // BOT
     public static final int beltMotorId1 = 15;
 
     public static final double kshooterP = 0.0002;
@@ -171,18 +171,22 @@ public final class Constants {
     public static final double kshooterD = 0.001;
     public static final double kshooterFF = 0.00019;
 
-    public static final double shooterSpeakerSpeed = -.5;
+    public static final double shooterSpeakerSpeed = 3500;
     public static final double beltSpeakerSpeed = -1;
-    public static final double revSpeakerTime = .5;
-    public static final double shootSpeakerTime = 2;
-    public static final double shooterAmpTopSpeed = 0;
-    public static final double shooterAmpBottomSpeed = .2;// TODO test all amp variables
+    public static final double revSpeakerTime = 1;
+    public static final double shootSpeakerTime = .5;
+
+    public static final double shooterAmpTopSpeed = 200;
+    public static final double shooterAmpBottomSpeed = 1200;
     public static final double beltAmpSpeed = -1;
-    public static final double revAmpTime = 2;
-    public static final double shootAmpTime = .5;
-    public static final double SourceShooterSpeed = .3;
-    public static final double SourceBeltSpeed = .5;
+    public static final double revAmpTime = .5;
+    public static final double shootAmpTime = .8;
+
+    public static final double SourceShooterSpeed = 1000;
+    public static final double SourceBeltSpeed = -1;
+
     public static final double DefaultSpeed = 0;
+    public static final double intakeSourceWait = .25;
 
   }
 
@@ -213,10 +217,10 @@ public final class Constants {
   }
 
   public static final class AutoConstants {
-    public static final double maxModuleSpeed = 2;
+    public static final double maxModuleSpeed = 3;
     public static final HolonomicPathFollowerConfig pathFollowerConfig = new HolonomicPathFollowerConfig(
-        new PIDConstants(2, 0, 0), new PIDConstants(2, 0, 0), maxModuleSpeed, 0.508, new ReplanningConfig(true, true)); // TODO:
-                                                                                                                        // check
+        new PIDConstants(5, 0, 0), new PIDConstants(5, 0, 0), maxModuleSpeed, 0.508, new ReplanningConfig(true, false)); // TODO:
+                                                                                                                         // check
     // driveBaseRadius
   }
 
@@ -224,9 +228,9 @@ public final class Constants {
   public static final class LimeLightConstants {
     public static final String cameraName = "camera";
     // distance limelight is from center of robot(m)
-    public static final double xTranslation = 0.1016;
+    public static final double xTranslation = .3016; // .1016
     public static final double yTranslation = 0;
-    public static final double zTranslation = 0.7874;
+    public static final double zTranslation = -.7874; // .7874
     // Rotation of the limelight in Radians
     public static final double rollRotation = 0; // side to side
     public static final double pitchRotation = Math.toRadians(15); // up and down
@@ -257,18 +261,21 @@ public final class Constants {
   }
 
   public static final class LedConstants {
-    public static final int ledLength = 44;
+    public static final int ledLength = 176;
     public static final int ledPWMID = 1;
-    public static final int startValue = 0;
-    public static final int endValue = 44;
 
-    public static final int NoNoteRed = 252;
-    public static final int NoNoteGreen = 190;
-    public static final int NoNoteBlue = 3;
+    public static final int shooterLedStart = 0;
+    public static final int shooterLedEnd = 30;
 
-    public static final int YesNoteRed = 15;
-    public static final int YesNoteGreen = 252;
-    public static final int YesNoteBlue = 3;
+    public static final int topBarLedStart = 31;
+    public static final int topBarLedStop = 64;
+
+    public static final int[] noNoteRGB = { 255, 0, 0 };
+    public static final int[] yesNoteRGB = { 0, 255, 0 };
+    public static final int[] intakeRunningRGB = { 219, 31, 191 };
+    public static final int[] sourceRunningRGB = { 31, 40, 219 };
+    public static final int[] revRGB = { 255, 255, 0 };
+    public static final int[] shootRGB = { 255, 149, 0 };
 
   }
 

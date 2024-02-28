@@ -39,7 +39,7 @@ public class ClimberSubsystem extends SubsystemBase {
     }
 
     public void setClimberPosition(double position) {
-        m_climberPIDController1.setReference(-position,
+        m_climberPIDController1.setReference(position,
                 CANSparkMax.ControlType.kPosition);
         m_climberPIDController2.setReference(position,
                 CANSparkMax.ControlType.kPosition);
@@ -52,7 +52,7 @@ public class ClimberSubsystem extends SubsystemBase {
     }
 
     public void MoveClimber(double speed) {
-        m_climberMotor1.set(-speed);
+        m_climberMotor1.set(speed);
         m_climberMotor2.set(speed);
     }
 

@@ -8,6 +8,9 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -36,7 +39,7 @@ public class SwerveSubsystem extends SubsystemBase {
             DriveConstants.kRearRightTurningCanId,
             DriveConstants.kBackRightChassisAngularOffset);
     private SwerveModule[] modules;
-    private boolean isFieldRelative = false;
+    private boolean isFieldRelative = true;
     // The gyro sensor
     private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
     // Slew rate filter variables for controlling acceleration
@@ -79,14 +82,6 @@ public class SwerveSubsystem extends SubsystemBase {
                 });
         SmartDashboard.putNumber("Gyro Pose X:", getPose().getX());
         SmartDashboard.putNumber("Gyro Pose Y:", getPose().getY());
-        // SmartDashboard.putNumber("New Estimated Pose X", getVisionPose().getX());
-        // SmartDashboard.putNumber("New Estimated Pose Y", getVisionPose().getY());
-        // SmartDashboard.putNumber("New Estimated Pose X Graph",
-        // getVisionPose().getX());
-        // SmartDashboard.putNumber("New Estimated Pose Y Graph",
-        // getVisionPose().getY());
-        // Optional<Alliance> ally = DriverStation.getAlliance();
-        // SmartDashboard.putString("Alliance Color", ally.toString());
 
     }
 
