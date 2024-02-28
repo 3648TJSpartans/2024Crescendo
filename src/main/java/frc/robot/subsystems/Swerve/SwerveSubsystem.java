@@ -44,6 +44,8 @@ public class SwerveSubsystem extends SubsystemBase {
     private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
     // Slew rate filter variables for controlling acceleration
     private double m_prevTime = WPIUtilJNI.now() * 1e-6;
+    StructArrayPublisher<SwerveModuleState> loggedStates;
+    StructPublisher<Rotation2d> loggedHeading;
 
     // Odometry class for tracking robot pose
     SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
@@ -66,11 +68,15 @@ public class SwerveSubsystem extends SubsystemBase {
         }).start();
 
         modules = new SwerveModule[] { m_frontLeft, m_frontRight, m_rearLeft, m_rearRight };
-
+        loggedStates = NetworkTableInstance.getDefault()
+                .getStructArrayTopic("Swerve States", SwerveModuleState.struct).publish();
+        loggedHeading = NetworkTableInstance.getDefault().getStructTopic("Swerve Heading", Rotation2d.struct).publish();
     }
 
     @Override
     public void periodic() {
+        loggedStates.set(getModuleStates());
+        loggedHeading.set(getRotation2d());
         // Update the odometry in the periodic block
         m_odometry.update(
                 Rotation2d.fromDegrees(m_gyro.getAngle()),
