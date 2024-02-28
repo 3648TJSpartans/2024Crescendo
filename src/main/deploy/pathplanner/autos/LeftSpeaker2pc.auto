@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7685180281204813,
-      "y": 3.4157423100144597
+      "x": 1.481379644214479,
+      "y": 7.342476299859433
     },
     "rotation": 0
   },
@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RightStartToMidSpeaker"
+            "pathName": "LeftStartToLeftSpeaker"
           }
         },
         {
@@ -30,13 +30,19 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.6
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "SpeakerToMiddleNote"
+                  "pathName": "SpeakerToLeftNote"
                 }
               },
               {
@@ -49,9 +55,15 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.6
+          }
+        },
+        {
           "type": "path",
           "data": {
-            "pathName": "MiddleNotetoSpeaker"
+            "pathName": "LeftNoteToSpeaker"
           }
         },
         {
@@ -69,6 +81,6 @@
       ]
     }
   },
-  "folder": "RightStartMidSpeaker",
+  "folder": "LeftSpeaker",
   "choreoAuto": false
 }

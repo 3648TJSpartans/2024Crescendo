@@ -3,12 +3,12 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.6,
+        "x": 1.3,
         "y": 5.65
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.4028830460385366,
+        "x": 2.102883046038537,
         "y": 5.65
       },
       "isLocked": false,
@@ -43,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "LeftStartMidSpeaker",
+  "folder": "LeftStartMidSpeaker(Don't need)",
   "previewStartingState": null,
   "useDefaultConstraints": false
 }

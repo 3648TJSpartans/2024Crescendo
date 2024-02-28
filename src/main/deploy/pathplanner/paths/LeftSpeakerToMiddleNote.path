@@ -43,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "LeftStartLeftSpeaker",
+  "folder": "LeftSpeaker",
   "previewStartingState": null,
   "useDefaultConstraints": false
 }

@@ -3,18 +3,17 @@
   "robotLength": 0.813,
   "holonomicMode": true,
   "pathFolders": [
-    "LeftStartLeftSpeaker",
-    "LeftStartMidSpeaker",
     "Amp",
-    "RightStartMidSpeaker",
-    "RightStartRightSpeaker"
+    "LeftSpeaker",
+    "LeftStartMidSpeaker(Don't need)",
+    "MidSpeaker",
+    "RightSpeaker"
   ],
   "autoFolders": [
-    "LeftStartLeftSpeaker",
-    "LeftStartMidSpeaker",
     "AmpAuto",
-    "RightStartMidSpeaker",
-    "RightStartRightSpeaker"
+    "LeftSpeaker",
+    "MidSpeaker",
+    "RightSpeaker"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,

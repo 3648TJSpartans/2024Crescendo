@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7685180281204813,
-      "y": 3.4157423100144597
+      "x": 1.481379644214479,
+      "y": 7.342476299859433
     },
     "rotation": 0
   },
@@ -12,9 +12,16 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "sequential",
           "data": {
-            "pathName": "RightStartToMidSpeaker"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "LeftStartToLeftSpeaker"
+                }
+              }
+            ]
           }
         },
         {
@@ -32,6 +39,6 @@
       ]
     }
   },
-  "folder": "RightStartMidSpeaker",
+  "folder": "LeftSpeaker",
   "choreoAuto": false
 }
