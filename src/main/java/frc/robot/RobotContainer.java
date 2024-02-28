@@ -4,13 +4,21 @@
 
 package frc.robot;
 
+import java.util.logging.Logger;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.util.PathPlannerLogging;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -65,11 +73,13 @@ public class RobotContainer {
       OIConstants.kDriverControllerPort);
   private final CommandXboxController m_copilotController = new CommandXboxController(
       OIConstants.kCopilotControllerPort);
+  private StructPublisher<Pose2d> loggedCurrentPose;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    loggedCurrentPose = NetworkTableInstance.getDefault().getStructTopic("Robot Pose", Pose2d.struct).publish();
     m_ledsSubsystem.setIntakeColor(m_IRSensor);
     configAuto();
     configureSwerve();
@@ -172,7 +182,9 @@ public class RobotContainer {
   }
 
   public void runPeriodic() {
+
     m_visionPoseEstimator.updateVisionPose();
+    loggedCurrentPose.set(m_visionPoseEstimator.getVisionPose());
     SmartDashboard.putNumber("PoseX", m_visionPoseEstimator.getVisionPose().getX());
     SmartDashboard.putNumber("PoseY", m_visionPoseEstimator.getVisionPose().getY());
 

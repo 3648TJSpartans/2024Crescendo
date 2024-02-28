@@ -4,14 +4,38 @@
       "/FMSInfo": "FMSInfo",
       "/SmartDashboard/Auto Chooser": "String Chooser",
       "/SmartDashboard/Example Auto": "Command",
+      "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/Square Auto": "Command"
+    },
+    "windows": {
+      "/FMSInfo": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Auto Chooser": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Field": {
+        "bottom": 1476,
+        "height": 8.210550308227539,
+        "left": 150,
+        "right": 2961,
+        "top": 79,
+        "width": 16.541748046875,
+        "window": {
+          "visible": true
+        }
+      }
     }
   },
   "NetworkTables": {
-    "Persistent Values": {
+    "Retained Values": {
       "open": false
     },
-    "Retained Values": {
+    "Transitory Values": {
       "open": false
     },
     "retained": {
@@ -25,6 +49,21 @@
   },
   "NetworkTables Info": {
     "Clients": {
+      "open": true
+    },
+    "Server": {
+      "Publishers": {
+        "open": true
+      },
+      "open": true
+    },
+    "shuffleboard@2": {
+      "Publishers": {
+        "open": true
+      },
+      "Subscribers": {
+        "open": true
+      },
       "open": true
     },
     "visible": true
