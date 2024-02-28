@@ -217,10 +217,10 @@ public final class Constants {
   }
 
   public static final class AutoConstants {
-    public static final double maxModuleSpeed = 2;
+    public static final double maxModuleSpeed = 3;
     public static final HolonomicPathFollowerConfig pathFollowerConfig = new HolonomicPathFollowerConfig(
-        new PIDConstants(1, 0, 0), new PIDConstants(1, 0, 0), maxModuleSpeed, 0.508, new ReplanningConfig(true, true)); // TODO:
-                                                                                                                        // check
+        new PIDConstants(5, 0, 0), new PIDConstants(5, 0, 0), maxModuleSpeed, 0.508, new ReplanningConfig(true, false)); // TODO:
+                                                                                                                         // check
     // driveBaseRadius
   }
 
