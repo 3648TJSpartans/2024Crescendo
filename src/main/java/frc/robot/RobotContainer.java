@@ -73,13 +73,11 @@ public class RobotContainer {
       OIConstants.kDriverControllerPort);
   private final CommandXboxController m_copilotController = new CommandXboxController(
       OIConstants.kCopilotControllerPort);
-  private StructPublisher<Pose2d> loggedCurrentPose;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    loggedCurrentPose = NetworkTableInstance.getDefault().getStructTopic("Robot Pose", Pose2d.struct).publish();
     m_ledsSubsystem.setIntakeColor(m_IRSensor);
     configAuto();
     configureSwerve();
@@ -184,7 +182,6 @@ public class RobotContainer {
   public void runPeriodic() {
 
     m_visionPoseEstimator.updateVisionPose();
-    loggedCurrentPose.set(m_visionPoseEstimator.getVisionPose());
     SmartDashboard.putNumber("PoseX", m_visionPoseEstimator.getVisionPose().getX());
     SmartDashboard.putNumber("PoseY", m_visionPoseEstimator.getVisionPose().getY());
 
