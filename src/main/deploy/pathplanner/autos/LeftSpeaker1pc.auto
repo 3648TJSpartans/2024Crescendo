@@ -2,34 +2,15 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.481379644214479,
-      "y": 7.342476299859433
+      "x": 0.83,
+      "y": 6.6
     },
-    "rotation": 0
+    "rotation": 60.69196979230918
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "LeftStartToLeftSpeaker"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
-          }
-        },
         {
           "type": "named",
           "data": {
