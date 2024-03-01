@@ -5,7 +5,10 @@
   "pathFolders": [
     "Amp",
     "LeftSpeaker",
+<<<<<<< Updated upstream
     "LeftStartMidSpeaker(Don't need)",
+=======
+>>>>>>> Stashed changes
     "MidSpeaker",
     "RightSpeaker"
   ],
