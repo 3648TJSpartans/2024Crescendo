@@ -1,7 +1,11 @@
 package frc.robot.commands;
 
+import java.util.function.BooleanSupplier;
+
 import org.ejml.interfaces.decomposition.LUSparseDecomposition;
 
+import edu.wpi.first.networktables.BooleanSubscriber;
+import edu.wpi.first.util.function.BooleanConsumer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -18,6 +22,7 @@ public class IRIntakeCommand extends Command {
     private final DigitalInput m_IRSensor;
     private final ShooterSubsystem m_shooterSubsystem;
     private final LedsSubsystem m_ledsSubsystem;
+    private Boolean isFinished;
 
     public IRIntakeCommand(IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem, DigitalInput irSensor,
             LedsSubsystem ledsSubsystem) {
@@ -47,15 +52,23 @@ public class IRIntakeCommand extends Command {
 
     public boolean isFinished() {
         if (!m_IRSensor.get()) {
-            m_ledsSubsystem.setColor(LedConstants.yesNoteRGB, LedConstants.topBarLedStart, LedConstants.topBarLedStop);
-            m_ledsSubsystem.setIntakeColor(m_IRSensor);
-            m_intakeSubsystem.setIntakeSpeed(Constants.IntakeConstants.DefaultSpeed);
-            m_shooterSubsystem.setBeltSpeed(ShooterConstants.DefaultSpeed);
-            m_shooterSubsystem.setShooterVelocity(ShooterConstants.DefaultSpeed, ShooterConstants.DefaultSpeed);
             return true;
         } else {
             return false;
         }
     }
+
+    @Override
+    public void end(boolean interrupted) {
+        m_ledsSubsystem.setIntakeColor(m_IRSensor);
+        m_intakeSubsystem.setIntakeSpeed(Constants.IntakeConstants.DefaultSpeed);
+        m_shooterSubsystem.setBeltSpeed(ShooterConstants.DefaultSpeed);
+        m_shooterSubsystem.setShooterVelocity(ShooterConstants.DefaultSpeed, ShooterConstants.DefaultSpeed);
+    }
+    // {
+    // m_intakeSubsystem.setIntakeSpeed(IntakeConstants.DefaultSpeed);
+    // m_shooterSubsystem.setBeltSpeed(ShooterConstants.DefaultSpeed);
+    // m_ledsSubsystem.setIntakeColor(m_IRSensor);
+    // }
 
 }

@@ -104,7 +104,7 @@ public class RobotContainer {
 
   private void configureIntake() {
     m_driverController.rightBumper()
-        .onTrue(m_irIntakeCmd);
+        .toggleOnTrue(m_irIntakeCmd);
 
     m_driverController.leftBumper().onTrue(m_sourceIntakeCmd);
   }

@@ -40,10 +40,7 @@ public class IRSourceIntakeCmd extends Command {
         if (!m_IRSensor.get()) {
             m_shooterSubsystem.setBeltSpeed(ShooterConstants.SourceBeltSpeed);
             if (m_IRSensor.get()) {
-                m_ledSubsystem.setColor(LedConstants.yesNoteRGB, LedConstants.topBarLedStart,
-                        LedConstants.topBarLedStop);
-                m_shooterSubsystem.setShooterVelocity(ShooterConstants.DefaultSpeed, ShooterConstants.DefaultSpeed);
-                m_shooterSubsystem.setBeltSpeed(ShooterConstants.DefaultSpeed);
+
                 return true;
             } else {
                 return false;
@@ -51,6 +48,15 @@ public class IRSourceIntakeCmd extends Command {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        m_ledSubsystem.setColor(LedConstants.yesNoteRGB, LedConstants.topBarLedStart,
+                LedConstants.topBarLedStop);
+        m_shooterSubsystem.setShooterVelocity(ShooterConstants.DefaultSpeed, ShooterConstants.DefaultSpeed);
+        m_shooterSubsystem.setBeltSpeed(ShooterConstants.DefaultSpeed);
+
     }
 
 }
