@@ -39,7 +39,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 1.0,
-    "maxAcceleration": 1.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 720.0,
     "maxAngularAcceleration": 720.0
   },
@@ -49,7 +49,11 @@
     "rotateFast": false
   },
   "reversed": false,
+<<<<<<< Updated upstream
   "folder": "LeftStartMidSpeaker(Don't need)",
+=======
+  "folder": "MidSpeaker",
+>>>>>>> Stashed changes
   "previewStartingState": null,
   "useDefaultConstraints": false
 }
