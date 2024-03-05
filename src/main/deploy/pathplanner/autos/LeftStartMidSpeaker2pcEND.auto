@@ -93,6 +93,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "LeftSpeaker",
   "choreoAuto": false
 }

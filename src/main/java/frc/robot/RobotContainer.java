@@ -129,6 +129,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("shoot", new ShooterCommandGroup(m_shooterSubsystem, m_ledsSubsystem, m_IRSensor));
     NamedCommands.registerCommand("ampShoot", new AmpCommandGroup(m_shooterSubsystem, m_ledsSubsystem, m_IRSensor));
     NamedCommands.registerCommand("Intake", m_irIntakeCmd);
+    // m_visionPoseEstimator::getVisionPose
     AutoBuilder.configureHolonomic(m_visionPoseEstimator::getVisionPose, m_swerveSubsystem::resetOdometry,
         m_swerveSubsystem::getSpeeds, m_swerveSubsystem::driveRobotRelative,
         AutoConstants.pathFollowerConfig, this::shouldFlipPath, m_swerveSubsystem);

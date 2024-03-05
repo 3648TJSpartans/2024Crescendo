@@ -1,22 +1,17 @@
 {
-  "robotWidth": 0.813,
-  "robotLength": 0.813,
+  "robotWidth": 0.9,
+  "robotLength": 0.9,
   "holonomicMode": true,
   "pathFolders": [
     "Amp",
-    "LeftSpeaker",
-<<<<<<< Updated upstream
-    "LeftStartMidSpeaker(Don't need)",
-=======
->>>>>>> Stashed changes
-    "MidSpeaker",
+    "Left Speaker",
+    "MiddleSpeaker",
     "RightSpeaker"
   ],
   "autoFolders": [
-    "AmpAuto",
     "LeftSpeaker",
     "MidSpeaker",
-    "RightSpeaker"
+    "New Folder"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,

@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 3.4,
-        "y": 5.6
+        "x": 3.258725097751881,
+        "y": 5.535994035608302
       },
       "prevControl": {
-        "x": 3.2907369598235205,
-        "y": 5.6
+        "x": 3.1494620575754015,
+        "y": 5.535994035608302
       },
       "nextControl": null,
       "isLocked": false,
@@ -43,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "MidSpeaker",
+  "folder": "MiddleSpeaker",
   "previewStartingState": null,
   "useDefaultConstraints": false
 }
