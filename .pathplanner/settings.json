@@ -11,7 +11,7 @@
   "autoFolders": [
     "LeftSpeaker",
     "MidSpeaker",
-    "New Folder"
+    "RightSpeaker"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
