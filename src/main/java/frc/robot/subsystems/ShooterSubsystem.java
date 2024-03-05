@@ -54,8 +54,6 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterMotorBottom.setInverted(false);
         m_shooterMotorTopController.setReference(topSpeed, CANSparkMax.ControlType.kVelocity);
         m_shooterMotorBottomController.setReference(bottomSpeed, CANSparkMax.ControlType.kVelocity);
-        System.out.println("top Inverted: " + m_shooterMotorTop.getInverted());
-        System.out.println("bottom Inverted: " + m_shooterMotorBottom.getInverted());
 
     }
 

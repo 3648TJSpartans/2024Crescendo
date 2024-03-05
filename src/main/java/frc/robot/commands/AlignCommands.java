@@ -22,7 +22,6 @@ public final class AlignCommands extends Command {
   private static SwerveSubsystem m_SwerveSubsystem;
 
   public static Command alignToAmp(VisionPoseEstimator visionPoseEstimator) {
-    System.out.println("running align");
     m_visionPoseEstimator = visionPoseEstimator;
     Pose2d ampPose1;
     Pose2d ampPose2;
