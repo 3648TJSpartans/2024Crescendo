@@ -171,10 +171,11 @@ public final class Constants {
     public static final double kshooterD = 0.001;
     public static final double kshooterFF = 0.00019;
 
-    public static final double shooterSpeakerSpeed = 3500;
+    public static final double shooterSpeakerBottomSpeed = 3000;
+    public static final double shooterTopSpeakerSpeed = 3800;
     public static final double beltSpeakerSpeed = -1;
-    public static final double revSpeakerTime = 1;
-    public static final double shootSpeakerTime = .5;
+    public static final double revSpeakerTime = .3;
+    public static final double shootSpeakerTime = .4;
 
     public static final double shooterAmpTopSpeed = 200;
     public static final double shooterAmpBottomSpeed = 1200;
@@ -183,7 +184,7 @@ public final class Constants {
     public static final double shootAmpTime = .8;
 
     public static final double SourceShooterSpeed = 1000;
-    public static final double SourceBeltSpeed = -1;
+    public static final double SourceBeltSpeed = 1;
 
     public static final double DefaultSpeed = 0;
     public static final double intakeSourceWait = .25;
@@ -261,14 +262,14 @@ public final class Constants {
   }
 
   public static final class LedConstants {
-    public static final int ledLength = 176;
-    public static final int ledPWMID = 1;
+    public static final int ledLength = 52;
+    public static final int ledPWMID = 9;
 
-    public static final int shooterLedStart = 0;
-    public static final int shooterLedEnd = 30;
+    // public static final int shooterLedStart = 0;
+    // public static final int shooterLedEnd = 30;
 
-    public static final int topBarLedStart = 31;
-    public static final int topBarLedStop = 64;
+    public static final int topBarLedStart = 0;
+    public static final int topBarLedStop = 52;
 
     public static final int[] noNoteRGB = { 255, 0, 0 };
     public static final int[] yesNoteRGB = { 0, 255, 0 };

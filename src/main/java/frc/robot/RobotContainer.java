@@ -106,7 +106,7 @@ public class RobotContainer {
     m_driverController.rightBumper()
         .toggleOnTrue(m_irIntakeCmd);
 
-    m_driverController.leftBumper().onTrue(m_sourceIntakeCmd);
+    m_driverController.leftBumper().toggleOnTrue(m_sourceIntakeCmd);
   }
 
   private void configureShooter() {

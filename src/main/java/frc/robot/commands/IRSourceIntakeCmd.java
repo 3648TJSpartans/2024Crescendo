@@ -13,6 +13,9 @@ public class IRSourceIntakeCmd extends Command {
     private final DigitalInput m_IRSensor;
     private final ShooterSubsystem m_shooterSubsystem;
     private final LedsSubsystem m_ledSubsystem;
+    private boolean m_passIrSensorDown2;
+    private boolean m_brokenIrSensorDown1;
+    private boolean m_isFinished;
 
     public IRSourceIntakeCmd(ShooterSubsystem shooterSubsystem, LedsSubsystem ledsSubsystem,
             DigitalInput irSensor) {
@@ -24,30 +27,49 @@ public class IRSourceIntakeCmd extends Command {
 
     @Override
     public void initialize() {
+        m_isFinished = false;
+        m_brokenIrSensorDown1 = false;
+        m_passIrSensorDown2 = false;
         m_ledSubsystem.setColor(LedConstants.sourceRunningRGB, LedConstants.topBarLedStart, LedConstants.topBarLedStop);
+        m_shooterSubsystem.setBeltSpeed(ShooterConstants.SourceBeltSpeed);
+        m_shooterSubsystem.setInvertedShooterVelocity(ShooterConstants.SourceShooterSpeed,
+                ShooterConstants.SourceShooterSpeed);
 
     }
 
     @Override
     public void execute() {
-        m_shooterSubsystem.setInvertedShooterVelocity(ShooterConstants.SourceShooterSpeed,
-                ShooterConstants.SourceShooterSpeed);
-        m_shooterSubsystem.setBeltSpeed(ShooterConstants.SourceBeltSpeed);
+        System.out.println("isFinished: " + m_isFinished);
+        if (!m_brokenIrSensorDown1) {
+            if (!m_IRSensor.get()) {
+                m_brokenIrSensorDown1 = true;
+
+            }
+            return;
+            // return false;
+        }
+        if (!m_passIrSensorDown2) {
+            if (m_IRSensor.get()) {
+                m_passIrSensorDown2 = true;
+            }
+            return;
+            // return false;
+
+        }
+        m_shooterSubsystem.setBeltSpeed(-ShooterConstants.SourceBeltSpeed);
+        if (m_IRSensor.get()) {
+            // return false;
+            return;
+        } else {
+            // return true;
+            m_isFinished = true;
+        }
 
     }
 
     public boolean isFinished() {
-        if (!m_IRSensor.get()) {
-            m_shooterSubsystem.setBeltSpeed(ShooterConstants.SourceBeltSpeed);
-            if (m_IRSensor.get()) {
+        return m_isFinished;
 
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
     }
 
     @Override

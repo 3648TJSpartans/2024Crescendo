@@ -21,16 +21,16 @@ public class ShooterCommandGroup extends SequentialCommandGroup {
 
                 addCommands(
                                 new SequentialCommandGroup(new RevMotorCommand(m_shooterSubsystem,
-                                                ShooterConstants.shooterSpeakerSpeed,
-                                                ShooterConstants.shooterSpeakerSpeed),
+                                                ShooterConstants.shooterTopSpeakerSpeed,
+                                                ShooterConstants.shooterSpeakerBottomSpeed),
                                                 new InstantCommand(() -> m_ledsSubsystem.setColor(LedConstants.revRGB,
                                                                 LedConstants.topBarLedStart,
                                                                 LedConstants.topBarLedStop)))
                                                 .withTimeout(ShooterConstants.revSpeakerTime),
                                 new SequentialCommandGroup(
                                                 new ShootCommand(m_shooterSubsystem,
-                                                                ShooterConstants.shooterSpeakerSpeed,
-                                                                ShooterConstants.shooterSpeakerSpeed,
+                                                                ShooterConstants.shooterTopSpeakerSpeed,
+                                                                ShooterConstants.shooterSpeakerBottomSpeed,
                                                                 ShooterConstants.beltSpeakerSpeed),
                                                 new InstantCommand(() -> m_ledsSubsystem.setColor(LedConstants.shootRGB,
                                                                 LedConstants.topBarLedStart,

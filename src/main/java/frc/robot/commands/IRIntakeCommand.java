@@ -65,10 +65,5 @@ public class IRIntakeCommand extends Command {
         m_shooterSubsystem.setBeltSpeed(ShooterConstants.DefaultSpeed);
         m_shooterSubsystem.setShooterVelocity(ShooterConstants.DefaultSpeed, ShooterConstants.DefaultSpeed);
     }
-    // {
-    // m_intakeSubsystem.setIntakeSpeed(IntakeConstants.DefaultSpeed);
-    // m_shooterSubsystem.setBeltSpeed(ShooterConstants.DefaultSpeed);
-    // m_ledsSubsystem.setIntakeColor(m_IRSensor);
-    // }
 
 }
