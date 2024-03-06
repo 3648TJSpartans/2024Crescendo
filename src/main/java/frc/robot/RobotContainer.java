@@ -54,15 +54,13 @@ import frc.robot.vision.VisionPoseEstimator;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
+
   private SendableChooser<Command> autoChooser;
-  // The robot's subsystems and commands are defined here...
 
   private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
   private final SwerveSubsystem m_swerveSubsystem = new SwerveSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
-  // private final TrapSubsystem m_trapSubsystem = new TrapSubsystem();
   private final LedsSubsystem m_ledsSubsystem = new LedsSubsystem();
   private final DigitalInput m_IRSensor = new DigitalInput(IRSensorConstants.IRSensorID);
   private Command m_irIntakeCmd = new IRIntakeCommand(m_intakeSubsystem, m_shooterSubsystem, m_IRSensor,
@@ -75,9 +73,6 @@ public class RobotContainer {
       OIConstants.kCopilotControllerPort);
   StructPublisher<Pose2d> loggedPose;
 
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
   public RobotContainer() {
     loggedPose = NetworkTableInstance.getDefault().getStructTopic("Robot Pose", Pose2d.struct).publish();
     m_ledsSubsystem.setIntakeColor(m_IRSensor);
@@ -131,38 +126,12 @@ public class RobotContainer {
     NamedCommands.registerCommand("shoot", new ShooterCommandGroup(m_shooterSubsystem, m_ledsSubsystem, m_IRSensor));
     NamedCommands.registerCommand("ampShoot", new AmpCommandGroup(m_shooterSubsystem, m_ledsSubsystem, m_IRSensor));
     NamedCommands.registerCommand("Intake", m_irIntakeCmd);
-    // m_visionPoseEstimator::getVisionPose
     AutoBuilder.configureHolonomic(m_visionPoseEstimator::getVisionPose, m_swerveSubsystem::resetOdometry,
         m_swerveSubsystem::getSpeeds, m_swerveSubsystem::driveRobotRelative,
         AutoConstants.pathFollowerConfig, this::shouldFlipPath, m_swerveSubsystem);
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
   }
-
-  // private void configureTrap() {
-
-  // m_copilotController.b()
-  // .onTrue(new EndgameCmdGroup(m_trapSubsystem, m_climberSubsystem));
-  // m_copilotController.x()
-  // .toggleOnTrue(Commands.startEnd(() ->
-  // m_trapSubsystem.setUpDownPosition(TrapConstants.kpositionUp),
-  // () -> m_trapSubsystem.setUpDownPosition(0), m_trapSubsystem));
-  // m_trapSubsystem.setDefaultCommand(new TrapJoystickCmd(m_trapSubsystem,
-  // () -> -MathUtil.applyDeadband(m_copilotController.getRightY(),
-  // OIConstants.kDeadband),
-  // () -> -MathUtil.applyDeadband(m_copilotController.getRightX(),
-  // OIConstants.kDeadband)));
-
-  // // m_trapSubsystem.setDefaultCommand(new TrapJoystickCmd(m_trapSubsystem,
-  // // () -> -MathUtil.applyDeadband(m_copilotController.getLeftY(),
-  // // OIConstants.kDeadband),
-  // // () -> -MathUtil.applyDeadband(m_copilotController.getRightY(),
-  // // OIConstants.kDeadband)));
-  // m_copilotController.a().toggleOnTrue(
-  // Commands.startEnd(() -> m_trapSubsystem.setTrack(160), () ->
-  // m_trapSubsystem.setTrack(0), m_trapSubsystem));
-
-  // }
 
   public Boolean shouldFlipPath() {
     var alliance = DriverStation.getAlliance();

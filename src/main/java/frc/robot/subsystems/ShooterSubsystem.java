@@ -37,16 +37,10 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterMotorTop.burnFlash();
         m_shooterMotorBottom.burnFlash();
 
-        // SmartDashboard.putNumber("Belt Speed", 0);
-        SmartDashboard.putNumber("Shooter Speed Top", 0);
-        SmartDashboard.putNumber("Shooter Speed Bottom", 0);
-
     }
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Shooter Top Velocity", m_shooterMotorTop.getEncoder().getVelocity());
-        SmartDashboard.putNumber("Shooter Bottom Velocity", m_shooterMotorBottom.getEncoder().getVelocity());
     }
 
     public void setShooterVelocity(double topSpeed, double bottomSpeed) {
@@ -67,19 +61,5 @@ public class ShooterSubsystem extends SubsystemBase {
     public void setBeltSpeed(double speed) {
         m_beltMotor1.set(speed);
     }
-
-    public double getBeltPos() {
-        return m_beltMotor1.getEncoder().getPosition();
-    }
-
-    // public void shuffleboardShooter() {
-    // m_shooterMotor1Controller.setReference(SmartDashboard.getNumber("Shooter
-    // Speed Top", 0),
-    // CANSparkMax.ControlType.kVelocity);
-    // m_shooterMotor2Controller.setReference(SmartDashboard.getNumber("Shooter
-    // Speed Bottom", 0),
-    // CANSparkMax.ControlType.kVelocity);
-
-    // }
 
 }
