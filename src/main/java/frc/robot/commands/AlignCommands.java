@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 public final class AlignCommands extends Command {
   private static VisionPoseEstimator m_visionPoseEstimator;
-  private static SwerveSubsystem m_SwerveSubsystem;
+  private static SwerveSubsystem m_swerveSubsystem;
 
   public static Command alignToAmp(VisionPoseEstimator visionPoseEstimator) {
     m_visionPoseEstimator = visionPoseEstimator;

@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3411798739536347,
-      "y": 6.694652244835785
+      "x": 1.3,
+      "y": 5.65
     },
     "rotation": 0
   },
@@ -12,21 +12,9 @@
     "data": {
       "commands": [
         {
-          "type": "path",
-          "data": {
-            "pathName": "LeftStartToAmp"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "ampShoot"
+            "name": "shoot"
           }
         },
         {
@@ -36,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AmpToLeftNote"
+                  "pathName": "SpeakerToMiddleNote"
                 }
               },
               {
@@ -51,7 +39,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "LeftNoteToAmp"
+            "pathName": "MiddleNotetoSpeaker"
           }
         },
         {
@@ -63,12 +51,37 @@
         {
           "type": "named",
           "data": {
-            "name": "ampShoot"
+            "name": "shoot"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "MiddleToLeftNote"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LeftNoteToMiddleSpeaker"
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "MidSpeaker",
   "choreoAuto": false
 }
