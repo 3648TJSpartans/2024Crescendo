@@ -27,6 +27,7 @@ import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.Constants.AlignConstants;
 import frc.robot.Constants.FieldConstants;
 import frc.robot.subsystems.Swerve.SwerveSubsystem;
@@ -57,11 +58,22 @@ public class AlignToStage extends Command {
     public void execute() {
         PhotonPipelineResult result = m_visionPoseEstimator.getLatestResult();
 
+        Pose3d ID_14 = VisionPoseEstimator.getAprilTagPose3d(14);
+        Pose3d ID_15 = VisionPoseEstimator.getAprilTagPose3d(15);
+        Pose3d ID_16 = VisionPoseEstimator.getAprilTagPose3d(16);
+
+        Pose3d[] StageArray = new Pose3d[] { ID_14, ID_15, ID_16 };
+        Pose3d close = 0;
+        
+        for (int i = 0; i < StageArray.length; i++)
+        {
+
         if (result.hasTargets()) {
             // Find the tag we want to chase
             Optional<PhotonTrackedTarget> target = result.getTargets().stream()
                     .filter(t -> t.getFiducialId() == trackedID)
                     .findFirst();
+
             if (target.isPresent()) {
                 PhotonTrackedTarget info = target.get();
                 double xTranslation = tagPose.getX()
@@ -80,5 +92,3 @@ public class AlignToStage extends Command {
                 AutoBuilder.followPath(path).schedule();
             }
         }
-    }
-}

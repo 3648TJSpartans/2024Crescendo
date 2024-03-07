@@ -69,7 +69,7 @@ public class VisionPoseEstimator {
 
     }
 
-    public Pose3d getAprilTagPose3d(int ID) {
+    public static Pose3d getAprilTagPose3d(int ID) {
         return layout.getTagPose(ID).get();
     }
 
