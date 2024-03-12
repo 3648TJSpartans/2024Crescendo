@@ -138,7 +138,7 @@ public final class Constants {
   public static final class IntakeConstants {
     public static final int IntakeMotor1Id = 9;
     // public static final int IntakeMotor2Id = 10;
-    public static final double IntakeSpeed = .43;
+    public static final double IntakeSpeed = .6;
     public static final double DefaultSpeed = 0;
   }
 
