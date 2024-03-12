@@ -18,19 +18,32 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "race",
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "parallel",
                 "data": {
-                  "pathName": "SpeakerToMiddleNote"
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "SpeakerToMiddleNote"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Intake"
+                      }
+                    }
+                  ]
                 }
               },
               {
-                "type": "named",
+                "type": "wait",
                 "data": {
-                  "name": "Intake"
+                  "waitTime": 2.5
                 }
               }
             ]
@@ -40,12 +53,6 @@
           "type": "path",
           "data": {
             "pathName": "MiddleNotetoSpeaker"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
           }
         },
         {
@@ -77,6 +84,12 @@
           "type": "path",
           "data": {
             "pathName": "LeftNoteToMiddleSpeaker"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot"
           }
         }
       ]

@@ -154,6 +154,7 @@ public class RobotContainer {
   public void runPeriodic() {
     loggedPose.set(m_visionPoseEstimator.getVisionPose());
     m_visionPoseEstimator.updateVisionPose();
+    SmartDashboard.putBoolean("IRsensor", m_IRSensor.get());
     SmartDashboard.putNumber("PoseX", m_visionPoseEstimator.getVisionPose().getX());
     SmartDashboard.putNumber("PoseY", m_visionPoseEstimator.getVisionPose().getY());
 
