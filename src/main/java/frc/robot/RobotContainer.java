@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.IRSensorConstants;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.TrapConstants;
@@ -102,8 +103,10 @@ public class RobotContainer {
   private void configureIntake() {
     m_driverController.rightBumper()
         .toggleOnTrue(m_irIntakeCmd);
-
     m_driverController.leftBumper().toggleOnTrue(m_sourceIntakeCmd);
+    m_copilotController.y()
+        .onTrue(new InstantCommand(() -> m_intakeSubsystem.setIntakeSpeed(-IntakeConstants.IntakeSpeed)));
+
   }
 
   private void configureShooter() {
