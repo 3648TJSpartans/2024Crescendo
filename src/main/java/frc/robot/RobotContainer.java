@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.AutoConstants;
+import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.IRSensorConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.OIConstants;
@@ -115,14 +116,13 @@ public class RobotContainer {
   }
 
   private void configureClimber() {
-    m_climberSubsystem.setDefaultCommand(
-        new ClimberJoystickCmd(m_climberSubsystem, () -> -MathUtil.applyDeadband(m_copilotController.getLeftY(),
-            OIConstants.kDeadband)));
-    // m_copilotController.leftBumper()
-    // .onTrue(new InstantCommand(() ->
-    // m_climberSubsystem.setClimberPosition(ClimberConstants.kClimberDown)));
-    // m_copilotController.rightBumper().onTrue(new InstantCommand(() ->
-    // m_climberSubsystem.setClimberPosition(5)));
+    // m_climberSubsystem.setDefaultCommand(
+    // new ClimberJoystickCmd(m_climberSubsystem, () ->
+    // -MathUtil.applyDeadband(m_copilotController.getLeftY(),
+    // OIConstants.kDeadband)));
+    m_copilotController.leftBumper()
+        .onTrue(new InstantCommand(() -> m_climberSubsystem.setClimberPosition(ClimberConstants.kClimberDown)));
+    m_copilotController.rightBumper().onTrue(new InstantCommand(() -> m_climberSubsystem.setClimberPosition(5)));
   }
 
   public void configAuto() {

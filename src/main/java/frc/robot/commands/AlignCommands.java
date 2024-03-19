@@ -5,6 +5,8 @@
 package frc.robot.commands;
 
 import java.util.List;
+import java.util.Optional;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
@@ -15,6 +17,8 @@ import frc.robot.subsystems.Swerve.SwerveSubsystem;
 import frc.robot.vision.VisionPoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public final class AlignCommands extends Command {
@@ -45,6 +49,30 @@ public final class AlignCommands extends Command {
         new GoalEndState(0.0, ampPose1.getRotation()));
 
     return AutoBuilder.followPath(path);
+  }
+
+  public static void alignToSource(VisionPoseEstimator visionPoseEstimator) {
+    m_visionPoseEstimator = visionPoseEstimator;
+    Pose2d sourcePose2d;
+    List<Translation2d> bezierPoints;
+    Optional<Alliance> ally = DriverStation.getAlliance();
+    if (ally.isPresent()) {
+      if (ally.get() == Alliance.Red) {
+        sourcePose2d = FieldConstants.redSourcePose;
+      } else {
+        sourcePose2d = FieldConstants.blueSourcePose;
+
+      }
+
+    } else {
+      sourcePose2d = new Pose2d();
+    }
+    bezierPoints = PathPlannerPath.bezierFromPoses(m_visionPoseEstimator.getVisionPose(), sourcePose2d);
+    PathPlannerPath path = new PathPlannerPath(bezierPoints,
+        new PathConstraints(AlignConstants.kmaxVelocityMps, AlignConstants.kmaxAccelerationMpsSq,
+            AlignConstants.kmaxAngularVelocityRps, AlignConstants.kmaxAngularAccelerationRpsSq),
+        new GoalEndState(0, sourcePose2d.getRotation()));
+    AutoBuilder.followPath(path).schedule();
   }
 
   private AlignCommands() {

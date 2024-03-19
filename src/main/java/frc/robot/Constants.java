@@ -138,12 +138,8 @@ public final class Constants {
   public static final class IntakeConstants {
     public static final int IntakeMotor1Id = 9;
     // public static final int IntakeMotor2Id = 10;
-    public static final double IntakeSpeed = .6;
+    public static final double IntakeSpeed = 1;
     public static final double DefaultSpeed = 0;
-  }
-
-  public static final class ArmConstants {
-    public static final int armMotorId = 20;
   }
 
   public static final class ClimberConstants {
@@ -154,7 +150,7 @@ public final class Constants {
     public static final double kClimberD = 0;
     public static final double kClimberFF = 0;
     public static final IdleMode kClimberIdleMode = IdleMode.kBrake;
-    public static final double kClimberDown = 80;
+    public static final double kClimberDown = 190;
     public static final Double kClimberMinOutPut = -1.0;
     public static final Double kTrapMaxOutput = 1.0;
 
@@ -174,7 +170,7 @@ public final class Constants {
     public static final double shooterSpeakerBottomSpeed = 3000;
     public static final double shooterTopSpeakerSpeed = 3800;
     public static final double beltSpeakerSpeed = -1;
-    public static final double revSpeakerTime = .3;
+    public static final double revSpeakerTime = .4;
     public static final double shootSpeakerTime = .4;
 
     public static final double shooterAmpTopSpeed = 200;
@@ -248,7 +244,8 @@ public final class Constants {
     public static final double speakerTargetDistance = 0; // TODO change
     public static final int blueSpeakerAprilID = 7;
     public static final int redSpeakerAprilID = 3;
-
+    public static final Pose2d redSourcePose = new Pose2d(1.21, .093, Rotation2d.fromDegrees(60));
+    public static final Pose2d blueSourcePose = new Pose2d(15.4, .98, Rotation2d.fromDegrees(119));
   }
 
   public static final class AlignConstants {

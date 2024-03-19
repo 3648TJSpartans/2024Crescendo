@@ -74,8 +74,7 @@ public class IRSourceIntakeCmd extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        m_ledSubsystem.setColor(LedConstants.yesNoteRGB, LedConstants.topBarLedStart,
-                LedConstants.topBarLedStop);
+        m_ledSubsystem.setIntakeColor(m_IRSensor);
         m_shooterSubsystem.setShooterVelocity(ShooterConstants.DefaultSpeed, ShooterConstants.DefaultSpeed);
         m_shooterSubsystem.setBeltSpeed(ShooterConstants.DefaultSpeed);
 
