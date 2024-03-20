@@ -244,8 +244,8 @@ public final class Constants {
     public static final double speakerTargetDistance = 0; // TODO change
     public static final int blueSpeakerAprilID = 7;
     public static final int redSpeakerAprilID = 3;
-    public static final Pose2d redSourcePose = new Pose2d(1.21, .093, Rotation2d.fromDegrees(60));
-    public static final Pose2d blueSourcePose = new Pose2d(15.4, .98, Rotation2d.fromDegrees(119));
+    public static final Pose2d redSourcePose = new Pose2d(.69, 1.22, Rotation2d.fromDegrees(58));
+    public static final Pose2d blueSourcePose = new Pose2d(15.87, 1.22, Rotation2d.fromDegrees(-117));
   }
 
   public static final class AlignConstants {
