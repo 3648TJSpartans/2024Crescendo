@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.IRSensorConstants;
 import frc.robot.Constants.OIConstants;
@@ -64,6 +65,8 @@ public class RobotContainer {
   private final CommandXboxController m_copilotController = new CommandXboxController(
       OIConstants.kCopilotControllerPort);
 
+  private Trigger m_IRSenorTrigger = new Trigger(() -> m_IRSenor.get());
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -95,6 +98,7 @@ public class RobotContainer {
   private void configureIntake() {
     m_driverController.rightBumper().onTrue(new IRIntakeCommand(m_intakeSubsystem, m_shooterSubsystem, m_IRSenor));
     m_driverController.leftBumper().onTrue(new IRSourceIntakeCmd(m_shooterSubsystem, m_IRSenor));
+    // m_IRSenorTrigger.onTrue().onFalse();
   }
 
   private void configureShooter() {
@@ -178,7 +182,7 @@ public class RobotContainer {
   }
 
   public void runPeriodic() {
-    m_ledsSubsystem.intakeColor(m_IRSenor);
+    // m_ledsSubsystem.intakeColor(m_IRSenor);
     m_visionPoseEstimator.updateVisionPose();
     SmartDashboard.putNumber("PoseX", m_visionPoseEstimator.getVisionPose().getX());
     SmartDashboard.putNumber("PoseY", m_visionPoseEstimator.getVisionPose().getY());

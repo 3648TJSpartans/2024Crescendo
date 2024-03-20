@@ -268,7 +268,10 @@ public final class Constants {
     public static final int shooterLedEnd = 29;
 
     public static final int topBarLedStart = 31;
-    public static final int topBarLedStop = 64;
+    public static final int topBarLedQuat = 39;
+    public static final int topBarLedHalf = 48;
+    public static final int topBarLedThreeQuats = 56;
+    public static final int topBarLedEnd = 64;
 
     public static final int NoNoteRed = 252;
     public static final int NoNoteGreen = 190;

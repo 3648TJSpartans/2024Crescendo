@@ -41,27 +41,27 @@ public class LedsSubsystem extends SubsystemBase {
     public void pewPewWave(double shift, int delta, int startValue, int endValue, boolean inverted) {
         // For best results, set shift to follow 0 < val < 1
         for (int i = startValue; i < endValue; i++) {
-            m_ledBuffer.setRGB(i, 255, (int) Math.round(
-                    delta * Math.cos(Math.PI * (((double) i - startValue) / ((double) endValue - startValue)
-                            + ((inverted ? -1 : 1) * shift)))
-                            * Math.cos(
-                                    Math.PI * (((double) i - startValue) / ((double) endValue - startValue)
-                                            + ((inverted ? -1 : 1) * shift)))),
+            m_ledBuffer.setRGB(i, 255, (int) Math.round(delta * Math.cos(Math.PI
+                    * (((double) i - startValue) / ((double) endValue - startValue) + ((inverted ? -1 : 1) * shift)))
+                    * Math.cos(
+                            Math.PI * (((double) i - startValue) / ((double) endValue - startValue)
+                                    + ((inverted ? -1 : 1) * shift)))),
                     0);
         }
         m_led.setData(m_ledBuffer);
     }
 
-    public void intakeColor(DigitalInput IRsenor) {
-        if (!IRsenor.get()) {
-            setColorRGB(LedConstants.YesNoteRed, LedConstants.YesNoteGreen, LedConstants.YesNoteBlue,
-                    LedConstants.topBarLedStart, LedConstants.topBarLedStop);
-        } else {
-
-            setColorRGB(LedConstants.NoNoteRed, LedConstants.NoNoteGreen, LedConstants.NoNoteBlue,
-                    LedConstants.topBarLedStart, LedConstants.topBarLedStop);
-
+    public void intakeWave(double shift, double gradient, int delta, int startValue, int endValue, boolean inverted) {
+        // To invert color scheme, change gradient to opposite sign
+        for (int i = startValue; i < endValue; i++) {
+            m_ledBuffer.setHSV(i,
+                    (int) Math.round(
+                            delta / 2 * (Math.tanh(
+                                    (((double) i - startValue) / ((double) endValue - startValue)
+                                            - (inverted ? -1 : 1) * shift + (inverted ? -11 : 3)) / gradient)
+                                    + 1))
+                            + 60,
+                    1, 1);
         }
-
     }
 }
