@@ -50,9 +50,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "MiddleNotetoSpeaker"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "MiddleNotetoSpeaker"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake"
+                }
+              }
+            ]
           }
         },
         {
@@ -94,15 +107,41 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "LeftNoteToMiddleSpeaker"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "LeftNoteToMiddleSpeaker"
+                }
+              },
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Intake"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.0
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "shoot"
+            "name": "justShoot"
           }
         },
         {
@@ -138,21 +177,28 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "RightNoteToMiddleSpeaker"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "RightNoteToMiddleSpeaker"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake"
+                }
+              }
+            ]
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "shoot"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "MidGoOut"
+            "name": "justShoot"
           }
         }
       ]

@@ -43,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "LeftStartMidSpeaker(Don't need)",
+  "folder": null,
   "previewStartingState": null,
   "useDefaultConstraints": false
 }

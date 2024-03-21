@@ -42,6 +42,7 @@ public class IRSourceIntakeCmd extends Command {
         System.out.println("isFinished: " + m_isFinished);
         if (!m_brokenIrSensorDown1) {
             if (!m_IRSensor.get()) {
+                m_ledSubsystem.setIntakeColor(m_IRSensor);
                 m_brokenIrSensorDown1 = true;
 
             }
@@ -74,7 +75,6 @@ public class IRSourceIntakeCmd extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        m_ledSubsystem.setIntakeColor(m_IRSensor);
         m_shooterSubsystem.setShooterVelocity(ShooterConstants.DefaultSpeed, ShooterConstants.DefaultSpeed);
         m_shooterSubsystem.setBeltSpeed(ShooterConstants.DefaultSpeed);
 

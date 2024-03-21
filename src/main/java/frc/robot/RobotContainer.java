@@ -38,6 +38,8 @@ import frc.robot.commands.ClimberJoystickCmd;
 import frc.robot.commands.IRIntakeCommand;
 import frc.robot.commands.IRSourceIntakeCmd;
 import frc.robot.commands.ShooterCommands.AmpCommandGroup;
+import frc.robot.commands.ShooterCommands.RevMotorCommand;
+import frc.robot.commands.ShooterCommands.ShootCommand;
 import frc.robot.commands.ShooterCommands.ShooterCommandGroup;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LedsSubsystem;
@@ -127,6 +129,11 @@ public class RobotContainer {
 
   public void configAuto() {
     NamedCommands.registerCommand("shoot", new ShooterCommandGroup(m_shooterSubsystem, m_ledsSubsystem, m_IRSensor));
+    NamedCommands.registerCommand("rev", new RevMotorCommand(m_shooterSubsystem,
+        ShooterConstants.shooterTopSpeakerSpeed, ShooterConstants.shooterSpeakerBottomSpeed));
+    NamedCommands.registerCommand("justShoot",
+        new ShootCommand(m_shooterSubsystem, ShooterConstants.shooterTopSpeakerSpeed,
+            ShooterConstants.shooterSpeakerBottomSpeed, ShooterConstants.beltSpeakerSpeed));
     NamedCommands.registerCommand("ampShoot", new AmpCommandGroup(m_shooterSubsystem, m_ledsSubsystem, m_IRSensor));
     NamedCommands.registerCommand("Intake", m_irIntakeCmd);
     AutoBuilder.configureHolonomic(m_visionPoseEstimator::getVisionPose, m_swerveSubsystem::resetOdometry,
