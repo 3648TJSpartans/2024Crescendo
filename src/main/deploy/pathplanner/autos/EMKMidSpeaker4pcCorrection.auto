@@ -54,9 +54,22 @@
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "deadline",
                 "data": {
-                  "pathName": "MiddleNotetoSpeaker"
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "MiddleNotetoSpeaker"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "rev"
+                      }
+                    }
+                  ]
                 }
               },
               {
@@ -84,7 +97,7 @@
         {
           "type": "named",
           "data": {
-            "name": "shoot"
+            "name": "justShoot"
           }
         },
         {
@@ -124,9 +137,22 @@
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "deadline",
                 "data": {
-                  "pathName": "LeftNoteToMiddleSpeaker"
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "LeftNoteToMiddleSpeaker"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "rev"
+                      }
+                    }
+                  ]
                 }
               },
               {
@@ -194,9 +220,22 @@
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "deadline",
                 "data": {
-                  "pathName": "RightNoteToMiddleSpeaker"
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "RightNoteToMiddleSpeaker"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "rev"
+                      }
+                    }
+                  ]
                 }
               },
               {
