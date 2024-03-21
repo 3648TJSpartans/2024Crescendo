@@ -54,38 +54,38 @@
           "data": {
             "commands": [
               {
-                "type": "deadline",
+                "type": "path",
+                "data": {
+                  "pathName": "MiddleNotetoSpeaker"
+                }
+              },
+              {
+                "type": "sequential",
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
+                      "type": "race",
                       "data": {
-                        "pathName": "MiddleNotetoSpeaker"
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "Intake"
+                            }
+                          },
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 1.0
+                            }
+                          }
+                        ]
                       }
                     },
                     {
                       "type": "named",
                       "data": {
                         "name": "rev"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "race",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Intake"
-                      }
-                    },
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 1.0
                       }
                     }
                   ]
@@ -137,38 +137,38 @@
           "data": {
             "commands": [
               {
-                "type": "deadline",
+                "type": "path",
+                "data": {
+                  "pathName": "LeftNoteToMiddleSpeaker"
+                }
+              },
+              {
+                "type": "sequential",
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
+                      "type": "race",
                       "data": {
-                        "pathName": "LeftNoteToMiddleSpeaker"
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "Intake"
+                            }
+                          },
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 1.0
+                            }
+                          }
+                        ]
                       }
                     },
                     {
                       "type": "named",
                       "data": {
                         "name": "rev"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "race",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Intake"
-                      }
-                    },
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 1.0
                       }
                     }
                   ]
@@ -220,38 +220,38 @@
           "data": {
             "commands": [
               {
-                "type": "deadline",
+                "type": "path",
+                "data": {
+                  "pathName": "RightNoteToMiddleSpeaker"
+                }
+              },
+              {
+                "type": "sequential",
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
+                      "type": "race",
                       "data": {
-                        "pathName": "RightNoteToMiddleSpeaker"
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "Intake"
+                            }
+                          },
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 1.0
+                            }
+                          }
+                        ]
                       }
                     },
                     {
                       "type": "named",
                       "data": {
                         "name": "rev"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "race",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Intake"
-                      }
-                    },
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 1.5
                       }
                     }
                   ]
