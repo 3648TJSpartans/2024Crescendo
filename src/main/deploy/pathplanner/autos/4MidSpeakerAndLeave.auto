@@ -265,6 +265,12 @@
           "data": {
             "name": "justShoot"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "MidGoOut"
+          }
         }
       ]
     }

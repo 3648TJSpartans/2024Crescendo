@@ -133,7 +133,8 @@ public class RobotContainer {
         ShooterConstants.shooterTopSpeakerSpeed, ShooterConstants.shooterSpeakerBottomSpeed));
     NamedCommands.registerCommand("justShoot",
         new ShootCommand(m_shooterSubsystem, ShooterConstants.shooterTopSpeakerSpeed,
-            ShooterConstants.shooterSpeakerBottomSpeed, ShooterConstants.beltSpeakerSpeed));
+            ShooterConstants.shooterSpeakerBottomSpeed, ShooterConstants.beltSpeakerSpeed)
+            .withTimeout(ShooterConstants.shootSpeakerTime));
     NamedCommands.registerCommand("ampShoot", new AmpCommandGroup(m_shooterSubsystem, m_ledsSubsystem, m_IRSensor));
     NamedCommands.registerCommand("Intake", m_irIntakeCmd);
     AutoBuilder.configureHolonomic(m_visionPoseEstimator::getVisionPose, m_swerveSubsystem::resetOdometry,

@@ -2,19 +2,44 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 15.82,
-      "y": 2.39
+      "x": 15.80483421900869,
+      "y": 4.392789096919929
     },
-    "rotation": 0
+    "rotation": 58.53585636913416
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "shoot"
+          }
+        },
+        {
           "type": "path",
           "data": {
-            "pathName": "KnockRed"
+            "pathName": "RedShootStart"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "KnockRed"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake"
+                }
+              }
+            ]
           }
         }
       ]
