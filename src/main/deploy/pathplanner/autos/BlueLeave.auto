@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6866336045496405,
-      "y": 4.411181068470365
+      "x": 0.6927642617331194,
+      "y": 4.368266468186013
     },
-    "rotation": -56.2950707076382
+    "rotation": -59.7435628364707
   },
   "command": {
     "type": "sequential",
@@ -18,19 +18,13 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "BlueStartShoot"
-          }
-        },
-        {
           "type": "sequential",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "KnockBlue"
+                  "pathName": "LeaveBlue"
                 }
               },
               {
