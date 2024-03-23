@@ -43,12 +43,6 @@
                       "data": {
                         "name": "Intake"
                       }
-                    },
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 2.55
-                      }
                     }
                   ]
                 }
@@ -70,6 +64,25 @@
                 "type": "path",
                 "data": {
                   "pathName": "EMKRightNoteToAmp"
+                }
+              },
+              {
+                "type": "race",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Intake"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.0
+                      }
+                    }
+                  ]
                 }
               }
             ]
